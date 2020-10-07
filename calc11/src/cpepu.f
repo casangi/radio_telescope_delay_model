@@ -389,13 +389,13 @@
 !            The option is available to have the units in km and km/sec.
 !            For this, set km=.true. in the STCOMX common block.
 !
-      REAL*8  RRD(6),ET2Z(2),ET2(2),PV(6,13), ET, AU, EMRAT
+      REAL*8  RRD(6),ET2Z(2),ET2(2),PV(6,13), ET, AU, EMRAT, DPV(6,12), DPNUT(4)
       REAL*8  SS(3),CVAL(400),PVSUN(6)
 !  BL1,BL2 added for padding. Common STCOMX rearranged.
       LOGICAL*2 BSAVE,KM,BARY, BL1,BL2
       LOGICAL*2 FIRST
       DATA FIRST/.TRUE./
-      INTEGER*4 LIST(12), IPT(39), DENUM, NTARG, NCENT, NCON, I, K
+      INTEGER*4 LIST(12), IPT(39), DENUM, NTARG, NCENT, NCON, I, K, DLIST(12)
 !
       COMMON/EPHHDR/CVAL,SS,AU,EMRAT,DENUM,NCON,IPT
 !     COMMON/STCOMX/KM,BARY,PVSUN
@@ -417,7 +417,7 @@
       RRD(I)=0.D0
       ENDDO
 !
-      IF(FIRST) CALL STATE(0.D0,0,0,0)
+      IF(FIRST) CALL STATE((/0.D0,0.D0/),DLIST,DPV,DPNUT)
       FIRST=.FALSE.
 !
   96  IF(NTARG .EQ. NCENT) RETURN

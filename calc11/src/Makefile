@@ -18,11 +18,11 @@
 #
 # Standard ALMA definitions like INSTALL_ROOT
 #
-MAKEDIRTMP := $(shell searchFile include/acsMakefile)
-ifneq ($(MAKEDIRTMP),\#error\#)
-   MAKEDIR := $(MAKEDIRTMP)/include
-    include $(MAKEDIR)/acsMakefile
-endif
+#MAKEDIRTMP := $(shell searchFile include/acsMakefile)
+#ifneq ($(MAKEDIRTMP),\#error\#)
+#   MAKEDIR := $(MAKEDIRTMP)/include
+#    include $(MAKEDIR)/acsMakefile
+#endif
 
 ############################################################################
 #

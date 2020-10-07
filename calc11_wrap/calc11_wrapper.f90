@@ -13,7 +13,7 @@ subroutine wrapper_almacalc(refx, refy, refz, nant, antx, anty, antz, &
       temp, pressure, humidity, axisoff
   real(c_double), dimension(ntimes), intent(in) :: mjd, ra, dec, dx, dy, dut
   character(len=8), dimension(ntimes), intent(in) :: sourcename
-  character(len=128), intent(in) :: jpx_de421
+  character(len=128), dimension(1), intent(in) :: jpx_de421
   logical(c_bool), dimension(ntimes), intent(in) :: ssobj
   real(c_double), dimension(ntimes, nant), intent(out) :: geodelay, &
       drydelay, wetdelay

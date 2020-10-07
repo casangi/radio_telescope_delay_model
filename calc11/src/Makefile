@@ -55,9 +55,7 @@ OBJECTS += $(SOURCES.c:%.c=%.o)
 all: ./libcalc11.so
 
 install: all
-	cp libcalc11.so $(INSTALL_ROOT)/lib
-	cp ../data/DE421_little_Endian $(INSTALL_ROOT)/config
-
+	cp libcalc11.so ../../calc11_wrap
 clean:
 	rm -f *.o
 	rm -f ./libcalc11.so

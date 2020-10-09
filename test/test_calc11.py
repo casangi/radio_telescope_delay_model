@@ -55,7 +55,7 @@ dut = np.zeros(ntimes)
 leapsec = 37.0
 axisoff = np.zeros(nant)
 sourcename = ['P'] * ntimes
-jpx_de421 = 'data/DE421_little_Endian'
+jpx_de421 = '../calc11/data/DE421_little_Endian'
 
 geodelay, drydelay, wetdelay = almacalc(refx, refy, refz, antx, anty,
                                         antz, temp, pressure,

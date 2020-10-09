@@ -52,14 +52,16 @@ OBJECTS += $(SOURCES.c:%.c=%.o)
 ###########################################################################
 #
 #  targets
-all: ./libcalc11.so
+all: ./libcalc11.so ./calc11_wrapper.so
 
 install: all
-	cp libcalc11.so ../../calc11_wrap
+	mv libcalc11.so ../lib
+	mv calc11_wrapper.so ../lib
 clean:
 	rm -f *.o
 	rm -f ./libcalc11.so
-	rm -f param11.i
+	rm -f ./../lib/libcalc11.so
+	rm -f ./../lib/calc11_wrapper.so
 
 #
 # Rule to turn Fortran source to object files
@@ -73,6 +75,9 @@ clean:
 ./libcalc11.so: param11.i $(OBJECTS)
 	gfortran -shared -o $@ $(OBJECTS)
 
-param11.i: param11.i.in
-	sed 's|@prefix@|$(INSTALL_ROOT)|' param11.i.in > param11.i
+./calc11_wrapper.so: calc11_wrapper.f90
+	fortran -fPIC -shared -o $@ $< -L. -lcalc11
+
+
+
 

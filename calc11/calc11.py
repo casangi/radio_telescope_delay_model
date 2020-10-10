@@ -12,10 +12,12 @@ a_char_1 = npc.ndpointer(dtype='S1', ndim=1, flags='C_CONTIGUOUS')
 a_char_2 = npc.ndpointer(dtype='S1', ndim=2, flags='C_CONTIGUOUS')
 
 # Import the wrapper library.
+path = os.path.dirname(os.path.realpath(__file__)) + '/lib'
+#os.system('otool -L ' + path + '/calc11_wrapper.so')
+#print('******')
+os.system('install_name_tool -change libcalc11.so ' + path + '/libcalc11.so '+ path + '/calc11_wrapper.so')
+#os.system('otool -L ' + path + '/calc11_wrapper.so')
 
-#wrapper = ct.CDLL('calc11_wrapper.so')
-
-path = os.path.dirname(os.path.realpath(__file__))
 wrapper = npc.load_library('calc11_wrapper.so', path)
 
 # Define wrapper_almacalc result and argument types.

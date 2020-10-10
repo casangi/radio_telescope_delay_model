@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-
 import numpy as np
-from calc11 import almacalc
+from radio_telescope_delay_model.calc11 import almacalc
 
 nant = 1
 ntimes = 60

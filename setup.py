@@ -25,7 +25,6 @@ with open('README.md', "r") as fid:   #encoding='utf-8'
     
 
 def make_library():
-
     cmd = 'make -C ./calc11/src/ clean'
     if subprocess.call(cmd, shell=True, env=_compile.compiler_environ) != 0:
         raise IOError('Compilation failed')
@@ -33,8 +32,6 @@ def make_library():
     cmd = 'make -C ./calc11/src/ install'
     if subprocess.call(cmd, shell=True, env=_compile.compiler_environ) != 0:
             raise IOError('Compilation failed')
-
-
     
 class MakeLibrary(Command):
     user_options = []
@@ -44,11 +41,23 @@ class MakeLibrary(Command):
         pass
     def run(self):
         make_library()
+        
+class SharedLibrary(build_py):
+
+    def run(self):
+        make_library()
+        build_py.run(self)
+
+class DevelopLibrary(develop):
+
+    def run(self):
+        make_library()
+        develop.run(self)
 
 setup(
     name='radio_telescope_delay_model',
     version='0.0.1',
-    description='',
+    description='Radio Telescope Delay Model',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='National Radio Astronomy Observatory',
@@ -57,5 +66,5 @@ setup(
     license='Apache-2.0',
     packages=find_packages(),
     install_requires=['numpy>=1.18.1'],
-    cmdclass={'build': MakeLibrary}
+    cmdclass={'build_py': SharedLibrary,'make': MakeLibrary,'develop': DevelopLibrary}
 )

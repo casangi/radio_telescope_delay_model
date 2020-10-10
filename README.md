@@ -1,10 +1,8 @@
-# cngi_CALC
+# Radio Telescope Delay Model
 Build instructions
 ```sh
 cd calc11/src
 make install
-cd ../../calc11_wrap
-make
 ```
 
 https://github.com/ska-telescope/delay-testing

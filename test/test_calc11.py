@@ -1,5 +1,5 @@
 import numpy as np
-from radio_telescope_delay_model.calc11 import almacalc
+from calc11 import almacalc
 
 nant = 1
 ntimes = 60

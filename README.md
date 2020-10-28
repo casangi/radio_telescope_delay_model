@@ -26,3 +26,7 @@ SKA SA Delay Calculations
 https://github.com/ska-sa/katpoint/tree/master/katpoint
 
 https://syrte.obspm.fr/jsr/journees2005/pdf/s1_06_Sekido.pdf
+
+https://safe.nrao.edu/wiki/bin/view/Main/RefBendDelayCalc
+
+https://sourceforge.net/projects/nusolve/

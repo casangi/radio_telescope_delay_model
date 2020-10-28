@@ -2,6 +2,9 @@ import os
 import ctypes as ct
 import numpy as np
 import numpy.ctypeslib as npc
+from threading import Lock
+
+mutex = Lock()
 
 # Define array pointer types.
 
@@ -82,13 +85,22 @@ def almacalc(refx, refy, refz, antx, anty, antz, temp, pressure,
     geodelay = np.zeros((nant, ntimes), dtype=np.float64)
     drydelay = np.zeros((nant, ntimes), dtype=np.float64)
     wetdelay = np.zeros((nant, ntimes), dtype=np.float64)
+    
 
     # Call the wrapper library function.
-
+#    Call Calc-11 function.
+#        Calc is not thread safe. It uses global variables (common blocks) to
+#        pass parameters between its various functions. If its computing
+#        values for more than one array at the same time these common blocks
+#        may contain values for another array. The mutex should prevent this
+#        by ensuring that if almacalc is running in one thread it cannot be
+#         run in another thread (in the same container).
+    mutex.acquire()
     wrapper.wrapper_almacalc(refx, refy, refz, nant, antx, anty, antz,
                              temp, pressure, humidity, ntimes, mjd, ra,
                              dec, ssobj, dx, dy, dut, leapsec, axisoff,
                              sourcename_arr, jpx_de421_arr, geodelay,
                              drydelay, wetdelay)
+    mutex.release()
 
     return geodelay, drydelay, wetdelay

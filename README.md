@@ -12,4 +12,8 @@ git clone https://github.com/casangi/radio_telescope_delay_model
 cd radio_telescope_delay_model
 pip install -e ./
 ```
+To use 
+```sh
+from calc11 import almacalc 
+```
 The notebook https://colab.research.google.com/github/casangi/radio_telescope_delay_model/blob/main/example_notebooks/Radio_Telescope_Delay_Model_Example.ipynb shows how to calculate uvw coordinates using ```sh almacalc``` and compares the results to CASA, Astropy, and data in a measurement set.

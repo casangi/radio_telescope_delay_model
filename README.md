@@ -12,6 +12,9 @@ git clone https://github.com/casangi/radio_telescope_delay_model
 cd radio_telescope_delay_model
 pip install -e ./
 ```
+## Requirements 
+gcc => 4.8.5
+
 ## Usage 
 ```sh
 from calc11 import almacalc 

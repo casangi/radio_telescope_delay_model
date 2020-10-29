@@ -1,6 +1,6 @@
 # Radio Telescope Delay Model
 Wraps the CALC11 Libary Fortran library found in https://bitbucket.alma.cl/projects/ASW/repos/control/browse/thirdPartyPackages. 
-Currently only the ```sh almacalc``` function has been wrapped.
+Currently only the ```almacalc``` function has been wrapped.
 
 The package can be insatalled by using 
 ```sh

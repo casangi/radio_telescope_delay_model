@@ -16,4 +16,4 @@ pip install -e ./
 ```sh
 from calc11 import almacalc 
 ```
-The notebook [here](https://colab.research.google.com/github/casangi/radio_telescope_delay_model/blob/main/example_notebooks/Radio_Telescope_Delay_Model_Example.ipynb) shows how to calculate uvw coordinates using ```sh almacalc``` and compares the results to CASA, Astropy, and data in a measurement set.
+The notebook [example](https://colab.research.google.com/github/casangi/radio_telescope_delay_model/blob/main/example_notebooks/Radio_Telescope_Delay_Model_Example.ipynb) shows how to calculate uvw coordinates using ```sh almacalc``` and compares the results to CASA, Astropy, and data in a measurement set.

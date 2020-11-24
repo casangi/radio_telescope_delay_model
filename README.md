@@ -1,32 +1,22 @@
 # Radio Telescope Delay Model
-Build instructions
+Wraps the CALC11 Libary Fortran library found [here](https://bitbucket.alma.cl/projects/ASW/repos/control/browse/thirdPartyPackages). 
+Currently only the ```almacalc``` function has been wrapped.
+
+## Installation
 ```sh
-cd calc11/src
-make install
+pip install radio_telescope_delay_model
 ```
+## Build
+```sh
+git clone https://github.com/casangi/radio_telescope_delay_model
+cd radio_telescope_delay_model
+pip install -e ./
+```
+## Requirements 
+gcc => 4.8.5
 
-https://github.com/ska-telescope/delay-testing
-
-https://bitbucket.alma.cl/projects/ASW/repos/control/browse/thirdPartyPackages
-
-- https://github.com/astropy/astropy/pull/6882
-- https://github.com/astropy/astropy/issues/7766
-- https://github.com/astropy/astropy/pull/9869
-- https://github.com/astropy/astropy/pull/10737
-
-IERS Convention (2010)  Section 11.1.4 VLBI delay model https://www.iers.org/SharedDocs/Publikationen/EN/IERS/Publications/tn/TechnNote36/tn36.pdf?__blob=publicationFile&v=1
-
-EHT UVW calculation
-https://github.com/achael/eht-imaging/blob/master/ehtim/observing/obs_helpers.py#L55
-
-Simple Astropy UVW implementation (Paul Demorest)
-https://gist.github.com/demorest/8c8bca4ac5860796593ca07006cc3df6
-
-SKA SA Delay Calculations
-https://github.com/ska-sa/katpoint/tree/master/katpoint
-
-https://syrte.obspm.fr/jsr/journees2005/pdf/s1_06_Sekido.pdf
-
-https://safe.nrao.edu/wiki/bin/view/Main/RefBendDelayCalc
-
-https://sourceforge.net/projects/nusolve/
+## Usage 
+```sh
+from calc11 import almacalc 
+```
+The [example notebook](https://colab.research.google.com/github/casangi/radio_telescope_delay_model/blob/main/example_notebooks/Radio_Telescope_Delay_Model_Example.ipynb) shows how to calculate uvw coordinates using ```almacalc``` and compares the results to CASA, Astropy, and data in a measurement set.

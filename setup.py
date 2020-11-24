@@ -113,7 +113,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='National Radio Astronomy Observatory',
-    author_email='casa-feedback@nrao.edu',
+    author_email='jsteeb@nrao.edu',
     url='https://github.com/casangi/radio_telescope_delay_model',
     license='Apache-2.0',
     packages=find_packages(),

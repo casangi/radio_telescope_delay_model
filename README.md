@@ -1,3 +1,5 @@
+**radio_telescope_delay_model is not being actively maintained.**
+
 # Radio Telescope Delay Model
 Wraps the CALC11 Libary Fortran library found [here](https://bitbucket.alma.cl/projects/ASW/repos/control/browse/thirdPartyPackages). 
 Currently only the ```almacalc``` function has been wrapped.

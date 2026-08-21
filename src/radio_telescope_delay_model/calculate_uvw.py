@@ -151,7 +151,8 @@ def calculate_delays_calc(
     antenna_position : np.ndarray, [n_antenna, 3], metres
         ITRF geocentric antenna positions.
     time : array-like, [n_time]
-        UTC times (>= 2; CALC forms EOP rates from the first and last).
+        UTC times (>= 2; CALC forms EOP rates from a run's first and last
+        epoch).
     phase_center_ra_dec : np.ndarray, [n_time | 1, 2], radians (ICRS)
     reference_position : np.ndarray, [3], metres, optional
         Array reference; default: mean antenna position.
@@ -169,7 +170,14 @@ def calculate_delays_calc(
         ``geometric_delay``, ``dry_delay``, ``wet_delay`` -- each
         ``[n_time, n_antenna]`` seconds -- plus the earth-orientation
         parameters used (``polar_motion_x_arcsec``, ``polar_motion_y_arcsec``,
-        ``ut1_minus_utc_seconds``, ``leap_seconds``).
+        ``ut1_minus_utc_seconds``, ``leap_seconds`` -- each ``[n_time]``).
+
+    Notes
+    -----
+    TAI - UTC is evaluated per epoch; a request that straddles a leap-second
+    insertion is split internally into runs of constant leap count (CALC's
+    ATMUTC treats it as a run constant) and the results are stitched back in
+    the caller's epoch order.
     """
     from radio_telescope_delay_model.delay_model_cpp import almacalc
     from radio_telescope_delay_model.earth_orientation import (
@@ -206,30 +214,64 @@ def calculate_delays_calc(
     axis_offset = per_antenna(axis_offset_metres, 0.0)
 
     eop = earth_orientation_parameters(astropy_time)
+    mjd = np.ascontiguousarray(astropy_time.mjd, dtype=np.float64)
+
+    # CALC treats the leap count (ATMUTC) as a constant of one run, so a
+    # request that straddles a leap-second insertion is split into runs of
+    # constant TAI - UTC and stitched back in epoch order. A single-epoch run
+    # is padded with the nearest other epoch -- discarded from the output --
+    # only so the per-run EOP rates (formed from a run's first and last
+    # epoch) stay defined; the pad's UT1 - UTC is re-expressed with the run's
+    # leap count, keeping the rate free of the 1 s UT1 - UTC step at the
+    # insertion.
+    leap_seconds = eop["leap_seconds"]
+    constant_leap_runs = []
+    for leap_value in np.unique(leap_seconds):
+        selected = np.flatnonzero(leap_seconds == leap_value)
+        call_indices = selected
+        if selected.size == 1:
+            other = np.flatnonzero(leap_seconds != leap_value)
+            pad = other[np.argmin(np.abs(mjd[other] - mjd[selected[0]]))]
+            call_indices = np.sort(np.append(selected, pad))
+        dut1_call = np.ascontiguousarray(
+            eop["ut1_minus_utc_seconds"][call_indices]
+            + (leap_value - leap_seconds[call_indices])
+        )
+        keep = np.isin(call_indices, selected)
+        constant_leap_runs.append((call_indices, keep, float(leap_value), dut1_call))
 
     def run(ra, dec):
+        ra = np.asarray(ra, dtype=np.float64)
+        dec = np.asarray(dec, dtype=np.float64)
         geometric = np.empty((n_time, n_antenna))
         dry = np.empty((n_time, n_antenna))
         wet = np.empty((n_time, n_antenna))
-        almacalc(
-            np.ascontiguousarray(reference_position, dtype=np.float64),
-            antenna_position,
-            temperature,
-            pressure,
-            humidity,
-            np.ascontiguousarray(astropy_time.mjd, dtype=np.float64),
-            np.ascontiguousarray(ra),
-            np.ascontiguousarray(dec),
-            eop["polar_motion_x_arcsec"],
-            eop["polar_motion_y_arcsec"],
-            eop["ut1_minus_utc_seconds"],
-            eop["leap_seconds"],
-            axis_offset,
-            ephemeris_path,
-            geometric,
-            dry,
-            wet,
-        )
+        for call_indices, keep, leap_value, dut1_call in constant_leap_runs:
+            call_geometric = np.empty((call_indices.size, n_antenna))
+            call_dry = np.empty((call_indices.size, n_antenna))
+            call_wet = np.empty((call_indices.size, n_antenna))
+            almacalc(
+                np.ascontiguousarray(reference_position, dtype=np.float64),
+                antenna_position,
+                temperature,
+                pressure,
+                humidity,
+                np.ascontiguousarray(mjd[call_indices]),
+                np.ascontiguousarray(ra[call_indices]),
+                np.ascontiguousarray(dec[call_indices]),
+                np.ascontiguousarray(eop["polar_motion_x_arcsec"][call_indices]),
+                np.ascontiguousarray(eop["polar_motion_y_arcsec"][call_indices]),
+                dut1_call,
+                leap_value,
+                axis_offset,
+                ephemeris_path,
+                call_geometric,
+                call_dry,
+                call_wet,
+            )
+            geometric[call_indices[keep]] = call_geometric[keep]
+            dry[call_indices[keep]] = call_dry[keep]
+            wet[call_indices[keep]] = call_wet[keep]
         return geometric, dry, wet
 
     geometric, dry, wet = run(phase_center[:, 0], phase_center[:, 1])

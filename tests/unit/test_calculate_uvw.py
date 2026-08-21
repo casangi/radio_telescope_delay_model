@@ -168,13 +168,70 @@ def test_calc_uvw_matches_pycalc11():
 
 def test_earth_orientation_parameters():
     eop = earth_orientation_parameters(TIME)
-    assert eop["leap_seconds"] == 37.0  # TAI - UTC in 2019
     for key in (
         "polar_motion_x_arcsec",
         "polar_motion_y_arcsec",
         "ut1_minus_utc_seconds",
+        "leap_seconds",
     ):
         assert eop[key].shape == (len(TIME),)
         assert np.all(np.isfinite(eop[key]))
+    np.testing.assert_array_equal(eop["leap_seconds"], 37.0)  # TAI - UTC in 2019
     assert np.abs(eop["polar_motion_x_arcsec"]).max() < 1.0
     assert np.abs(eop["ut1_minus_utc_seconds"]).max() < 1.0
+
+
+# Epochs around the 2016-12-31 23:59:60 leap-second insertion (TAI - UTC
+# steps 36 -> 37): the calc method must split such a request internally.
+STRADDLE_TIME = Time(
+    [
+        "2016-12-31T21:00:00.000",
+        "2016-12-31T23:00:00.000",
+        "2017-01-01T01:00:00.000",
+    ],
+    scale="utc",
+)
+
+
+def test_earth_orientation_leap_step():
+    eop = earth_orientation_parameters(STRADDLE_TIME)
+    np.testing.assert_array_equal(eop["leap_seconds"], [36.0, 36.0, 37.0])
+
+
+@pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
+def test_calc_straddles_leap_second_insertion():
+    """A request across a leap-second insertion is split into constant-leap
+    runs and stitched back in epoch order.
+
+    Each returned epoch must be bit-identical to the same epoch computed by a
+    request confined to its own run (identical run arrays by construction),
+    and the stitched whole must still agree with the independent astropy
+    method (a mis-stitched or mislabeled epoch would err at the 0.1 m level).
+    """
+    results = calculate_delays_calc(ANTENNA_POSITION, STRADDLE_TIME, PHASE_CENTER)
+    np.testing.assert_array_equal(results["leap_seconds"], [36.0, 36.0, 37.0])
+
+    uvw, antenna1, antenna2 = calculate_uvw_calc(
+        ANTENNA_POSITION, STRADDLE_TIME, PHASE_CENTER
+    )
+    assert uvw.shape == (len(STRADDLE_TIME), 15, 3)
+
+    # The leap-36 pair is one run of its own: identical to requesting it alone.
+    uvw_before, _, _ = calculate_uvw_calc(
+        ANTENNA_POSITION, STRADDLE_TIME[:2], PHASE_CENTER
+    )
+    np.testing.assert_array_equal(uvw[:2], uvw_before)
+
+    # The leap-37 singleton is padded with the nearest epoch (23:00) for the
+    # EOP-rate estimate: identical to requesting exactly that pair, which
+    # splits into the same two runs.
+    uvw_pair, _, _ = calculate_uvw_calc(
+        ANTENNA_POSITION, STRADDLE_TIME[1:], PHASE_CENTER
+    )
+    np.testing.assert_array_equal(uvw[2], uvw_pair[1])
+
+    # And the stitched result still matches the independent astropy method.
+    uvw_astropy, _, _ = calculate_uvw_astropy(
+        ANTENNA_POSITION, STRADDLE_TIME, PHASE_CENTER
+    )
+    np.testing.assert_allclose(uvw, uvw_astropy, atol=0.05)

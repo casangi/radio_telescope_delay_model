@@ -15,8 +15,12 @@ Both return uvw in the archival / VLBI convention adopted by MSv4:
 ```python
 from radio_telescope_delay_model import calculate_uvw_calc, calculate_uvw_astropy
 
-uvw, antenna1, antenna2 = calculate_uvw_calc(antenna_position_itrf, times, phase_center_ra_dec)
-uvw, antenna1, antenna2 = calculate_uvw_astropy(antenna_position_itrf, times, phase_center_ra_dec)
+uvw, antenna1, antenna2 = calculate_uvw_calc(
+    antenna_position_itrf, times, phase_center_ra_dec
+)
+uvw, antenna1, antenna2 = calculate_uvw_astropy(
+    antenna_position_itrf, times, phase_center_ra_dec
+)
 ```
 
 ## Install

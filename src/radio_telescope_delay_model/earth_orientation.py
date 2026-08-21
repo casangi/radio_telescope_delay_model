@@ -17,18 +17,28 @@ def earth_orientation_parameters(time) -> dict:
     Returns
     -------
     dict
-        ``polar_motion_x_arcsec``, ``polar_motion_y_arcsec`` and
-        ``ut1_minus_utc_seconds`` as ``[n_time]`` float64 arrays (IERS-B, the
-        table astropy ships), and the scalar ``leap_seconds`` (TAI - UTC).
+        ``polar_motion_x_arcsec``, ``polar_motion_y_arcsec``,
+        ``ut1_minus_utc_seconds`` (IERS-B, the table astropy ships) and
+        ``leap_seconds`` (TAI - UTC, a step function that increments at
+        leap-second insertions) -- each an ``[n_time]`` float64 array.
     """
+    import erfa
     from astropy.utils import iers
 
     iers_b = iers.IERS_B.open()
     pm_x, pm_y = iers_b.pm_xy(time)
     dut1 = iers_b.ut1_utc(time)
-    # TAI - UTC in integer seconds at the first time (constant per run; CALC
-    # takes a single value).
-    leap_seconds = float(np.round(time[0].unix_tai - time[0].unix))
+    # TAI - UTC per epoch from the IAU leap-second table (steps exactly at
+    # each insertion; e.g. 36 -> 37 at 2017-01-01). Not astropy's
+    # ``unix_tai - unix``: astropy smears the inserted second across the whole
+    # leap day, so that difference is off by up to 1 near an insertion.
+    ymdhms = time.utc.ymdhms
+    day_fraction = (
+        ymdhms["hour"] / 24.0 + ymdhms["minute"] / 1440.0 + ymdhms["second"] / 86400.0
+    )
+    leap_seconds = np.ascontiguousarray(
+        erfa.dat(ymdhms["year"], ymdhms["month"], ymdhms["day"], day_fraction)
+    )
     return {
         "polar_motion_x_arcsec": np.ascontiguousarray(pm_x.to_value("arcsec")),
         "polar_motion_y_arcsec": np.ascontiguousarray(pm_y.to_value("arcsec")),

@@ -40,6 +40,29 @@ sdist.include = [
   "extern/difx/applications/difxcalc11/src/*",
 ]
 
+[tool.cibuildwheel]
+# Compiled package (C++23 + two Fortran cores): wheels are per-platform and
+# per-Python (used by .github/workflows/python-publish.yml). Every wheel must
+# pass the unit tests before upload -- bit parity is per-toolchain, so the
+# pinned difxcalc11 values and the EHT-archive comparison in tests/unit are
+# the acceptance criterion for a CI-built wheel.
+build = "cp311-* cp312-* cp313-*"
+skip = "*-musllinux*"
+build-verbosity = 1
+test-requires = "pytest"
+test-command = "python -m pytest {project}/tests/unit -q"
+# These images ship the gcc-toolset (C++23-capable gcc + gfortran); auditwheel
+# bundles libgfortran/libquadmath into the wheel.
+manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
+
+[tool.cibuildwheel.macos]
+# AppleClang (>= the C++23 floor on current runners) compiles the C++; the
+# Fortran cores use Homebrew's gfortran-14 (the workflow installs gcc@14).
+# The deployment target matches the runner OS so delocate accepts the brew
+# libgfortran it bundles into the wheel.
+environment = { MACOSX_DEPLOYMENT_TARGET = "14.0", FC = "gfortran-14" }
+
 [tool.ruff]
 target-version = "py311"
 

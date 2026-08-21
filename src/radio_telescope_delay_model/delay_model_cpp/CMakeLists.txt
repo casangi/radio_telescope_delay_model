@@ -54,11 +54,28 @@ get_filename_component(_rtdm_repo_root
     "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
 set(_difx_src "${_rtdm_repo_root}/extern/difx/applications/difxcalc11/src")
 if(NOT EXISTS "${_difx_src}/dinit.f")
+    # Fresh clone or CI runner: fetch the pinned submodule ourselves
+    # (shallow + sparse; needs git + network). sdists never get here -- they
+    # carry these sources via pyproject's sdist.include.
+    message(STATUS
+        "difxcalc11 sources missing -- running scripts/init_difx_submodule.sh")
+    execute_process(
+        COMMAND bash "${_rtdm_repo_root}/scripts/init_difx_submodule.sh"
+        RESULT_VARIABLE _difx_init_status
+        OUTPUT_VARIABLE _difx_init_output
+        ERROR_VARIABLE _difx_init_output)
+    if(NOT _difx_init_status EQUAL 0)
+        message(WARNING
+            "init_difx_submodule.sh failed:\n${_difx_init_output}")
+    endif()
+endif()
+if(NOT EXISTS "${_difx_src}/dinit.f")
     message(FATAL_ERROR
-        "difxcalc11 sources not found at ${_difx_src}. Initialize the "
-        "pinned DiFX submodule first: scripts/init_difx_submodule.sh "
-        "(shallow + sparse; a plain 'git submodule update --init "
-        "extern/difx' also works but materializes the full DiFX worktree).")
+        "difxcalc11 sources not found at ${_difx_src} and the automatic "
+        "fetch failed (offline, or not a git checkout?). Run "
+        "scripts/init_difx_submodule.sh manually (shallow + sparse; a plain "
+        "'git submodule update --init extern/difx' also works but "
+        "materializes the full DiFX worktree).")
 endif()
 find_program(RTDM_PATCH_EXECUTABLE patch)
 if(NOT RTDM_PATCH_EXECUTABLE)

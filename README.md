@@ -26,10 +26,13 @@ uvw, antenna1, antenna2 = calculate_uvw_astropy(
 ## Install
 
 ```
-scripts/init_difx_submodule.sh   # difxcalc11 sources: pinned DiFX submodule (shallow + sparse)
-pip install .                    # needs a C++23 compiler and gfortran (CALC core)
+pip install .          # needs a C++23 compiler and gfortran (CALC core)
 python -m pytest tests/
 ```
+
+The difxcalc11 sources come from the pinned DiFX submodule (`extern/difx`);
+the build fetches it automatically (shallow + sparse, ~60 MB) when missing,
+or run `scripts/init_difx_submodule.sh` yourself.
 
 The JPL DE421 ephemeris and CALC coefficient files ship with the package.
 

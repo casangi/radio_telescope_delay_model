@@ -1,5 +1,6 @@
-// C++ driver over the vendored difxcalc11 pipeline -- see
-// fortran_difxcalc11/rtdm_paths.i for the (only) vendored-source patches.
+// C++ driver over the difxcalc11 pipeline, compiled from the pinned DiFX
+// submodule (extern/difx) with patches/difxcalc11_runtime_paths.patch as
+// the only rtdm modification (runtime data-file paths via /RTDMPATHS/).
 //
 // Unlike delay_model.hpp's almacalc driver, this runs difxcalc11's OWN
 // dSTART -> dINITL -> dSCAN -> dDRIVR sequence on a .calc file, so every

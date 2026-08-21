@@ -26,7 +26,8 @@ uvw, antenna1, antenna2 = calculate_uvw_astropy(
 ## Install
 
 ```
-pip install .          # needs a C++23 compiler and gfortran (CALC core)
+scripts/init_difx_submodule.sh   # difxcalc11 sources: pinned DiFX submodule (shallow + sparse)
+pip install .                    # needs a C++23 compiler and gfortran (CALC core)
 python -m pytest tests/
 ```
 

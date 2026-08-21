@@ -1,0 +1,5 @@
+[submodule "extern/difx"]
+	path = extern/difx
+	url = https://github.com/difx/difx.git
+	shallow = true
+	branch = main

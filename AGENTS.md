@@ -37,11 +37,25 @@ cmake/RtdmPybind.cmake    # single source of truth for build flags
   calc-vs-astropy methods differ at the annual-aberration level
   (~1e-4 relative) by uvw convention, which dominates at VLBI scales.
 - **difxcalc11 bit parity**: `mode="difxcalc11"` runs difxcalc11's OWN
-  vendored source (`delay_model_cpp/fortran_difxcalc11/`, a second
-  self-contained extension `_difxcalc11_ext`; byte-identical to
-  `difx/applications/difxcalc11/src` except five runtime data-path OPEN
-  sites, see `rtdm_paths.i`) through its own dSTART/dINITL/dSCAN/dDRIVR
-  pipeline on a generated `.calc` job (`difxcalc11_core.py`). Raw samples
+  source (a second self-contained extension `_difxcalc11_ext`) through its
+  own dSTART/dINITL/dSCAN/dDRIVR pipeline on a generated `.calc` job
+  (`difxcalc11_core.py`). The Fortran comes from the **pinned DiFX
+  submodule** (`extern/difx`, shallow + sparse; init with
+  `scripts/init_difx_submodule.sh`), staged into the build tree at
+  configure time with exactly one patch applied
+  (`delay_model_cpp/patches/difxcalc11_runtime_paths.patch`: the five
+  data-file OPEN sites redirected to the runtime `/RTDMPATHS/` common,
+  plus `rtdm_paths.i` declaring it — pre-commit must keep skipping the
+  patch, its context lines carry significant trailing blanks); `param11.i`
+  is generated from upstream's `param11.i.in` with inert placeholder paths.
+  **Bumping the submodule SHA is a deliberate action**: fetch + checkout
+  the new SHA in `extern/difx`, rebuild, and let the tests gate it — the
+  EHT archive comparison (`tests/unit/test_fits_idi.py`) plus the pinned
+  difxcalc11-mode values. If pins move because upstream physics
+  legitimately changed, re-bless them consciously (and re-verify bit
+  parity against an instrumented difxcalc build of the same SHA, as in
+  `experiments/difx_uvw_comparison/REPORT.md`); then stage the new gitlink
+  and regenerate the patch if it stopped applying. Raw samples
   verified **bit-identical (6480/6480)** to an instrumented difxcalc
   binary built with the same toolchain and `-ffp-contract=off` (now in
   `RTDM_FORTRAN_FLAGS` — required; contraction produces 1-ULP drift).

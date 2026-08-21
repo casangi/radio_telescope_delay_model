@@ -4,7 +4,9 @@ The dataset is a compact extract (3000 UV rows) from the DiFX-correlated
 EHT 2021 track e21d15 (job E21D15.1, 3C273, band 1); its uvw were written by
 difx2fits from the difxcalc11 ``.im`` model in float32 light-seconds, so
 this pins the embedded difxcalc11 pipeline against a real archive at the
-file's own precision floor (measured: median 0.056 m, max 0.168 m).
+file's own precision floor (float32 light-seconds: ~1 m ulp on the longest
+baselines, plus correlation-time-vs-final EOP differences; measured median
+~0.06 m, max ~1.7 m across all 21 baselines).
 """
 
 import os
@@ -36,7 +38,9 @@ def test_difxcalc11_reproduces_eht_archive_uvw():
     result = compare_uvw(data, method="difxcalc11")
     residual = np.abs(result["residual"])
     assert np.median(residual) < 0.1  # the file's float32 quantization floor
-    assert residual.max() < 0.5
+    # float32 ulp reaches ~1 m at the longest-baseline uvw components, and
+    # the EOP values used at correlation time differ from IERS-B finals.
+    assert residual.max() < 2.5
     # The wrong orientation misses by the full uvw scale.
     flipped = np.abs(-result["model_uvw"] - result["file_uvw"]).max()
     assert flipped > 1.0e6

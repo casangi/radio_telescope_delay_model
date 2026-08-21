@@ -1,0 +1,185 @@
+diff -ruN a/cpepu.f b/cpepu.f
+--- a/cpepu.f	2026-08-21 20:18:19
++++ b/cpepu.f	2026-08-21 20:18:19
+@@ -749,6 +749,7 @@
+       LOGICAL*2 KM,BARY, BL1, BL2
+ !
+       INCLUDE 'param11.i'
++      INCLUDE 'rtdm_paths.i'
+ !       Variables from:
+ !         1. JPL_405 - Character string giving the complete path name of
+ !                      the JPL DE405 ephemeris.
+@@ -779,7 +780,7 @@
+ !
+ !     OPEN(NRFILE, FILE=JPL_405, ACCESS='DIRECT', FORM='UNFORMATTED', &
+ !    &     RECL=I_RECL_JPL, STATUS='OLD')
+-      OPEN(NRFILE, FILE=JPL_DE421, ACCESS='DIRECT', FORM='UNFORMATTED', &
++      OPEN(NRFILE, FILE=RTDM_DE421_FILE, ACCESS='DIRECT', FORM='UNFORMATTED', &
+      &     RECL=I_RECL_JPL, STATUS='OLD')
+ !
+       READ(NRFILE,REC=1)TTL,CNAM,SS,NCON,AU,EMRAT, &
+diff -ruN a/cut1m.f b/cut1m.f
+--- a/cut1m.f	2026-08-21 20:18:19
++++ b/cut1m.f	2026-08-21 20:18:19
+@@ -1287,6 +1287,7 @@
+ !     -1301  No data found in "leapsecond" file (EOF on first read).
+ !
+       INCLUDE 'param11.i'
++      INCLUDE 'rtdm_paths.i'
+ !
+ !     Specifications:
+ !
+@@ -1314,9 +1315,9 @@
+       xleap(5) = 0.D0
+       get_leapsec = 0
+       if(lpdcb.le.0) lpdcb = get4unit()
+-      open(UNIT=lpdcb,FILE=DFLEAP,STATUS='Old',IOSTAT=ierr)
++      open(UNIT=lpdcb,FILE=RTDM_LEAP_FILE,STATUS='Old',IOSTAT=ierr)
+       IF ( IERR .NE. 0 ) THEN
+-           WRITE ( 6, '(A)' ) 'Error in opening leap second file '//DFLEAP
++           WRITE ( 6, '(A)' ) 'Error in opening leap second file '//RTDM_LEAP_FILE
+            CALL TERMINATE_CALC ( 'get_leapsec', int2(0), int2(0) )
+       END IF
+ !
+@@ -1334,7 +1335,7 @@
+          read(lpdcb,'(17X,F9.1,12X,F10.7,12X,F6.0,4X,F9.7,1X)', &
+      &        IOSTAT=ierr,END=800) xleapr
+          IF ( IERR > 0 ) THEN
+-              WRITE ( 6, '(A)' ) 'Error in reading leap second file '//DFLEAP
++              WRITE ( 6, '(A)' ) 'Error in reading leap second file '//RTDM_LEAP_FILE
+               CALL TERMINATE_CALC ( 'get_leapsec', int2(0), int2(0) )
+           END IF
+       enddo
+diff -ruN a/dinit.f b/dinit.f
+--- a/dinit.f	2026-08-21 20:18:19
++++ b/dinit.f	2026-08-21 20:18:19
+@@ -257,9 +257,10 @@
+ !                            data base. (First index: year, month, day,
+ !                            hour, minute. Second index: first, last.)
+       INCLUDE 'param11.i'
++      INCLUDE 'rtdm_paths.i'
+ !       Variables from:
+-!           1. A_tilts   - Antenna tilts file name (default file).
+-!           2. OPTL_file - Ocean pole tide loading file (default file).
++!           1. RTDM_TILT_FILE   - Antenna tilts file name (default file).
++!           2. RTDM_OPTL_FILE - Ocean pole tide loading file (default file).
+ !
+       INCLUDE 'd_input.i'
+ !
+@@ -1553,7 +1554,8 @@
+       INCLUDE 'cmxst11.i'
+ !
+       INCLUDE 'param11.i'
+-!       1. OC_file - Name of the ocean loading coefficients file
++      INCLUDE 'rtdm_paths.i'
++!       1. RTDM_OC_FILE - Name of the ocean loading coefficients file
+ !
+       Real*8           PI, TWOPI, HALFPI, CONVD, CONVDS, CONVHS, SECDAY
+       COMMON / CMATH / PI, TWOPI, HALFPI, CONVD, CONVDS, CONVHS, SECDAY
+@@ -1593,10 +1595,10 @@
+ !
+ !  Open the Ocean loading data file
+        If (Kjob .eq. 1) Iunit = get4unit()
+-       Open (Unit=Iunit, File=OC_file, Status='old', Action='READ',     &
++       Open (Unit=Iunit, File=RTDM_OC_FILE, Status='old', Action='READ',     &
+      &       Err=240, Iostat=ios)
+ !
+-      If ( Index(OC_file,'blokq') .gt. 0) Then
++      If ( Index(RTDM_OC_FILE,'blokq') .gt. 0) Then
+ !  Blokq.dat file, find the ocean loading coefficients catalog
+   50   Continue
+        Read(iunit,'(A80)') Inbuf
+@@ -1682,7 +1684,7 @@
+             If (iquit.eq.0) Write(6,'(/)')
+             Write(6,'("Warning - No ocean loading coefficients for ",   &
+      &         A8,/, "Will continue but you really should update file ", &
+-     &         A128,/)')  Dbsites(I), OC_file
++     &         A128,/)')  Dbsites(I), RTDM_OC_FILE
+             Iquit = Iquit + 1
+              Do k = 1, 11
+               SITOAM(k,I)   = 0.D0
+@@ -1696,7 +1698,7 @@
+         Endif
+ !        If (Iquit .gt. 0) Then
+ !            Write(6,'(/,"!!! Missing ocean loading!!! Update file ",/,   &
+-!    &       10X, A80,/,3X, " and rerun Calc!!!",/ )') OC_file 
++!    &       10X, A80,/,3X, " and rerun Calc!!!",/ )') RTDM_OC_FILE
+ !            Call TERMINATE_CALC( 'dOCNIN ',int2(0), int2(0))
+ !        Endif
+       ENDDO
+@@ -1731,8 +1733,9 @@
+ !                                    For alt-az mounts, 1 => East tilt,
+ !                                    2 => North tilt.
+       INCLUDE 'param11.i'
++      INCLUDE 'rtdm_paths.i'
+ !        Variables 'from':
+-!           1. A_tilts -  Ascii name of the antenna fixed axis tilts file.
++!           1. RTDM_TILT_FILE -  Ascii name of the antenna fixed axis tilts file.
+ !
+       INCLUDE 'cmxut11.i'
+ !        Variables 'to':
+@@ -1792,7 +1795,7 @@
+ !
+ !  Open the input file of antenna tilts
+        If (Kjob .eq. 1) Iunit = get4unit()
+-       Open (Unit=Iunit, File=A_tilts, Status='old', Action='READ',     &
++       Open (Unit=Iunit, File=RTDM_TILT_FILE, Status='old', Action='READ',     &
+      &       Err=240, Iostat=ios)
+ !
+ !   Skip first 4 lines
+@@ -1906,7 +1909,8 @@
+       INCLUDE 'cmxst11.i'
+ !
+       INCLUDE 'param11.i'
+-!       1. OPTL_file - Name of the ocean pole tide loading coefficients
++      INCLUDE 'rtdm_paths.i'
++!       1. RTDM_OPTL_FILE - Name of the ocean pole tide loading coefficients
+ !                      file.
+ !
+       Character*80 Inbuf
+@@ -1934,7 +1938,7 @@
+ !
+ !  Open the Ocean pole tide loading data file
+        If (Kjob .eq. 1) Iunit = get4unit()
+-       Open (Unit=Iunit, File=OPTL_file, Status='old', Action='READ',   &
++       Open (Unit=Iunit, File=RTDM_OPTL_FILE, Status='old', Action='READ',   &
+      &       Err=240, Iostat=Ios)
+ !
+   50   Continue
+@@ -1988,13 +1992,13 @@
+           If (iquit.eq.0) Write(6,'(/)')
+           Write(6,'("Warning - No ocean pole tide loading coefficients for ",  &
+      &         A8,/, "Will continue but you really should update file ", &
+-     &         A50,/)')  Dbsites(I), OPTL_file
++     &         A50,/)')  Dbsites(I), RTDM_OPTL_FILE
+           Iquit = Iquit + 1
+         endif
+ !        If (Iquit .gt. 0) Then
+ !            Write(6,'(/,"!!! Missing ocean pole tide loading!!! You"   &
+ !    &       " really should update file ",/, A80, /,                   &
+-!    &       " and rerun Calc!!!",/ )') OPTL_file 
++!    &       " and rerun Calc!!!",/ )') RTDM_OPTL_FILE
+ !!!!!        Call TERMINATE_CALC( 'OPTLIN ',int2(0), int2(0))
+ !        Endif
+       enddo
+diff -ruN a/rtdm_paths.i b/rtdm_paths.i
+--- a/rtdm_paths.i	1970-01-01 01:00:00
++++ b/rtdm_paths.i	2026-08-21 20:18:19
+@@ -0,0 +1,17 @@
++!  rtdm_paths.i
++!
++!  Runtime data-file paths for the vendored difxcalc11 core.
++!
++!  difxcalc11 bakes its station-catalog and ephemeris paths into param11.i
++!  at configure time, which a relocatable Python package cannot do. The
++!  five file-OPEN sites (dOCNIN, dANTILT, dOPTLIN in dinit.f; the ephemeris
++!  OPEN in cpepu.f; get_leapsec in cut1m.f) are patched -- the only rtdm
++!  modifications to the vendored source -- to use these variables, which the
++!  C++ driver (difxcalc_core.cpp) fills with the packaged data locations
++!  before dSTART/dINITL run. Everything else is byte-identical to
++!  difx/applications/difxcalc11/src.
++!
++      CHARACTER*128 RTDM_OC_FILE, RTDM_TILT_FILE, RTDM_OPTL_FILE,       &
++     &              RTDM_DE421_FILE, RTDM_LEAP_FILE
++      COMMON / RTDMPATHS / RTDM_OC_FILE, RTDM_TILT_FILE,                &
++     &              RTDM_OPTL_FILE, RTDM_DE421_FILE, RTDM_LEAP_FILE

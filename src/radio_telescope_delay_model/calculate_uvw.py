@@ -372,6 +372,7 @@ def calculate_uvw_calc(
     axis_offset_metres=None,
     station_name=None,
     mount_type=None,
+    eop=None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Baseline ``uvw`` (metres) for every time, CALC11 method.
 
@@ -419,6 +420,12 @@ def calculate_uvw_calc(
         Archival convention: ``P(antenna1) - P(antenna2)``.
     antenna1, antenna2 : np.ndarray, [n_baseline] int
     """
+    if eop is not None and mode != "difxcalc11":
+        raise ValueError(
+            "eop (explicit daily EOP entries) is only supported with "
+            "mode='difxcalc11'; the other methods take per-epoch EOPs from "
+            "IERS-B via earth_orientation_parameters."
+        )
     if mode not in ("geometric", "difxcalc11"):
         raise ValueError(
             f"Unknown mode {mode!r}; expected 'geometric' or 'difxcalc11'."
@@ -458,6 +465,7 @@ def calculate_uvw_calc(
             phase_center,
             station_name=station_name,
             mount_type=mount_type,
+            eop=eop,
         )
         epochs = np.atleast_1d(astropy_time.unix)
         antenna_uvw = np.stack(

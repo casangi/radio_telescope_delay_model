@@ -63,6 +63,15 @@ def read_fits_idi(path, max_rows: int | None = None) -> dict:
         uvw_seconds = np.stack([data["UU"], data["VV"], data["WW"]], axis=1).astype(
             np.float64
         )
+        eop = None
+        if "eop_mjd" in data:
+            eop = {
+                "mjd": np.asarray(data["eop_mjd"], dtype=int),
+                "tai_utc": np.asarray(data["eop_tai_utc"], dtype=np.float64),
+                "ut1_utc": np.asarray(data["eop_ut1_utc"], dtype=np.float64),
+                "x_pole_arcsec": np.asarray(data["eop_x_arcsec"], dtype=np.float64),
+                "y_pole_arcsec": np.asarray(data["eop_y_arcsec"], dtype=np.float64),
+            }
     else:
         from astropy.io import fits
 
@@ -113,6 +122,22 @@ def read_fits_idi(path, max_rows: int | None = None) -> dict:
                 ],
                 axis=1,
             )
+            eop = None
+            if "CALC" in [h.name for h in hdus]:
+                calc = hdus["CALC"]
+                from astropy.time import Time as _Time
+
+                rdate_mjd = _Time(geometry.header["RDATE"], scale="utc").mjd
+                wobble = np.asarray(calc.data["WOBXY"], dtype=np.float64)
+                eop = {
+                    "mjd": np.round(
+                        np.asarray(calc.data["TIME"], dtype=np.float64) + rdate_mjd
+                    ).astype(int),
+                    "tai_utc": np.asarray(calc.data["IAT-UTC"], dtype=np.float64),
+                    "ut1_utc": np.asarray(calc.data["UT1-UTC"], dtype=np.float64),
+                    "x_pole_arcsec": wobble[:, 0],
+                    "y_pole_arcsec": wobble[:, 1],
+                }
 
     unknown = sorted({int(m) for m in mntsta if int(m) not in _MNTSTA_TO_MOUNT})
     if unknown:
@@ -132,16 +157,22 @@ def read_fits_idi(path, max_rows: int | None = None) -> dict:
         "antenna2": antenna2[cross],
         "source_index": source_id[cross] - 1,
         "uvw": uvw_seconds[cross] * SPEED_OF_LIGHT,
+        "eop": eop,
     }
 
 
-def compare_uvw(data: dict, method: str = "difxcalc11") -> dict:
+def compare_uvw(data: dict, method: str = "difxcalc11", eop=None) -> dict:
     """Compute uvw for every row of a ``read_fits_idi`` result and compare.
 
     ``method`` is ``"difxcalc11"`` (the embedded difxcalc11 pipeline -- the
     convention DiFX-era archives store), ``"calc"`` (geometric CALC recipe,
     geocenter reference, with the file's axis offsets) or ``"astropy"``
     (pure geometric projection -- the convention pre-DiFX archives store).
+
+    ``eop`` (``"difxcalc11"`` only): explicit daily EOP entries for the
+    model -- pass ``data["eop"]`` to use the file's own CALC-table values
+    (the EOPs the correlator actually used), removing the
+    correlation-time-vs-IERS-final EOP difference from the residuals.
 
     Rows whose baseline code lists the higher antenna first are compared
     against the negated model baseline (``uvw(i, j) = -uvw(j, i)``).
@@ -173,6 +204,7 @@ def compare_uvw(data: dict, method: str = "difxcalc11") -> dict:
                 mode="difxcalc11",
                 station_name=data["station_name"],
                 mount_type=data["mount_type"],
+                eop=eop,
             )
         elif method == "calc":
             model, b1, b2 = calculate_uvw_calc(

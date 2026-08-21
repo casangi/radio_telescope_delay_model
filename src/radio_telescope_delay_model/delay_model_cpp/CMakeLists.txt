@@ -33,40 +33,74 @@ rtdm_add_pybind_module(
 target_include_directories(_delay_model_ext PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/fortran")
 
-# The vendored difxcalc11 pipeline (bit parity with the difxcalc binary's
-# internal samples). A separate, self-contained extension: several modules
+# The difxcalc11 pipeline (bit parity with the difxcalc binary's internal
+# samples). A separate, self-contained extension: several modules
 # (catmm, csitm, cut1m, ...) exist in both cores with the same symbol names
 # but different (ALMA vs difxcalc11) implementations, so they must never be
 # linked together -- keep each module's symbol set complete (nm-verify; see
 # PORT_PLAN.md on macOS -undefined dynamic_lookup masking omissions).
-# Sources are byte-identical to difx/applications/difxcalc11/src except the
-# five runtime-path OPEN sites (see fortran_difxcalc11/rtdm_paths.i);
-# dmain.f / d_out.f / fitpoly_.c / difxiohelper.c (the .im writing stage and
-# its GSL dependency) are replaced by src/difxcalc_core.cpp.
-set(_difxcalc11_core
-    fortran_difxcalc11/catiu.f fortran_difxcalc11/catmm.f
-    fortran_difxcalc11/caxom.f fortran_difxcalc11/cctiu.f
-    fortran_difxcalc11/cdiuu.f fortran_difxcalc11/cdtdb.f
-    fortran_difxcalc11/cetdm.f fortran_difxcalc11/cm20u.f
-    fortran_difxcalc11/cmabd.f fortran_difxcalc11/cmatu.f
-    fortran_difxcalc11/cnutm.f fortran_difxcalc11/cnutu.f
-    fortran_difxcalc11/cnutu6.f fortran_difxcalc11/cocem.f
-    fortran_difxcalc11/cpepu.f fortran_difxcalc11/cptdm.f
-    fortran_difxcalc11/crosu.f fortran_difxcalc11/csitm.f
-    fortran_difxcalc11/cstrm.f fortran_difxcalc11/ctheu.f
-    fortran_difxcalc11/cut1m.f fortran_difxcalc11/cuvm.f
-    fortran_difxcalc11/cvecu.f fortran_difxcalc11/cwobm.f
-    fortran_difxcalc11/ddrvr.f fortran_difxcalc11/dinit.f
-    fortran_difxcalc11/dkill.f fortran_difxcalc11/dscan.f
-    fortran_difxcalc11/dsitu.f fortran_difxcalc11/dstrt.f
-    fortran_difxcalc11/hardisp.f fortran_difxcalc11/nfmodel.f
-    fortran_difxcalc11/nfstrm.f
-)
+#
+# Sources come from the pinned DiFX submodule (extern/difx; init with
+# scripts/init_difx_submodule.sh) and are staged into the build tree at
+# configure time with exactly one rtdm patch applied
+# (patches/difxcalc11_runtime_paths.patch): the five data-file OPEN sites
+# redirected from param11.i's configure-time paths to the runtime
+# /RTDMPATHS/ common that src/difxcalc_core.cpp fills; the patch also adds
+# rtdm_paths.i, that common's declaration. dmain.f (CLI main + GETCL) and
+# d_out.f (the .im writing stage, whose GSL fitpoly_.c / difxiohelper.c we
+# also never compile) are replaced by src/difxcalc_core.cpp. Bumping the
+# submodule SHA is a deliberate action gated by the tests -- see AGENTS.md.
+get_filename_component(_rtdm_repo_root
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
+set(_difx_src "${_rtdm_repo_root}/extern/difx/applications/difxcalc11/src")
+if(NOT EXISTS "${_difx_src}/dinit.f")
+    message(FATAL_ERROR
+        "difxcalc11 sources not found at ${_difx_src}. Initialize the "
+        "pinned DiFX submodule first: scripts/init_difx_submodule.sh "
+        "(shallow + sparse; a plain 'git submodule update --init "
+        "extern/difx' also works but materializes the full DiFX worktree).")
+endif()
+find_program(RTDM_PATCH_EXECUTABLE patch)
+if(NOT RTDM_PATCH_EXECUTABLE)
+    message(FATAL_ERROR
+        "The 'patch' tool is required to stage the difxcalc11 sources.")
+endif()
+
+set(_difxcalc11_staged "${CMAKE_CURRENT_BINARY_DIR}/difxcalc11_staged")
+file(REMOVE_RECURSE "${_difxcalc11_staged}")
+file(MAKE_DIRECTORY "${_difxcalc11_staged}")
+file(GLOB _difx_upstream "${_difx_src}/*.f" "${_difx_src}/*.i")
+file(COPY ${_difx_upstream} DESTINATION "${_difxcalc11_staged}")
+file(REMOVE "${_difxcalc11_staged}/dmain.f" "${_difxcalc11_staged}/d_out.f")
+
+# param11.i: upstream's configure generates it from param11.i.in. Its baked
+# paths are dead code here (every OPEN that read them is patched to
+# /RTDMPATHS/), so substitute inert placeholders and keep the real constants
+# (JPL record sizes etc.) exactly as upstream defines them.
+file(READ "${_difx_src}/param11.i.in" _param11)
+string(REGEX REPLACE "@[A-Za-z0-9_]+@" "/nonexistent" _param11 "${_param11}")
+file(WRITE "${_difxcalc11_staged}/param11.i" "${_param11}")
+
+execute_process(
+    COMMAND "${RTDM_PATCH_EXECUTABLE}" -p1 --batch --forward
+            -i "${CMAKE_CURRENT_SOURCE_DIR}/patches/difxcalc11_runtime_paths.patch"
+    WORKING_DIRECTORY "${_difxcalc11_staged}"
+    RESULT_VARIABLE _patch_status
+    OUTPUT_VARIABLE _patch_output
+    ERROR_VARIABLE _patch_output)
+if(NOT _patch_status EQUAL 0)
+    message(FATAL_ERROR
+        "Applying difxcalc11_runtime_paths.patch to the DiFX submodule "
+        "sources failed -- is extern/difx off its pinned SHA, or did "
+        "upstream change the OPEN sites? Regenerate the patch against the "
+        "new sources if this was a deliberate bump.\n${_patch_output}")
+endif()
+
+file(GLOB _difxcalc11_core "${_difxcalc11_staged}/*.f")
 
 rtdm_add_pybind_module(
     NAME _difxcalc11_ext
     SOURCES src/difxcalc_core.cpp python/difxcalc_bindings.cpp
     FORTRAN_SOURCES ${_difxcalc11_core}
 )
-target_include_directories(_difxcalc11_ext PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/fortran_difxcalc11")
+target_include_directories(_difxcalc11_ext PRIVATE "${_difxcalc11_staged}")

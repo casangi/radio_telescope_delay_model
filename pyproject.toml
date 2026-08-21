@@ -32,7 +32,13 @@ cmake.build-type = "Release"
 # objects differed from the reference by a few ULPs in the geometric delay.
 cmake.args = ["-DCMAKE_Fortran_FLAGS_RELEASE=-O2"]
 wheel.packages = ["src/radio_telescope_delay_model"]
-sdist.include = ["src/radio_telescope_delay_model/data/*"]
+# The difxcalc11 Fortran lives in the DiFX submodule's worktree, which is not
+# tracked by this repo's git index -- include it explicitly or sdists cannot
+# build the _difxcalc11_ext extension.
+sdist.include = [
+  "src/radio_telescope_delay_model/data/*",
+  "extern/difx/applications/difxcalc11/src/*",
+]
 
 [tool.ruff]
 target-version = "py311"

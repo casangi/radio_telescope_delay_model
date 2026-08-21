@@ -1,6 +1,9 @@
 # The packaged CALC data files are binary / byte-exact reference data; the
 # whitespace fixers corrupted DE421_little_Endian once by treating it as text.
-exclude: ^src/radio_telescope_delay_model/data/
+# The difxcalc11 patch is excluded for the same reason: its context lines must
+# match the pristine submodule sources byte-for-byte (trailing blanks
+# included) or the patch stops applying.
+exclude: ^src/radio_telescope_delay_model/(data/|delay_model_cpp/patches/)
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks

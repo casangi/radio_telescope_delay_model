@@ -126,12 +126,19 @@ def difxcalc11_samples(
     phase_center_ra_dec,
     station_name=None,
     mount_type=None,
+    eop=None,
 ) -> dict:
     """Raw difxcalc11 model samples covering the given times.
 
     Parameters mirror :func:`calculate_delays_calc`; ``station_name`` feeds
     difxcalc11's own catalog lookup (unknown names get its usual warning on
     stdout and zero coefficients), ``mount_type`` its mount strings.
+
+    ``eop`` optionally supplies the daily EOP entries for the generated
+    ``.calc`` -- a dict with ``mjd``, ``tai_utc``, ``ut1_utc``,
+    ``x_pole_arcsec``, ``y_pole_arcsec`` arrays (e.g. the FITS-IDI CALC
+    table: the values the correlator actually used, reproducing its frame
+    exactly). Default: 5 daily IERS-B entries with erfa TAI-UTC.
 
     Returns a dict with ``sample_unix`` [n_samples] (UTC epochs, 24 s grid,
     interval boundaries deduplicated), ``interval_start_unix``
@@ -175,16 +182,25 @@ def difxcalc11_samples(
     start = Time(start.isot.split(".")[0], scale="utc")  # exact whole second
     duration = int(np.ceil((t_unix.max() - start.unix) / 120.0) + 1) * 120
 
-    # 5 daily IERS-B EOP entries around the window, exactly as a correlator
-    # .calc carries; TAI-UTC per day from the IAU table (erfa).
-    mjd0 = int(np.floor(start.mjd))
-    eop_mjds = np.arange(mjd0 - 2, mjd0 + 3)
-    eop_times = Time(eop_mjds.astype(float), format="mjd", scale="utc")
-    iers_b = iers.IERS_B.open()
-    pm_x, pm_y = iers_b.pm_xy(eop_times)
-    dut1 = iers_b.ut1_utc(eop_times).to_value("s")
-    ymdf = eop_times.ymdhms
-    tai_utc = erfa.dat(ymdf["year"], ymdf["month"], ymdf["day"], 0.0)
+    if eop is not None:
+        eop_mjds = np.asarray(eop["mjd"], dtype=int)
+        tai_utc = np.asarray(eop["tai_utc"], dtype=np.float64)
+        dut1 = np.asarray(eop["ut1_utc"], dtype=np.float64)
+        pole_x = np.asarray(eop["x_pole_arcsec"], dtype=np.float64)
+        pole_y = np.asarray(eop["y_pole_arcsec"], dtype=np.float64)
+    else:
+        # 5 daily IERS-B EOP entries around the window, exactly as a
+        # correlator .calc carries; TAI-UTC per day from the IAU table.
+        mjd0 = int(np.floor(start.mjd))
+        eop_mjds = np.arange(mjd0 - 2, mjd0 + 3)
+        eop_times = Time(eop_mjds.astype(float), format="mjd", scale="utc")
+        iers_b = iers.IERS_B.open()
+        pm_x, pm_y = iers_b.pm_xy(eop_times)
+        pole_x = pm_x.to_value("arcsec")
+        pole_y = pm_y.to_value("arcsec")
+        dut1 = iers_b.ut1_utc(eop_times).to_value("s")
+        ymdf = eop_times.ymdhms
+        tai_utc = erfa.dat(ymdf["year"], ymdf["month"], ymdf["day"], 0.0)
 
     lines = _calc_lines(
         antenna_position,
@@ -197,8 +213,8 @@ def difxcalc11_samples(
         eop_mjds,
         tai_utc,
         dut1,
-        pm_x.to_value("arcsec"),
-        pm_y.to_value("arcsec"),
+        pole_x,
+        pole_y,
     )
     handle, calc_path = tempfile.mkstemp(suffix=".calc", prefix="rtdm_")
     if len(calc_path) > 127:  # CALC filename buffers are CHARACTER*128

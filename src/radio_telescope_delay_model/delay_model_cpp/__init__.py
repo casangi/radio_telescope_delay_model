@@ -14,8 +14,13 @@ def calc_available() -> bool:
     return True
 
 
-def almacalc(*args, **kwargs):
-    """In-place CALC11 delay computation; see ``_delay_model_ext.almacalc``."""
+def calc_delay_model(*args, **kwargs):
+    """In-place CALC11 delay computation; see ``_delay_model_ext.calc_delay_model``."""
     from radio_telescope_delay_model.delay_model_cpp import _delay_model_ext
 
-    return _delay_model_ext.almacalc(*args, **kwargs)
+    return _delay_model_ext.calc_delay_model(*args, **kwargs)
+
+
+# Backwards-compatible alias (the driver descends from ALMA's almacalc.f,
+# but is not ALMA-specific).
+almacalc = calc_delay_model

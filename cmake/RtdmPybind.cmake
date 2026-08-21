@@ -97,13 +97,14 @@ target_compile_definitions(rtdm_cpp_flags INTERFACE
 
 target_link_libraries(rtdm_cpp_flags INTERFACE Threads::Threads)
 
-# Flags for the legacy CALC11 Fortran core: exactly the reference build's
-# (-ffree-form -ffree-line-length-none -O2), plus -fPIC for the shared module.
-# -frecursive puts local variables on the stack (no static locals), one of the
-# prerequisites for eventually calling the core from multiple threads; the
-# COMMON blocks still make the core single-threaded today (see PORT_PLAN.md).
+# Flags for the CALC11 Fortran cores: the reference build's
+# (-ffree-form -ffree-line-length-none -O2) plus -fPIC for the shared module
+# and -ffp-contract=off for the same bit-reproducibility policy as the C++
+# (contraction choices otherwise vary with codegen context, producing 1-ULP
+# drift between otherwise identical builds -- observed against the
+# instrumented difxcalc11 reference).
 set(RTDM_FORTRAN_FLAGS
-    -ffree-form -ffree-line-length-none -fPIC -O2)
+    -ffree-form -ffree-line-length-none -fPIC -O2 -ffp-contract=off)
 
 # ---------------------------------------------------------------------------
 # rtdm_add_pybind_module(NAME <name> SOURCES <src>...

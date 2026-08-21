@@ -100,6 +100,88 @@ def test_calc_and_astropy_methods_agree():
 
 
 @pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
+def test_calc_uvw_difxcalc11_mode():
+    """``mode="difxcalc11"`` reproduces what difxcalc11 itself writes.
+
+    The mode runs the embedded difxcalc11 pipeline; its raw samples are
+    bit-identical to the difxcalc binary's internal values (verified against
+    an instrumented reference build; procedure in
+    ``experiments/difx_uvw_comparison``). The reference values here are
+    baseline (0, 1) evaluated from that binary's ``.im`` file; agreement is
+    limited only by the ``.im`` encoding itself (GSL polynomial fit +
+    16-digit coefficients): measured <= 1.1e-5 m on u/v and <= 4e-9 m on w
+    over all 15 baselines and 3 epochs.
+    """
+    uvw, antenna1, antenna2 = calculate_uvw_calc(
+        ANTENNA_POSITION, TIME, PHASE_CENTER, mode="difxcalc11"
+    )
+    difx_im_baseline_01 = np.array(
+        [
+            [26.281199, 40.128718, 54.873154],
+            [33.991361, 37.823827, 52.211423],
+            [41.239422, 34.950093, 48.886752],
+        ]
+    )
+    np.testing.assert_allclose(uvw[:, 0], difx_im_baseline_01, atol=5e-5)
+
+    # The difxcalc11 model carries the atmosphere and the geocentric
+    # reference in uvw; on these baselines that separates it from the
+    # geometric recipe at the sub-millimetre level.
+    geometric, _, _ = calculate_uvw_calc(ANTENNA_POSITION, TIME, PHASE_CENTER)
+    difference = np.abs(uvw - geometric).max()
+    assert 1e-5 < difference < 0.05
+
+    with pytest.raises(ValueError, match="mode"):
+        calculate_uvw_calc(ANTENNA_POSITION, TIME, PHASE_CENTER, mode="bogus")
+    with pytest.raises(ValueError, match="geocenter"):
+        calculate_uvw_calc(
+            ANTENNA_POSITION,
+            TIME,
+            PHASE_CENTER,
+            mode="difxcalc11",
+            reference_position=ANTENNA_POSITION.mean(axis=0),
+        )
+    with pytest.raises(ValueError, match="weather"):
+        calculate_uvw_calc(
+            ANTENNA_POSITION,
+            TIME,
+            PHASE_CENTER,
+            mode="difxcalc11",
+            pressure_hpa=550.0,
+        )
+
+
+@pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
+def test_difxcalc11_backend_samples():
+    """The embedded difxcalc11 pipeline is deterministic and its samples
+    carry the documented conventions (24 s grid, geocentric delay-like
+    per-antenna model, W = c x total delay including the atmosphere).
+
+    Bit parity with the difxcalc binary itself is established against an
+    instrumented reference build compiled with the same toolchain and
+    -ffp-contract=off (6480/6480 values bit-exact; procedure in
+    experiments/difx_uvw_comparison/REPORT.md) -- a cross-toolchain test
+    would only measure libm differences, so here determinism and the
+    conventions are asserted instead.
+    """
+    from radio_telescope_delay_model.difxcalc11_core import difxcalc11_samples
+
+    first = difxcalc11_samples(ANTENNA_POSITION, TIME, PHASE_CENTER)
+    second = difxcalc11_samples(ANTENNA_POSITION, TIME, PHASE_CENTER)
+    for key in ("delay", "dry", "wet", "u", "v", "w"):
+        np.testing.assert_array_equal(first[key], second[key])
+    spacing = np.diff(first["sample_unix"][:6])
+    np.testing.assert_allclose(spacing, 24.0)
+    # W = c * total delay (CALC sign), the difxcalc11 exact-mode convention.
+    np.testing.assert_allclose(
+        first["w"], 299792458.0 * first["delay"], rtol=0, atol=1e-6
+    )
+    assert np.all(first["dry"] > 0)
+    # Geocentric per-antenna scale: |w| within an Earth radius of light-time.
+    assert np.abs(first["w"]).max() < 6.5e6
+
+
+@pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
 def test_calc_delays_shapes_and_magnitudes():
     results = calculate_delays_calc(ANTENNA_POSITION, TIME, PHASE_CENTER)
     for key in ("geometric_delay", "dry_delay", "wet_delay"):

@@ -27,12 +27,22 @@ import numpy as np
 
 SPEED_OF_LIGHT = 299792458.0
 
+# difxcalc11 mount strings (dinit.f::dSITI) -> CALC axis type codes.
+MOUNT_TYPE_TO_AXIS_CODE = {
+    "AZEL": 3,  # altitude-azimuth
+    "EQUA": 1,  # equatorial
+    "XYNS": 2,  # X/Y, X-axis north-south
+    "XYEW": 4,  # X/Y, X-axis east-west
+    "RICH": 5,  # Richmond special
+}
+
 __all__ = [
     "calculate_antenna_uvw_astropy",
     "calculate_delays_calc",
     "calculate_uvw_astropy",
     "calculate_uvw_calc",
     "baseline_antenna_pairs",
+    "MOUNT_TYPE_TO_AXIS_CODE",
 ]
 
 
@@ -143,6 +153,8 @@ def calculate_delays_calc(
     humidity_fraction=None,
     axis_offset_metres=None,
     ephemeris_path: str | None = None,
+    station_name=None,
+    mount_type=None,
 ) -> dict:
     """CALC11 delays of every antenna relative to the array reference.
 
@@ -155,14 +167,33 @@ def calculate_delays_calc(
         epoch).
     phase_center_ra_dec : np.ndarray, [n_time | 1, 2], radians (ICRS)
     reference_position : np.ndarray, [3], metres, optional
-        Array reference; default: mean antenna position.
+        Array reference; default: mean antenna position. Passing exactly
+        ``(0, 0, 0)`` selects difxcalc11's geocenter mode: per-antenna
+        delays are referenced to the geocenter and CALC's geocenter
+        special-casing applies (dummy site geometry, no station-1
+        atmosphere/tides) -- the convention of difxcalc11's ``.im``
+        per-antenna model.
     temperature_celsius, pressure_hpa, humidity_fraction : [n_antenna], optional
-        Surface weather per antenna (defaults 0 C, 1013.25 hPa, 0.5); affects
-        only the dry / wet delays, not the geometric delay.
+        Measured surface weather per antenna; affects only the dry / wet
+        delays, not the geometric delay. When omitted, CALC's internal
+        height-based standard-atmosphere defaults apply (temperature
+        20 C - 6.5e-3 K/m x height, pressure 1013.25 x (1 - 6.5e-3 x
+        height / 293.15)^5.26 hPa, relative humidity 0.5) -- the same
+        defaults difxcalc11 uses when a .calc file carries no weather.
     axis_offset_metres : [n_antenna], optional
-        Antenna axis offsets (default 0; alt-az mounts assumed).
+        Antenna axis offsets (default 0).
     ephemeris_path : str, optional
         JPL DE421 ephemeris file; defaults to the packaged copy.
+    station_name : sequence of str, [n_antenna], optional
+        Telescope names looked up in the packaged difxcalc11 station
+        catalogs (see :mod:`radio_telescope_delay_model.station_data`):
+        ocean loading and ocean pole tide loading coefficients are applied
+        per antenna; unknown names get zeros with a warning, exactly as
+        difxcalc11 behaves.
+    mount_type : str or sequence of str, [n_antenna], optional
+        difxcalc11 mount strings, one of ``AZEL`` (default), ``EQUA``,
+        ``XYNS``, ``XYEW``, ``RICH``; sets the CALC antenna axis type used
+        by the axis-offset module.
 
     Returns
     -------
@@ -179,7 +210,7 @@ def calculate_delays_calc(
     ATMUTC treats it as a run constant) and the results are stitched back in
     the caller's epoch order.
     """
-    from radio_telescope_delay_model.delay_model_cpp import almacalc
+    from radio_telescope_delay_model.delay_model_cpp import calc_delay_model
     from radio_telescope_delay_model.earth_orientation import (
         earth_orientation_parameters,
     )
@@ -198,6 +229,21 @@ def calculate_delays_calc(
     )
     if reference_position is None:
         reference_position = antenna_position.mean(axis=0)
+        # For continent- or Earth-spanning arrays (VLBA, EVN, EHT, ...) the
+        # mean position lies far below the surface and is not a meaningful
+        # site; the consensus formula's baseline nonlinearity then makes the
+        # reference choice matter (~cm on 1e4 km baselines). VLBI convention
+        # is the geocenter.
+        if np.linalg.norm(reference_position) < 6.3e6:
+            import warnings
+
+            warnings.warn(
+                "The default array reference (mean antenna position) is deep "
+                "inside the Earth for this array; for VLBI-scale arrays pass "
+                "reference_position=np.zeros(3) to use the geocenter (the "
+                "VLBI/difxcalc11 convention), or a specific site.",
+                stacklevel=2,
+            )
     if ephemeris_path is None:
         ephemeris_path = _packaged_ephemeris_path()
 
@@ -208,10 +254,36 @@ def calculate_delays_calc(
             np.broadcast_to(np.asarray(value, dtype=np.float64), (n_antenna,))
         )
 
-    temperature = per_antenna(temperature_celsius, 0.0)
-    pressure = per_antenna(pressure_hpa, 1013.25)
-    humidity = per_antenna(humidity_fraction, 0.5)
+    # -999 sentinels select CALC's height-based standard-atmosphere defaults
+    # (catmm.f treats temperature/humidity <= -90 and pressure <= 0 as
+    # "no measurement"), matching difxcalc11 when no weather is supplied.
+    temperature = per_antenna(temperature_celsius, -999.0)
+    pressure = per_antenna(pressure_hpa, -999.0)
+    humidity = per_antenna(humidity_fraction, -999.0)
     axis_offset = per_antenna(axis_offset_metres, 0.0)
+
+    station_kwargs = {}
+    if mount_type is not None:
+        if isinstance(mount_type, str):
+            mount_type = [mount_type] * n_antenna
+        mounts = [str(m).strip().upper() for m in mount_type]
+        if len(mounts) != n_antenna:
+            raise ValueError("mount_type must have one entry per antenna.")
+        unknown = sorted({m for m in mounts if m not in MOUNT_TYPE_TO_AXIS_CODE})
+        if unknown:
+            raise ValueError(
+                f"Unknown mount_type {unknown}; supported difxcalc11 mounts: "
+                f"{sorted(MOUNT_TYPE_TO_AXIS_CODE)}."
+            )
+        station_kwargs["axis_type"] = np.ascontiguousarray(
+            [MOUNT_TYPE_TO_AXIS_CODE[m] for m in mounts], dtype=np.int32
+        )
+    if station_name is not None:
+        from radio_telescope_delay_model.station_data import station_geophysics
+
+        if len(station_name) != n_antenna:
+            raise ValueError("station_name must have one entry per antenna.")
+        station_kwargs.update(station_geophysics(station_name))
 
     eop = earth_orientation_parameters(astropy_time)
     mjd = np.ascontiguousarray(astropy_time.mjd, dtype=np.float64)
@@ -250,7 +322,7 @@ def calculate_delays_calc(
             call_geometric = np.empty((call_indices.size, n_antenna))
             call_dry = np.empty((call_indices.size, n_antenna))
             call_wet = np.empty((call_indices.size, n_antenna))
-            almacalc(
+            calc_delay_model(
                 np.ascontiguousarray(reference_position, dtype=np.float64),
                 antenna_position,
                 temperature,
@@ -268,6 +340,7 @@ def calculate_delays_calc(
                 call_geometric,
                 call_dry,
                 call_wet,
+                **station_kwargs,
             )
             geometric[call_indices[keep]] = call_geometric[keep]
             dry[call_indices[keep]] = call_dry[keep]
@@ -292,20 +365,53 @@ def calculate_uvw_calc(
     reference_position: np.ndarray | None = None,
     ephemeris_path: str | None = None,
     delta: float = 1e-5,
+    mode: str = "geometric",
+    temperature_celsius=None,
+    pressure_hpa=None,
+    humidity_fraction=None,
+    axis_offset_metres=None,
+    station_name=None,
+    mount_type=None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Baseline ``uvw`` (metres) for every time, CALC11 method.
 
-    Follows the DiFX recipe (``difxcalc.c::callCalc``): the geometric delay is
-    evaluated at the phase centre and at two offset directions, and the
-    per-antenna uvw follows from the delay and its finite-difference
-    direction derivatives::
+    Two recipes are provided, selected with ``mode``:
 
-        u = (c / delta) * (tau - tau_x)   with ra_x  = ra - delta / cos(dec)
-        v = (c / delta) * (tau_y - tau)   with dec_y = dec + delta
-        w = c * tau
+    ``"geometric"`` (default)
+        The DiFX calcserver recipe (``difxcalc.c::callCalc``): the geometric
+        (vacuum) delay is evaluated at the phase centre and at two offset
+        directions, and the per-antenna uvw follows from one-sided
+        finite differences::
 
-    These per-antenna values are delay-like (``-P(r)``), so the archival
-    baseline is assembled as ``antenna2 - antenna1``.
+            u = (c / delta) * (tau - tau_x)   with ra_x  = ra - delta / cos(dec)
+            v = (c / delta) * (tau_y - tau)   with dec_y = dec + delta
+            w = c * tau
+
+    ``"difxcalc11"``
+        Runs the **embedded difxcalc11 pipeline itself** (the vendored
+        dSTART/dINITL/dSCAN/dDRIVR code driven through a generated
+        correlator ``.calc`` job; see
+        :mod:`radio_telescope_delay_model.difxcalc11_core`). The raw
+        per-antenna samples are bit-identical to what the difxcalc11
+        binary computes internally ("ABERRATION CORR: EXACT", geocentric
+        per-antenna model, atmosphere in the total delay and uvw,
+        difxcalc11's own EOP tables and height-based weather defaults);
+        arbitrary epochs are evaluated by interpolating each 2-minute
+        interval's unique degree-5 sample polynomial -- the polynomial its
+        ``.im`` files carry. ``reference_position``, weather and axis
+        offsets must be omitted in this mode (a ``.calc`` job carries
+        none). The geocentric reference matters beyond bookkeeping: the
+        consensus formula is nonlinear in the baseline, so geocentric
+        per-antenna differencing differs from array-referenced
+        differencing by ``(K.b_geo/c)(K.(w2-w1)/c)`` terms, ~1e-4 m for a
+        200 m baseline -- and DiFX products carry the geocentric
+        convention.
+
+    Either way the per-antenna values are delay-like (``-P(r)``), so the
+    archival baseline is assembled as ``antenna2 - antenna1``.
+
+    ``station_name`` / ``mount_type`` (and the weather and axis-offset
+    arguments) are passed through to :func:`calculate_delays_calc`.
 
     Returns
     -------
@@ -313,22 +419,76 @@ def calculate_uvw_calc(
         Archival convention: ``P(antenna1) - P(antenna2)``.
     antenna1, antenna2 : np.ndarray, [n_baseline] int
     """
+    if mode not in ("geometric", "difxcalc11"):
+        raise ValueError(
+            f"Unknown mode {mode!r}; expected 'geometric' or 'difxcalc11'."
+        )
+    if mode == "difxcalc11":
+        if reference_position is not None and np.any(
+            np.asarray(reference_position, dtype=np.float64) != 0.0
+        ):
+            raise ValueError(
+                "mode='difxcalc11' uses the geocenter reference (the .im "
+                "per-antenna convention); do not pass reference_position."
+            )
+        if any(
+            value is not None
+            for value in (
+                temperature_celsius,
+                pressure_hpa,
+                humidity_fraction,
+                axis_offset_metres,
+            )
+        ):
+            raise ValueError(
+                "mode='difxcalc11' runs the embedded difxcalc11 pipeline, "
+                "which (like a correlator .calc job) carries no measured "
+                "weather or axis offsets; its height-based defaults apply."
+            )
+        from radio_telescope_delay_model.difxcalc11_core import (
+            difxcalc11_samples,
+            evaluate_samples,
+        )
+
+        astropy_time = _as_time(time)
+        phase_center = np.asarray(phase_center_ra_dec, dtype=np.float64)
+        samples = difxcalc11_samples(
+            antenna_position,
+            astropy_time,
+            phase_center,
+            station_name=station_name,
+            mount_type=mount_type,
+        )
+        epochs = np.atleast_1d(astropy_time.unix)
+        antenna_uvw = np.stack(
+            [evaluate_samples(samples, q, epochs) for q in ("u", "v", "w")],
+            axis=2,
+        )  # [n_time, n_antenna, 3], geocentric delay-like (-P(r))
+        antenna1, antenna2 = baseline_antenna_pairs(np.shape(antenna_position)[0])
+        uvw = antenna_uvw[:, antenna2, :] - antenna_uvw[:, antenna1, :]
+        return np.ascontiguousarray(uvw), antenna1, antenna2
+
     results = calculate_delays_calc(
         antenna_position,
         time,
         phase_center_ra_dec,
         reference_position=reference_position,
+        temperature_celsius=temperature_celsius,
+        pressure_hpa=pressure_hpa,
+        humidity_fraction=humidity_fraction,
+        axis_offset_metres=axis_offset_metres,
         ephemeris_path=ephemeris_path,
+        station_name=station_name,
+        mount_type=mount_type,
     )
     run = results["_run"]
     phase_center = results["_phase_center"]
-    tau = results["geometric_delay"]
-
     ra = phase_center[:, 0]
     dec = phase_center[:, 1]
+
+    tau = results["geometric_delay"]
     tau_x, _, _ = run(ra - delta / np.cos(dec), dec)
     tau_y, _, _ = run(ra, dec + delta)
-
     factor = SPEED_OF_LIGHT / delta
     antenna_uvw = np.stack(
         [factor * (tau - tau_x), factor * (tau_y - tau), SPEED_OF_LIGHT * tau],
@@ -358,5 +518,17 @@ def _packaged_ephemeris_path() -> str:
     if not os.path.exists(path):
         raise FileNotFoundError(
             "Packaged JPL DE421 ephemeris not found; pass ephemeris_path."
+        )
+    # The packaged DE421 is exactly 1715 direct-access records of 8144 bytes.
+    # Any other size means the file was corrupted at rest (Dropbox sync has
+    # truncated it twice), which would otherwise surface only as silent NaN
+    # delays from misaligned ephemeris records.
+    size = os.path.getsize(path)
+    if size != 13966960:
+        raise OSError(
+            f"Packaged DE421 ephemeris is corrupted ({size} bytes, expected "
+            "13966960). Restore it, e.g. 'git checkout -- "
+            "src/radio_telescope_delay_model/data/DE421_little_Endian', and "
+            "check what rewrote it (Dropbox sync has done this)."
         )
     return path

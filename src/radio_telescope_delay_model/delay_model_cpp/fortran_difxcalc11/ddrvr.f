@@ -1,7 +1,4 @@
-      SUBROUTINE aDRIVR (Iref, Iremot, UTC, XJD, UT1, DUT1AT, CFSITE,   &
-     &           SITLON, SITLAT, RIGHT_ASC, DECLINATION,                &
-     &           surTp, surPr, surHm, ss_obj,                           &
-     &           delay_vac, dry_atm1, dry_atm2, wet_atm1, wet_atm2)
+      SUBROUTINE dDRIVR(Iscan,J2m)
       IMPLICIT None
 !
 ! 1.    DRIVR
@@ -45,7 +42,10 @@
 !        4. Near_Far   - Character*10 variable specifying whether to
 !                        use the 'Far-field ' or the 'Near-field model.
 !
-!!!   INCLUDE 'get2s.i'
+      INCLUDE 'get2s.i'
+!       Variables from:
+!         1. LNBASE(4,2) - THE EIGHT CHARACTER SITE NAMES OF THE BASELINE
+!                          OF THE CURRENT OBSERVATION. (ALPHAMERIC)
 !
       INCLUDE 'put2s.i'
 !       Variables from:
@@ -56,7 +56,7 @@
 !                       aberration and its CT time derivative at each
 !                       site. (rad,rad/sec)
 !
-!      INCLUDE 'cmxut11.i'
+       INCLUDE 'cmxut11.i'
 !            Variables 'to':
 !              1. Xintv(2)    - First and last Julian Date of data in the
 !                               current data base.
@@ -68,9 +68,7 @@
 !            Variables 'to':
 !              1. NUMSIT - The total number of sites in the data base.
 !
-      INCLUDE 'cmwob11.i'
-!
-!      INCLUDE 'cuser11.i'
+       INCLUDE 'cuser11.i'
 !       Variables from:
 !            1. Calc_user   - Calc user type. 'A' for Calc/SOLVE analysis.
 !                             'C' for VLBI correlator.
@@ -87,7 +85,7 @@
 !           Variables 'from' :
 !             1. CONVD -
 !
-!      INCLUDE 'c2poly.i'
+       INCLUDE 'c2poly.i'
 !
 !
 ! 1.2.3 PROGRAM SPECIFICATIONS -
@@ -107,6 +105,8 @@
      &       SITHEIGHT(2), RTTOCF(3,3,2), GEOLAT(2), STAR12dt(3,2),     &
      &       AXTILT(2,2), ROTAXIS(3,3,2), OPTLcoef(6,2), STAR12(3,2),   &
      &       WOBXds, WOBYds, OPTLOADP(3,2), OPTLOADV(3,2)
+      Real*8 WBP(3)
+      Real*8 WBQ(3)
       Real*8 R1(3), R2(3), R1dt(3), R2dt(3), R1mag, R2mag, R1magdt,     &
      &       R2magdt, T0_T1, STARff(3), RIGHT_ASC, DECLINATION,         &
      &       R1_TDB(3), R2_TDB(3), R1mag_TDB, R2mag_TDB, Site2_TDB(3)
@@ -131,7 +131,9 @@
      &       RPNm1(3,3,2), RWm1(3,3,2), RPNp1(3,3,2), RWp1(3,3,2)
       Real*8 tg2_tg1, dtg2_tg1, delta_t_grav, d_delta_t_grav,           &
      &       delta_t_grav_Sun, d_delta_t_grav_Sun
-      Real*8 Xscale, Dt, Rt, DOTP, Xsec
+      Real*8 Xscale, Dt, Rt, DOTP
+!     Real*8 UT1td
+!     Real*8 R2Kdif(3,3)
       Real*8 TDBminusTT
       Real*8 TT,TDBmTT,TDB,TDBg,Elong,Udist,Vdist
       Real*8 delay6(6), poly6(6)
@@ -141,33 +143,29 @@
       Real*8 K_EWNS(3,4), K_EWNS_ab(3,4), dKew, dKns, AZ_ab(4),         &
      &       EL_ab(4), gmfh(2), gmfw(2), Datmc_h_EWNS(4),               &
      &       Datmc_w_EWNS(4), STAR2(3,4), STAR2_ab(3,4), tg2_tg1ewns(4)
-      Real*8 surPr(2), surTp(2), surHm(2)
-      Real*8 delay_vac, dry_atm1, dry_atm2,wet_atm1, wet_atm2
+!
+      Character*8 Baseline(2), Sourc8
+      Character*20 Sourc20
+      Equivalence (LNBASE(1,1), Baseline(1))
 !
       Integer*4 TSKIP, I, J, ierc2, c_out2, c_out, c2_out, get4unit,    &
      &          LC, ios, IDEC, IRA, I_ph, I_mid, Iscan, J2m, IS1, IS2
       Integer*4 IYY, IM, ID, JTAG(5), K, L, I11, I12, I21, I22, K1, K2
       Integer*4 Itime, Istation1, Istation2, Isource, Isrc, IndexB
-      Integer*4 Iref, Iremot
-      Logical*4  ss_obj   ! True if solar system object
       Integer*2 KAXIS(2)
 !
       DATA SJD /-999.D6/
 !
 ! 1.2.3.1   SAVE BLOCK -
        SAVE SITEA, SITEP,                                              &
-!    &      SITEV, SITLAT, STAR, SUNCU, TCTOCF, TIDEP, SITRAD,         &
-     &      SITEV,         STAR, SUNCU, TCTOCF, TIDEP, SITRAD,         &
+     &      SITEV, SITLAT, STAR, SUNCU, TCTOCF, TIDEP, SITRAD,         &
      &      TIDEV, XLOADP, XLOADV, ZPATH, EPS,                         &
      &      POLTDP, POLTDV, SUN, AXOFF, CFBASE, DIURNV, DLPGR, EPBASE, &
-!    &      CFSITE, CFSITN, CFLON, CFLAT, SITLON, OCEAMP, OCEPHS,      &
-     &              CFSITN, CFLON, CFLAT,         OCEAMP, OCEPHS,      &
+     &      CFSITE, CFSITN, CFLON, CFLAT, SITLON, OCEAMP, OCEPHS,      &
      &                       KAXIS, EARTH, EPSMNR, STAR_ABERRATED,     &
      &      EPSMD,        XMOON, SITHEIGHT, FA2K, FAD2K,               &
-!    &      NUTDIF, XJD, CT, SJD, TJD, OBSDIF, CENT, UT1, DUT1AT,      &
-     &      NUTDIF,      CT, SJD, TJD, OBSDIF, CENT,                   &
-!    &      RTTOCF, GEOLAT, WOBXR, WOBYR, UTC, AT, DUTCAT, DATDCT,     &
-     &      RTTOCF, GEOLAT, WOBXR, WOBYR,      AT, DUTCAT, DATDCT,     &
+     &      NUTDIF, XJD, CT, SJD, TJD, OBSDIF, CENT, UT1, DUT1AT,      &
+     &      RTTOCF, GEOLAT, WOBXR, WOBYR, UTC, AT, DUTCAT, DATDCT,     &
      &      RPN2K, Xn, Yn, Sn, ERA2K, RS2K, SP, RW2K, R2K,             &
      &      WOBXD, WOBYD, DERA2K, RPC2K, GAST2K, RSC2K,                &
      &      RNC2K, RC2K, RFR2K,                 GMST2K, pERA2K,        &
@@ -175,7 +173,8 @@
      &      dUT1ti, TT, RPN2K6, X06, Y06, S06, R2K6, TDB, TDBg,        &
      &      Xli, Yli, dXli, dYli, UT1li, dUT1li, OPTLcoef, WOBXds,     &
      &      WOBYds, OPTLOADP, OPTLOADV, STARdt, STAR12, STAR12dt,      &
-     &      STAR_ABERRATEDdt, RS2Km1, RS2Kp1, R2K6m1, R2K6p1, STARff
+     &      STAR_ABERRATEDdt, RS2Km1, RS2Kp1, R2K6m1, R2K6p1, STARff,  &
+     &      Sourc20, Sourc8
 !
 ! 1.2.4 DATA BASE ACCESS - NONE
 !
@@ -391,7 +390,6 @@
 ! 1.2.9 PROGRAMMER - David Gordon Jan. 2013
 !        January 2015  D. Gordon  Difx version: updated for multi-phase
 !                                 centers and multiple scans.
-!        Feb-April 2019 D. Gordon Modified for use on the ALMA array.
 !
 ! PROGRAM STRUCTURE
 !
@@ -415,18 +413,87 @@
 !     other subroutines may be considered utilities and either superseed or
 !     incorporate many present PEP routines.
 !
+!      write(6,*) ' !!!! ddrvr/UVW = ', UVW
 !  Pass # of sites to c2poly.i.
-!??    Numsite = Numsit
+      Numsite = Numsit
+!  Open the output file if requested
+!     If (I_out .eq. 1) Then
+!      LC = get4unit()
+!      Open(LC, file=calc_out_file, status='new', iostat=ios )
+!      If(ios.ne.0) Then
+!        Write(6,'("File ",A40,"already exists. Stopping.")')           &
+!    &            calc_out_file
+!        Stop
+!      Endif
+!      If (Atmdr .eq. 'Add-dry   ')                                     &
+!    &     Buf1 = 'Dry atmosphere contributions added to delays.     '
+!      If (Atmdr .eq. 'no-Add-dry')                                     &
+!    &     Buf1 = 'Dry atmosphere contributions NOT added to delays. '
+!      If (Atmwt .eq. 'Add-wet   ')                                     &
+!    &     Buf2 = 'Wet atmosphere contributions added to delays.     '
+!      If (Atmwt .eq. 'no-Add-wet')                                     &
+!    &     Buf2 = 'Wet atmosphere contributions NOT added to delays. '
+!      Write(LC,'("Calc 11 output. ")')
+!      IF (NumSpace .le. 0) Write (LC,'("Using far-field model.")')
+!      If (NumSpace .ge. 1) Write (LC,'("Using Sekido & Fukushima",     &
+!    &                      " near-field model.")')
+!      If (NumSpace .ge. 1 .and. L_time .eq. 'solve     ')              &
+!    &   Write (LC,'("Solving for light travel time. ")')
+!      Write(LC,'(A50,/,A50)') Buf1, Buf2
+!      Write(LC,'("Calc delays every ",F4.1," seconds.",/)') d_interval
+!     Endif
+!
+!  UTC epoch at start of current 2-minute interval
+       JTAG(1) = Intrvl(1,1)    ! year
+       JTAG(2) = Intrvl(2,1)    ! month
+       JTAG(3) = Intrvl(3,1)    ! day
+       JTAG(4) = Intrvl(4,1)    ! hour
+       JTAG(5) = Intrvl(5,1) + (J2m-1)*2   ! minute
+       TAG_SEC = 0.D0
+         IF (JTAG(5) .ge. 60) Call FixEpoch2(JTAG, TAG_SEC)
 !
 ! Start the loop over time. We do all observations at each epoch before
 !  moving to the next epoch because it is the most efficient in terms of
 !  CPU time.
 !
+      DO Itime = 1, Epoch2m                     ! Start of epoch loop
+!
+!  Define UTC for this epoch
+        If (Itime .gt. 1) TAG_SEC = TAG_SEC +  d_interval     ! seconds
+       IF (TAG_SEC .ge. 59.999999999D0) Call FixEpoch2(JTAG, TAG_SEC)
+        TAGSEC = TAG_SEC
+!
+!  Compute the Julian date at 0 hours UTC for the year, month, day.
+!  Use function JDY2K to convert year, month, day to Julian date.
+!  Year can be either 2-digit or 4-digit.
+      IYY = JTAG(1)
+      IM  = JTAG(2)
+      ID  = JTAG(3)
+      XJD = JDY2K(IYY,IM,ID)
+!     write(6,*) '   '
+!     write(6,'("ddrvr: JTAG,TAGSEC,XJD = ",5I5,F5.1,F12.2)')         &
+!    &      JTAG,TAGSEC,XJD
+!     write(6,*) '   '
+!  Fill output time array
+       Iymdhms_f(Itime,1) = JTAG(1)
+       Iymdhms_f(Itime,2) = JTAG(2)
+       Iymdhms_f(Itime,3) = JTAG(3)
+       Iymdhms_f(Itime,4) = JTAG(4)
+       Iymdhms_f(Itime,5) = JTAG(5)
+       Iymdhms_f(Itime,6) = TAGSEC
+!
+!     Compute the UTC time as a fraction of the UTC day.
+      UTC = ( DFLOAT ( JTAG(4) ) * 3600.D0                              &
+     &      + DFLOAT ( JTAG(5) ) * 60.D0                                &
+     &      + TAGSEC ) / 86400.D0
+!
+!     write(6,'("ddrvr: UTC ",F15.10)')  UTC
+!
 !     Call ATIME for the atomic time fraction of the atomic time day (AT) and
 !     for the partial derivative of the UTC time with respect to the atomic
 !     time (DUTCAT).
       CALL ATIME (UTC, XJD, AT, DUTCAT, TT)
-!!    write(6,*) ' ATIME: UTC,XJD,AT,DUTCAT,TT ', UTC,XJD,AT,DUTCAT,TT
+!     write(6,*) ' ATIME: UTC,XJD,AT,DUTCAT,TT ', UTC,XJD,AT,DUTCAT,TT
 !
 !     Call CTIMG for the coordinate time fraction of the coordinate time day at
 !     site #1 (CT), the partial derivative of the atomic time with respect to
@@ -435,8 +502,8 @@
 !     time (DLPGR).
       CALL CTIMG (AT, TT, CFSITE, SITLON, UTC, XJD, CT, DATDCT, DLPGR,  &
      &     TDB, TDBg )
-!!    write(6,*) ' CTIMG: CFSITE,SITLON,CT,DATDCT,DLPGR,TDB,TDBg ',     &
-!!   &            CFSITE,SITLON,CT,DATDCT,DLPGR,TDB,TDBg
+!     write(6,*) ' CTIME: CFSITE,SITLON,CT,DATDCT,DLPGR,TDB,TDBg ',     &
+!    &            CFSITE,SITLON,CT,DATDCT,DLPGR,TDB,TDBg
 !
 !     Compute epoch and compare with previous observation. If same, set
 !     TSKIP=1, otherwise TSKIP=0. If TSKIP=1, then we can skip many steps in
@@ -456,21 +523,21 @@
 !     (except Pluto) barycentric and geocentric positions and velocities.
 !     The solar system info comes from the DE421 JPL Ephemeris.
       CALL PEP (XJD, TDBg, TSKIP, EARTH, SUN, XMOON)
-!!    write(6,*) ' PEP: EARTH,SUN,XMOON ', EARTH,SUN,XMOON
+!     write(6,*) ' PEP: EARTH,SUN,XMOON ', EARTH,SUN,XMOON
 !
 !     Call NUTFA before NUTG and before UT1G to get epoch in centuries and
 !     the fundamental arguments for the nutation series.
           CALL NUTFA (XJD, TT, CT, CENT, FA2K, FAD2K)
-!!    write(6,*) ' NUTFA: FA2K, FAD2K ', FA2K, FAD2K
+!     write(6,*) ' NUTFA: FA2K, FAD2K ', FA2K, FAD2K
 !
 !     Call UT1G for the UT1 fraction of the UT1 day (UT1) and for the partial
 !     derivative of the UT1 time with respect to the atomic time (DUT1AT).
       CALL UT1G (AT, DUTCAT, UTC, XJD, CT, TT, FA2K, FAD2K,             &
      &     CENT, TSKIP, DUT1AT, UT1, Xti, Yti, UT1ti,                   &
      &     dXti, dYti, dUT1ti)
-!!    write(6,*) ' UT1G: DUT1AT, UT1 ', DUT1AT, UT1
-!!    write(6,*) ' UT1G: Xti,Yti,dXti,dYti(mas) ', Xti,Yti,dXti,dYti
-!!    write(6,*) ' UT1G: UT1ti,dUT1ti(msec) ',  UT1ti,dUT1ti
+!     write(6,*) ' UT1G: DUT1AT, UT1 ', DUT1AT, UT1
+!     write(6,*) ' UT1G: Xti,Yti,dXti,dYti(mas) ', Xti,Yti,dXti,dYti
+!     write(6,*) ' UT1G: UT1ti,dUT1ti(msec) ',  UT1ti,dUT1ti
 !
 !     Call NUTG for the nutation portion of the complete crust fixed to
 !     J2000.0 rotation matrices and their CT time derivatives (RPN2K6),
@@ -479,8 +546,8 @@
 !     nutation offsets (X06, Y06, S06).
       CALL NUTG (CENT, FA2K, FAD2K, XJD, TT, TSKIP, EPS,                &
      &          EPSMNR, RPN2K6, X06, Y06, S06)
-!!    write(6,*) ' NUTG: X06, Y06, S06 ', X06, Y06, S06
-!!    write(6,*) ' NUTG: RPN2K6 ', RPN2K6
+!     write(6,*) ' NUTG: X06, Y06, S06 ', X06, Y06, S06
+!     write(6,*) ' NUTG: RPN2K6 ', RPN2K6
 !
 !     Call DIRNL for the diurnal spin portion of the complete crust fixed to
 !     J2000.0 rotation matrices and their first two CT time derivatives (RS2K
@@ -495,7 +562,8 @@
      &       RPN2K6, S06,                                               &
      &       ERA2K, DERA2K, pERA2K, RS2K,  RS2Km1, RS2Kp1,              &
      &       GAST2K, GMST2K, RSC2K)
-!!    write(6,*) 'DIRNL: ERA2K, DERA2K ', ERA2K, DERA2K
+!!!!!! GMST2K updated, GAST2K not updated !!!!!!!!!
+!     write(6,*) ' DIRNL: ERA2K, DERA2K ', ERA2K, DERA2K
 !
 !     Call WOBG for the wobble portion of the complete crust fixed to J2000.0
 !     rotation matrix and its first time derivative (RW2K), and the long period
@@ -504,34 +572,90 @@
      &           UT1, DUT1AT, Xti, Yti, dXti, dYti, Xli, Yli,           &
      &           dXli, dYli, UT1li, dUT1li, UT1ti, dUT1ti,              &
      &           WOBXR, WOBYR, WOBXD, WOBYD, SP, DSP, RW2K)
-!!    write(6,*) ' WOBG: WOBXR,WOBYR,WOBXD,WOBYD ', WOBXR,WOBYR,WOBXD,WOBYD
+!     write(6,*) ' WOBG: WOBXR,WOBYR,WOBXD,WOBYD ', WOBXR,WOBYR,WOBXD,WOBYD
 !
 !     Call M2K to complete the IERS 2010 CEO-based TRF ==> CRF
 !      tranformation matrix and its first two time derivatives.
       CALL M2K (RPN2K6, RS2K, RW2K, TSKIP, R2K6 )
-!*      IF (Near_Far .eq. 'Near-field') THEN
-!*       TSKIP = 0
-!*!      Rotation matrix at -1 second.
-!*         CALL MSUB2 (RPN2K6(1,1,1), RPN2K6(1,1,2), RPNm1(1,1,1))
-!*         CALL MATEQ (RPN2K6(1,1,2), RPNm1(1,1,2))
-!*         CALL MSUB2 (RW2K  (1,1,1), RW2K  (1,1,2), RWm1(1,1,1))
-!*         CALL MATEQ (RW2K  (1,1,2), RWm1(1,1,2))
-!*        CALL M2K (RPNm1, RS2Km1, RWm1, TSKIP, R2K6m1)
-!*!
-!*!      Rotation matrix at +1 second.
-!*         CALL MADD2 (RPN2K6(1,1,1), RPN2K6(1,1,2), RPNp1(1,1,1))
-!*         CALL MATEQ (RPN2K6(1,1,2), RPNp1(1,1,2))
-!*         CALL MADD2 (RW2K  (1,1,1), RW2K  (1,1,2), RWp1(1,1,1))
-!*         CALL MATEQ (RW2K  (1,1,2), RWp1(1,1,2))
-!*        CALL M2K (RPNp1, RS2Kp1, RWp1, TSKIP, R2K6p1)
-!!     Write(6,1037) R2K6
+
+!!    IF (NumSpace .ge. 1) THEN
+      IF (Near_Far .eq. 'Near-field') THEN
+       TSKIP = 0
+!      Rotation matrix at -1 second.
+         CALL MSUB2 (RPN2K6(1,1,1), RPN2K6(1,1,2), RPNm1(1,1,1))
+         CALL MATEQ (RPN2K6(1,1,2), RPNm1(1,1,2))
+         CALL MSUB2 (RW2K  (1,1,1), RW2K  (1,1,2), RWm1(1,1,1))
+         CALL MATEQ (RW2K  (1,1,2), RWm1(1,1,2))
+        CALL M2K (RPNm1, RS2Km1, RWm1, TSKIP, R2K6m1)
+!
+!      Rotation matrix at +1 second.
+         CALL MADD2 (RPN2K6(1,1,1), RPN2K6(1,1,2), RPNp1(1,1,1))
+         CALL MATEQ (RPN2K6(1,1,2), RPNp1(1,1,2))
+         CALL MADD2 (RW2K  (1,1,1), RW2K  (1,1,2), RWp1(1,1,1))
+         CALL MATEQ (RW2K  (1,1,2), RWp1(1,1,2))
+        CALL M2K (RPNp1, RS2Kp1, RWp1, TSKIP, R2K6p1)
+!      Write(6,1037) R2K6
  1037  Format(1x,'DRIVR/R2K6 : ',(9(/,3E25.15)))
 !      Write(6,1047) R2K6m1
  1047  Format(1x,'DRIVR/R2K6m1: ',(9(/,3E25.15)))
 !      Write(6,1057) R2K6p1
  1057  Format(1x,'DRIVR/R2K6p1: ',(9(/,3E25.15)))
-!*    ENDIF
+      ENDIF
 !
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!  Set up baseline definitions
+      If (Base_mode .eq. 'geocenter ') Then
+!    Station 1 is always the geocenter
+       I11 = 1
+       I12 = 1
+!    Station 2 runs over all antennas
+       I21 = 2
+       I22 = Numsite
+      Endif
+!
+      If (Base_mode .eq. 'master-stn') Then
+!    Station 1 is always the first antenna
+       I11 = 2
+       I12 = 2
+!    Station 2 runs over all other antennas
+       I21 = 3
+       I22 = Numsite
+      Endif
+!
+      If (Base_mode .eq. 'baseline  ') Then
+!    Station 1 runs from first to next-to-last antenna
+       I11 = 2
+       I12 = Numsite - 1
+      Endif
+!
+!    Assign a unique baseline index number
+       IndexB = 0
+!
+!  Begin Station Loops. Process all the baselines for the current epoch.
+!
+      DO Istation1 = I11, I12                     ! Start of station 1 loop
+!
+        If (Base_mode .eq. 'baseline  ') Then
+!      Station 2 runs from next antenna to the last antenna
+         I21 = Istation1 + 1
+         I22 = Numsite
+        Endif
+!
+      DO Istation2 = I21, I22                     ! Start of station 2 loop
+!
+!  Define baseline.
+       Baseline(1) = Sites(Istation1)
+       Baseline(2) = Sites(Istation2)
+!    Assign a unique baseline index number
+       IndexB = IndexB + 1
+       Site1(IndexB,Itime) = Baseline(1)
+       Site2(IndexB,Itime) = Baseline(2)
+        Numbaseline = IndexB
+!
+!     write(6,*) '   '
+!     write(6,'(5I5,F5.1,2X,A8,1X,A8)') JTAG, TAGSEC, Baseline(1),      &
+!    &      Baseline(2)
 !
 !     Call SITG for the geographical site data. SITG provides the following
 !     geocentric information for each observing site: the antenna axis offsets
@@ -546,11 +670,9 @@
 !     observing site. SITG is the only routine which 'knows' which two sites are
 !     involved in the observation. All other routines merely work with site #1
 !     and site #2.
-      CALL SITG (Iref, Iremot, AXOFF, CFBASE, CFLAT, CFLON, CFSITE,     &
-     &     CFSITN, KAXIS,                                               &
+      CALL SITG (AXOFF, CFBASE, CFLAT, CFLON, CFSITE, CFSITN, KAXIS,    &
      &     OCEAMP, OCEPHS, SITLAT, SITLON, SITRAD, TCTOCF, RTTOCF,      &
      &     ZPATH, SITHEIGHT, GEOLAT, AXTILT, ROTAXIS, OPTLcoef )
-!!      write(6,*) 'CFBASE: ', CFBASE
 !
 !     Call ROT2K to rotate the crust fixed site data into the J2000.0 inertial
 !     reference system. The following variables are output for each observing
@@ -563,38 +685,26 @@
 !  IERS 2010 version:
       CALL ROT2K (CFLAT, CFLON, CFSITE, CFSITN, R2K6, EPLATP, EPLATV,   &
      &     EPLONP, EPLONV, EPSITN, SITEA, USITEP, USITEV)
-!!    write(6,237) USITEP, USITEV, SITEA
- 237  format('USITEP, USITEV, SITEA',/,6(3D30.16,/))
+!     write(6,237) USITEP, USITEV, SITEA
+ 237  format(' USITEP, USITEV, SITEA',/,6(3D30.16,/))
 !
 !     Call ETDG for the corrections to the J2000 site position vectors (TIDEP)
 !     and velocity vectors (TIDEV) due to Earth tide effects.
       CALL ETDG ( R2K6, SITLAT, SITLON, SUN, TCTOCF, RTTOCF,            &
      &            USITEP, USITEV, XMOON, EARTH, GAST2K,                 &
      &                FA2K, FAD2K, CENT, GEOLAT, TIDEP, TIDEV)
-!!     write(6,*) 'CENT: ', CENT
-!!     write(6,*) 'FA2K:  ', FA2K
-!!     write(6,*) 'FAD2K: ', FAD2K
-!!     write(6,*) 'GEOLAT: ', GEOLAT
-!!     write(6,*) 'GAST2K: ', GAST2K
-!!     write(6,*) 'TIDEP: ', TIDEP
-!!     write(6,*) 'TIDEPV ', TIDEV
 !
 !     Call 'PTDG' for the corrections to the J2000.0 site positions
 !      and site velocity vectors due to the solid Earth pole tide.
       CALL PTDG (SITLAT, SITLON, SITRAD, WOBXR, WOBYR, &
      &     TCTOCF, R2K6, CENT, POLTDP, POLTDV, WOBXds, WOBYds)
-!!     write(6,*) 'POLTDP: ', POLTDP
-!!     write(6,*) 'POLTDV: ', POLTDV
 !
 !     Call OCEG for the corrections to the J2000.0 site position vectors
 !      (XLOADP) and velocity vectors (XLOADV) due to ocean loading effects.
-!      [Reactivated 2026-08 to match difxcalc11's ddrvr.f; the ALMA driver
-!       had these zeroed. With zero coefficients (the default when no
-!       station names are given) the contributions are exactly zero.]
       CALL OCEG (CFSITE, UT1, OCEAMP, OCEPHS, R2K6, XJD, TCTOCF, TSKIP, &
      &     FA2K, CENT, UTC, XLOADP, XLOADV)
 !
-!     Call OPTLG for the corrections to the J2000.0 site position vectors
+!     Call OCPTG for the corrections to the J2000.0 site position vectors
 !      (XLOADP) and velocity vectors (XLOADV) due to ocean pole tide
 !      loading effects.
       CALL OPTLG (WOBXds, WOBYds, OPTLcoef, R2K6, TCTOCF, TSKIP,        &
@@ -607,55 +717,66 @@
       CALL dSITCR (TIDEP, TIDEV, USITEP, USITEV, XLOADP, XLOADV,        &
      &     EPBASE, SITEP, SITEV, POLTDP, POLTDV, OPTLOADP, OPTLOADV)
 !     write(6,238) SITEP
-!238  format(' Site positions:',/,3D26.16,/,3D26.16)
+ 238  format(' Site positions:',/,3D26.16,/,3D26.16)
 !     write(6,239) SITEV
-!239  format(' Site velocities:',/,3D26.16,/,3D26.16)
+ 239  format(' Site velocities:',/,3D26.16,/,3D26.16)
 !
+      WBP(1) = SITEP(1,2)
+      WBP(2) = SITEP(2,2)
+      WBP(3) = SITEP(3,2)
+
+      WBQ(1) = R2K6(1,1,1)*WBP(1)+R2K6(2,1,1)*WBP(2)+R2K6(3,1,1)*WBP(3)
+      WBQ(2) = R2K6(1,2,1)*WBP(1)+R2K6(2,2,1)*WBP(2)+R2K6(3,2,1)*WBP(3)
+      WBQ(3) = R2K6(1,3,1)*WBP(1)+R2K6(2,3,1)*WBP(2)+R2K6(3,3,1)*WBP(3)
+!
+      DO Isrc = 1, (NumPhCntr+1)           ! Start of source/phase center loop
+!
+       If (Isrc .eq. 1) Isource = PointingSrc
+       If (Isrc .gt. 1) Isource = PhCntr(Isrc-1)
+!       write(6,*) 'ddrvr: Isrc, Isource ', Isrc, Isource
+
 !
 !     Call STRG for the J2000.0 unit vector in the direction of the
 !     radio source. (STAR)
 !        Far-field:
-!*    IF (Near_Far .eq. 'Far-field ') Then
-!*        CALL STRG (XJD, UTC, Isource,                                 &
-!*   &           STAR, STAR12, RIGHT_ASC, DECLINATION, Sourc20)
-      CALL STRG (XJD, UTC, RIGHT_ASC, DECLINATION, STAR, STAR12)
-!!     write(6,*) 'RA/Dec: ', RIGHT_ASC, DECLINATION
-!!     write(6,*) 'STAR,STAR12: ', STAR, STAR12
+      IF (Near_Far .eq. 'Far-field ') Then
+          CALL STRG (XJD, UTC, Isource,                                 &
+     &           STAR, STAR12, RIGHT_ASC, DECLINATION, Sourc20)
 !
-!*     If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+       If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
 !          write (6,*) 'Itime, ANT, Isrc: ', Itime, (Istation2-2), Isrc
-!!!       Call STAR_NSEW (STAR, K_EWNS, RIGHT_ASC,DECLINATION, STAR12,  &
-!!!  &                    dKew,dKns)
-!*     Endif
-!***  Endif
+          Call STAR_NSEW (STAR, K_EWNS, RIGHT_ASC,DECLINATION, STAR12,  &
+     &                    dKew,dKns)
+       Endif
+      Endif
 !
 !        Near-field:
-!*    If (Near_Far .eq. 'Near-field') Then
-!*      CALL NFSTRG (XJD, UTC, Isource, EARTH,  &
-!*   &    SITEP, SITEV, SUN, XMOON,R2K6,STAR, STARdt, STAR12, STAR12dt, &
-!*   &    T0_T1, R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag,             &
-!*   &    R2magdt, STARff, R1_TDB, R2_TDB, R1mag_TDB, R2mag_TDB,        &
-!*   &    Site2_TDB, Sourc20)
+      If (Near_Far .eq. 'Near-field') Then
+        CALL NFSTRG (XJD, UTC, Isource, EARTH,  &
+     &    SITEP, SITEV, SUN, XMOON,R2K6,STAR, STARdt, STAR12, STAR12dt, &
+     &    T0_T1, R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag,             &
+     &    R2magdt, STARff, R1_TDB, R2_TDB, R1mag_TDB, R2mag_TDB,        &
+     &    Site2_TDB, Sourc20)
 !       write(6,*) 'ddrvr1/R1mag,R1magdt ',  R1mag,R1magdt
 !       write(6,*) 'ddrvr1/R2mag,R2magdt ',  R2mag,R2magdt
 !       write(6,'(" R1mag: ",F20.7," AU")') R2mag/1.4959787D11
 !       write(6,*) 'STARff: ',  STARff
-!*     If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
-!*      Call NFSTewns( R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag,       &
-!*   &       R2magdt, STAR, STARdt, STAR12, STAR12dt, SITEP, SITEV,     &
-!*   &       R1_TDB, R2_TDB, R1mag_TDB, R2mag_TDB, Site2_TDB, K_EWNS,   &
-!*   &       STAR2           )
+       If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+        Call NFSTewns( R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag,       &
+     &       R2magdt, STAR, STARdt, STAR12, STAR12dt, SITEP, SITEV,     &
+     &       R1_TDB, R2_TDB, R1mag_TDB, R2mag_TDB, Site2_TDB, K_EWNS,   &
+     &       STAR2           )
 !       Write (6,*) '*** ddrvr *** '
 !       Write (6,*) 'STAR2(n,1): ', STAR2(1,1), STAR2(2,1), STAR2(3,1)
 !       Write (6,*) 'STAR2(n,2): ', STAR2(1,2), STAR2(2,2), STAR2(3,2)
 !       Write (6,*) 'STAR2(n,3): ', STAR2(1,3), STAR2(2,3), STAR2(3,3)
 !       Write (6,*) 'STAR2(n,4): ', STAR2(1,4), STAR2(2,4), STAR2(3,4)
 !       Write (6,*) '************* '
-!*     Endif
-!*    Endif
+       Endif
+      Endif
 !
 !       xSource = Sourc8
-!!!!    xSource = Sourc20
+        xSource = Sourc20
 !       write(6,*) 'ddrvr: Sourc20,xSource,RIGHT_ASC, DECLINATION',     &
 !    &    Sourc20,xSource,RIGHT_ASC, DECLINATION
 !
@@ -664,73 +785,66 @@
 !      source and their CT time derivatives, and the aberrated source
 !      unit vector.
 !!    IF (NumSpace .eq. 0) Then
-!**   IF (Near_Far .eq. 'Far-field ') Then
+      IF (Near_Far .eq. 'Far-field ') Then
          CALL ATMG (R2K6, STAR, STAR12, EARTH, TCTOCF, SITEV,           &
      &     STAR_ABERRATED)
-!!     write(6,*) 'STAR_ABERRATED: ', STAR_ABERRATED
-!!     write(6,*) 'ELEV, AZ: ', ELEV, AZ
        DO I = 1,3
         DO J = 1,2
           STAR_ABERRATEDdt(I,J) = 0.D0
         ENDDO
        ENDDO
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!         UVW = 'exact '
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!     If (UVW .eq. 'exact ')  Then
-!!!       CALL ATMGuv (R2K6, K_EWNS, EARTH, TCTOCF, SITEV, K_EWNS_ab,   &
-!!!  &         AZ_ab, EL_ab)
-!!!     Endif
-!**   ENDIF
+        If (UVW .eq. 'exact ')  Then
+          CALL ATMGuv (R2K6, K_EWNS, EARTH, TCTOCF, SITEV, K_EWNS_ab,   &
+     &         AZ_ab, EL_ab)
+        Endif
+
+      ENDIF
 !
 !!    IF (NumSpace .ge. 1)                                              &
-!*    IF (Near_Far .eq. 'Near-field') Then
-!*      CALL NFATM (R2K6, STAR, STAR12, STAR12dt, EARTH, TCTOCF, SITEV, &
-!*   &       SITEA, R2K6m1, R2K6p1, R1mag, R2mag,                       &
-!*   &       STAR_ABERRATED, STAR_ABERRATEDdt)
+      IF (Near_Far .eq. 'Near-field') Then
+        CALL NFATM (R2K6, STAR, STAR12, STAR12dt, EARTH, TCTOCF, SITEV, &
+     &       SITEA, R2K6m1, R2K6p1, R1mag, R2mag,                       &
+     &       STAR_ABERRATED, STAR_ABERRATEDdt)
 !       write(6,*) 'ddrvr2/R1mag,R1magdt ',  R1mag,R1magdt
 !       write(6,*) 'ddrvr2/R2mag,R2magdt ',  R2mag,R2magdt
 !
-!*     If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
-!*      Call NFATMuv (R2K6, STAR2, TCTOCF, SITEV, STAR12, STAR2_ab,      &
-!*   &         AZ_ab, EL_ab)
-!*     Endif
-!*    ENDIF
+       If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+        Call NFATMuv (R2K6, STAR2, TCTOCF, SITEV, STAR12, STAR2_ab,      &
+     &         AZ_ab, EL_ab)
+       Endif
+      ENDIF
 !
 !     Call AXOG for the J2000.0 vector axis offsets of the antennas and
 !      their time derivatives at each site.
-      If (AXOFF(1) .ne. 0.D0 .or. AXOFF(2) .ne. 0.D0) Then
-       CALL AXOG (KAXIS, R2K6, SITLAT, STAR, TCTOCF, SITEV, AXOFF,      &
+      CALL AXOG (KAXIS, R2K6, SITLAT, STAR, TCTOCF, SITEV, AXOFF,       &
      &     EARTH, STAR_ABERRATED, STAR_ABERRATEDdt, SITHEIGHT, AXTILT,  &
      &     ROTAXIS, AXIS2000, DAXIS2000, C2000STR)
-!      write(6,*) 'KAXIS,AXOFF,AXIS2000,DAXIS2000', KAXIS,AXOFF, AXIS2000,DAXIS2000
 !  C2000STR(3) = Aberrated/refracted source unit vector in the J2000.0 frame.
 !
 !    Add axis offset to the baseline instead of computing a contribution
-       Do J=1,2
-        Do I=1,3
-         SITEP1(I,J) = SITEP(I,J) +  AXIS2000(I,J)
-         SITEV1(I,J) = SITEV(I,J) + DAXIS2000(I,J)
-        Enddo
+      Do J=1,2
+       Do I=1,3
+        SITEP1(I,J) = SITEP(I,J) +  AXIS2000(I,J)
+        SITEV1(I,J) = SITEV(I,J) + DAXIS2000(I,J)
        Enddo
-        Do I=1,3
-         EPBASE(I,1) = SITEP1(I,1) - SITEP1(I,2)
-         EPBASE(I,2) = SITEV1(I,1) - SITEV1(I,2)
-        Enddo
-      Endif
+      Enddo
+       Do I=1,3
+        EPBASE(I,1) = SITEP1(I,1) - SITEP1(I,2)
+        EPBASE(I,2) = SITEV1(I,1) - SITEV1(I,2)
+       Enddo
 !
 !    Call UVG to compute the (U,V) coordinates of the baseline.
-!!!   If (UVW .eq. 'uncorr') Then
-!!!    CALL UVG_un (STAR, EPBASE) ! [ABERRATION CORR = UNCORRECTED]
+      If (UVW .eq. 'uncorr') Then
+       CALL UVG_un (STAR, EPBASE) ! [ABERRATION CORR = UNCORRECTED]
 !      Write (6,*) 'UVG_un: U,V,W   ', U_V, Wb
-!!!   Endif
+      Endif
 !
 !    Call UVG_ab to compute the (U,V) coordinates of the baseline,
 !    using the aberrated source unit vector.
-!!!   If (UVW .eq. 'approx') Then
-!!!    CALL UVG_ab (STAR_ABERRATED, EPBASE) ! [ABERRATION CORR = APPROXIMATE]
+      If (UVW .eq. 'approx') Then
+       CALL UVG_ab (STAR_ABERRATED, EPBASE) ! [ABERRATION CORR = APPROXIMATE]
 !      Write (6,*) 'UVG_ab: U,V,W   ', U_V, Wb
-!!!   Endif
+      Endif
 !
 !    Call UVG_no to compute the (U,V) coordinates of the baseline,
 !    using the partial derivative technique without atmosphere
@@ -754,8 +868,45 @@
 !    The others are left for future use but commented out.
 !
 !     Compute the atmosphere partials.
-      CALL ATMP (SITLAT, SITLON, SITHEIGHT, XJD, CT,                    &
-     &           surTp, surPr, surHm, dATMCdh, gmfh, gmfw)
+      CALL ATMP (SITLAT, SITLON, SITHEIGHT, XJD, CT, dATMCdh,           &
+     &     gmfh, gmfw)
+!
+!     Compute the axis offset partials.
+!**   CALL AXOP (AXOFF, STAR12, EARTH, SITEV1)
+!
+!     Compute the Earth tide partials.
+!**   CALL ETDP (R2K6, SITLAT, STAR, TCTOCF)
+!
+!     Compute the pole tide partials.
+!**   CALL PTDP (STAR)
+!
+!     Compute the nutation partials. (IERS 2010)
+!**   CALL NUTP (CFBASE,      X06,Y06,S06,                              &
+!    &      STAR, RPN2K6, RS2K, RW2K, TSKIP)
+!
+!     Compute the ocean loading partials.
+!**   CALL OCEP()
+!
+!     Compute the site partials.
+!**   CALL SITP (R2K6, STAR, STAR12, EARTH, SITEV1)
+!
+!     Compute the star partials.
+      CALL STRP (EPBASE, STAR, EARTH, SITEV1,        CD, CRA, SD, SRA)
+!*    Write(6,'(" U,V,W: ",7x,3D22.14)')  U_V(1), U_V(2), Wb
+!     WRITE(6,'(" DSTRP*Vlight: ",4D22.14)') DSTRP(1,1)*Vlight/CD,      &
+!    &  DSTRP(2,1)*Vlight, DSTRP(1,2)*Vlight/CD, DSTRP(2,2)*Vlight
+
+!
+!     Compute the UT1 partials.
+!**   CALL UT1P (CFBASE, STAR,EARTH, RPN2K6, RW2K, ERA2K, dERA2K,        &
+!**  &           pERA2K, SITEV       )
+!
+!     Compute the wobble partials.
+!**   CALL WOBP (CFBASE, STAR, EARTH, RPN2K6, RS2K, SITEV1)
+!
+!     Compute the parallax partials.
+!**   CALL PLXP (SUN, CD, CRA, SD, SRA, EARTH, STAR, EPBASE, SITEV1)
+!
 !
 !  Perform the contributions calculations.
 !    For difx, only the atmosphere contributions are needed.
@@ -763,15 +914,61 @@
 !
 !     Compute the atmosphere contributions.
       CALL ATMC (ZPATH, DATMC)
-!!     write(6,*) 'DATMC:', DATMC
-!!     write(6,*) 'Dry1:', Datmc_hmf(1,1), Datmc_hmf(1,2)
-!!     write(6,*) 'Dry2:', Datmc_hmf(2,1), Datmc_hmf(2,2)
-!!     write(6,*) 'Wet1:', Datmc_wmf(1,1), Datmc_wmf(1,2)
-!!     write(6,*) 'Wet2:', Datmc_wmf(2,1), Datmc_wmf(2,2)
+       If (UVW .eq. 'exact ')  Then
+        Call EWNS_atmC (gmfh,gmfw, EL_ab,Datmc_h_EWNS,Datmc_w_EWNS)
+       Endif
 !
-!!!!   If (UVW .eq. 'exact ')  Then
-!!!!    Call EWNS_atmC (gmfh,gmfw, EL_ab,Datmc_h_EWNS,Datmc_w_EWNS)
-!!!!   Endif
+      If (Base_mode .eq. 'geocenter ') IS2 = 1
+      If (Base_mode .ne. 'geocenter ') Then
+       IS1 = 1
+       IS2 = 2
+      Endif
+!
+!    Station 2:
+       ATMdryd_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = DATMC(2,1)
+       ATMdryr_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = DATMC(2,2)
+       ATMwetd_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = Datmc_wmf(2,1)
+       ATMwetr_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = Datmc_wmf(2,2)
+       El_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = ELEV(2,1) * 57.295779512D0
+       Az_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = AZ(2,1) * 57.295779512D0
+       StaX_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBP(1)
+       StaY_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBP(2)
+       StaZ_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBP(3)
+       StaXt_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBQ(1)
+       StaYt_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBQ(2)
+       StaZt_f(IS2,Itime,Istation1,(Istation2-1),Isrc) = WBQ(3)
+!    Station 1 (usually the geocenter):
+!     If (Base_mode .ne. 'geocenter ') Then
+!      ATMdryd_f(IS1,Itime,Istation1,(Istation2-1),Isrc) = DATMC(1,1)
+!      ATMdryr_f(IS1,Itime,Istation1,(Istation2-1),Isrc) = DATMC(1,2)
+!      ATMwetd_f(IS1,Itime,Istation1,(Istation2-1),Isrc) = Datmc_wmf(1,1)
+!      ATMwetr_f(IS1,Itime,Istation1,(Istation2-1),Isrc) = Datmc_wmf(1,2)
+!     Endif
+!
+!     Compute the axis offset contributions.
+!**   CALL AXOC (AXOFF)
+!
+!     Compute the Earth tide contributions.
+!**   CALL ETDC (TIDEP1, TIDEV1, STAR)
+!
+!     Compute the pole tide contributions.
+!**   CALL PTDC (STAR)
+!
+!     Compute the ocean loading contributions.
+!**   CALL OCEC (STAR)
+!
+!     Compute the ocean pole tide loading contributions.
+!**   CALL OPTLC(OPTLOADP, OPTLOADV, STAR)
+!
+!     Compute the UT1 contributions.
+!**   CALL UT1C (       UT1ti, dUT1ti, UT1li, dUT1li)
+!
+!     Compute the wobble contributions.
+!**   CALL WOBC(Xti,Yti,dXti,dYti)
+!
+!     Compute the parallax contributions.
+!**   CALL PLXC()
+!
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !     Perform the calculation for the complete theoretical delay and rate.
@@ -779,98 +976,241 @@
 !     including the contributions and partials. This now includes only
 !     the Consensus relativity model computations:
 !!!   IF (NumSpace .le. 0)                                              &
-!**   IF (Near_Far .eq. 'Far-field ')                                   &
-!      If(ss_obj) write(6,*) ' Solar system object '
-       Call CONSEN ( DATMC, EARTH, EPBASE, SITEP , SITEV ,              &
-     &      SITEA, SUN, XMOON, STAR, ss_obj, K_EWNS, Datmc_h_EWNS,      &
-     &      Datmc_w_EWNS, tg2_tg1, dtg2_tg1,                            &
+      IF (Near_Far .eq. 'Far-field ')                                   &
+     & Call CONSEN ( DATMC, EARTH, EPBASE, SITEP1, SITEV1,              &
+     &      SITEA, SUN, XMOON, STAR, K_EWNS, Datmc_h_EWNS,Datmc_w_EWNS, &
+     &      tg2_tg1, dtg2_tg1,                                          &
      &      delta_t_grav, d_delta_t_grav, delta_t_grav_Sun,             &
      &      d_delta_t_grav_Sun )
-!!     write(6,*) 'tg2_tg1, dtg2_tg1 ', tg2_tg1, dtg2_tg1
 !
 !       write(6,*) 'ddrvr3/R1mag,R1magdt ',  R1mag,R1magdt
 !       write(6,*) 'ddrvr3/R2mag,R2magdt ',  R2mag,R2magdt
 !
 !     IF (NumSpace .ge. 1) THEN
-!*    IF (Near_Far .eq. 'Near-field') THEN
+      IF (Near_Far .eq. 'Near-field') THEN
 !
-!*     If (NF_model .eq. 'Sekido  ') Then
-!*      Call SEKIDO ( DATMC, EARTH, EPBASE, SITEP1, SITEV1, SITEA, SUN, &
-!*   &      XMOON, STAR, STARdt, T0_T1, R1, R1dt, R1mag, R1magdt,       &
-!*   &      R2, R2dt, R2mag, R2magdt, STAR12, STAR12dt,                 &
-!*   &      tg2_tg1, dtg2_tg1)
+       If (NF_model .eq. 'Sekido  ') Then
+        Call SEKIDO ( DATMC, EARTH, EPBASE, SITEP1, SITEV1, SITEA, SUN, &
+     &      XMOON, STAR, STARdt, T0_T1, R1, R1dt, R1mag, R1magdt,       &
+     &      R2, R2dt, R2mag, R2magdt, STAR12, STAR12dt,                 &
+     &      tg2_tg1, dtg2_tg1)
 !      write(6,*) 'tg2_tg1,dtg2_tg1 ', tg2_tg1,dtg2_tg1
-!*      If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+        If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
 !         write (6,*) ' tg2_tg1      ', tg2_tg1
-!*       Call  SEKIDOewns ( Datmc_h_EWNS, Datmc_w_EWNS, EARTH, EPBASE,  &
-!*   &         SITEP, SITEV,  SITEA, SUN, XMOON, T0_T1 )
-!*      Endif
-!*     Endif
+         Call  SEKIDOewns ( Datmc_h_EWNS, Datmc_w_EWNS, EARTH, EPBASE,  &
+     &         SITEP, SITEV,  SITEA, SUN, XMOON, T0_T1 )
+        Endif
+       Endif
 !
-!*     If (NF_model .eq. 'Ranging ') Then
-!*      Call RANGE (DATMC, SITEP, SITEV, SITEA, SUN,                    &
-!*   &      T0_T1, R1, R1dt, R1mag, R1magdt,                            &
-!*   &      R2, R2dt, R2mag, R2magdt,                                   &
-!*   &      tr2_tr1, dtr2_tr1)
-!*       tg2_tg1 = tr2_tr1
-!*       dtg2_tg1 = 0.D0
-!*      If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+       If (NF_model .eq. 'Ranging ') Then
+        Call RANGE (DATMC, SITEP, SITEV, SITEA, SUN,                    &
+     &      T0_T1, R1, R1dt, R1mag, R1magdt,                            &
+     &      R2, R2dt, R2mag, R2magdt,                                   &
+     &      tr2_tr1, dtr2_tr1)
+         tg2_tg1 = tr2_tr1
+         dtg2_tg1 = 0.D0
+        If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
 !         write(6,*) 'tr2_tr1 ', tr2_tr1
-!*      Call  RANGEewns (Datmc_h_EWNS, Datmc_w_EWNS, SITEP, SITEV,      &
-!*   &      SITEA, SUN, T0_T1,                                          &
-!*   &      R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag, R2magdt)
-!*      Endif
-!*     Endif
+        Call  RANGEewns (Datmc_h_EWNS, Datmc_w_EWNS, SITEP, SITEV,      &
+     &      SITEA, SUN, T0_T1,                                          &
+     &      R1, R1dt, R1mag, R1magdt, R2, R2dt, R2mag, R2magdt)
+        Endif
+       Endif
 !
-!*     If (NF_model .eq. 'Duev    ') Then
-!*      CALL DUEV (DATMC, SITEP, SITEV, SITEA, SUN, T0_T1,              &
-!*   &     EARTH, XMOON, UTC, TT, TDB, TDBg, td2_td1, dtd2_td1)
-!*       tg2_tg1 = td2_td1
-!*       dtg2_tg1 = 0.D0
+       If (NF_model .eq. 'Duev    ') Then
+        CALL DUEV (DATMC, SITEP, SITEV, SITEA, SUN, T0_T1,              &
+     &     EARTH, XMOON, UTC, TT, TDB, TDBg, td2_td1, dtd2_td1)
+         tg2_tg1 = td2_td1
+         dtg2_tg1 = 0.D0
 !       write(6,*) 'td2_td1 ', td2_td1
-!*      If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
-!*       Call DUEVewns (Datmc_h_EWNS, Datmc_w_EWNS, SITEP, SITEV,       &
-!*   &      SITEA, SUN, T0_T1, EARTH, XMOON, UTC, TT, TDB, TDBg)
-!*      Endif
-!*     Endif
+        If (UVW .eq. 'exact ' .or. UVW .eq. 'noatmo')  Then
+         Call DUEVewns (Datmc_h_EWNS, Datmc_w_EWNS, SITEP, SITEV,       &
+     &      SITEA, SUN, T0_T1, EARTH, XMOON, UTC, TT, TDB, TDBg)
+        Endif
+       Endif
 !
 !      write(6,*) 'tg2_tg1,tr2_tr1,td2_td1 ', tg2_tg1,tr2_tr1,td2_td1
 !      write(6,*) 'diffs: ', tg2_tg1-tr2_tr1, tg2_tg1-td2_td1, tr2_tr1-td2_td1
 !      write(6,*) '       '
 !
-!*    ENDIF
+      ENDIF
+!
+!
+!   Load delay and rate arrays
+        Delay_f(Itime,Istation1,(Istation2-1),Isrc) = tg2_tg1
+         Rate_f(Itime,Istation1,(Istation2-1),Isrc) = dtg2_tg1
+!        write(6,*) 'ddrvr: ', Iscan,J2m,Itime,Istation1,(Istation2-1), &
+!    &     Isrc, Delay_f(Itime,Istation1,(Istation2-1),Isrc),DATMC(1,1), DATMC(2,1)
+!
+       If (Atmdr .eq. 'Add-dry   ')  Then
+        Delay_f(Itime,Istation1,(Istation2-1),Isrc)  =                  &
+     &     Delay_f(Itime,Istation1,(Istation2-1),Isrc) +                &
+     &      DATMC(1,1) + DATMC(2,1)
+         Rate_f(Itime,Istation1,(Istation2-1),Isrc)  =                  &
+     &     Rate_f(Itime,Istation1,(Istation2-1),Isrc)   +               &
+     &     DATMC(1,2) + DATMC(2,2)
+       Endif
+!
+       If (Atmwt .eq. 'Add-wet   ')  Then
+        Delay_f(Itime,Istation1,(Istation2-1),Isrc)  =                  &
+     &     Delay_f(Itime,Istation1,(Istation2-1),Isrc) +                &
+     &     Datmc_wmf(1,1) + Datmc_wmf(2,1)
+         Rate_f(Itime,Istation1,(Istation2-1),Isrc)  =                  &
+     &     Rate_f(Itime,Istation1,(Istation2-1),Isrc) +                 &
+     &     Datmc_wmf(1,2) + Datmc_wmf(2,2)
+       Endif
+!
+! W coordinate of UVW:
+      If (UVW .eq. 'noatmo')  Then
+       Wb = tg2_tg1 * VLIGHT
+!      Write (6,*) 'noatmo: U,V,W   ', U_V, Wb
+      Endif
+!
+      If (UVW .eq. 'exact ') Then
+        Wb = (tg2_tg1 + DATMC(1,1) + DATMC(2,1) +                       &
+     &       Datmc_wmf(1,1) + Datmc_wmf(2,1)) * VLIGHT
+!      Write (6,*) 'exact: U,V,W   ', U_V, Wb
+      Endif
 !
 !  Load U,V,W coordinates:
-!!!     Ubase_f(Itime,Istation1,(Istation2-1),Isrc) = U_V(1)
-!!!     Vbase_f(Itime,Istation1,(Istation2-1),Isrc) = U_V(2)
-!!!     Wbase_f(Itime,Istation1,(Istation2-1),Isrc) = Wb
+        Ubase_f(Itime,Istation1,(Istation2-1),Isrc) = U_V(1)
+        Vbase_f(Itime,Istation1,(Istation2-1),Isrc) = U_V(2)
+        Wbase_f(Itime,Istation1,(Istation2-1),Isrc) = Wb
 !
-!!! new for ALMA version  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-       delay_vac   = tg2_tg1    ! vacuum delay
-!      rate_vac    =  dtg2_tg1   ! vacuum rate
-       dry_atm1    = DATMC(1,1)        ! station 1 dry atmosphere delay
-!      dry_atm1(2) = DATMC(1,2)        ! station 1 dry atmosphere rate
-       dry_atm2    = DATMC(2,1)        ! station 2 dry atmosphere delay
-!      dry_atm2(2) = DATMC(2,2)        ! station 2 dry atmosphere rate
-       wet_atm1    = Datmc_wmf(1,1)    ! station 1 wet atmosphere delay
-!      wet_atm1(2) = Datmc_wmf(1,2)    ! station 1 wet atmosphere rate
-       wet_atm2    = Datmc_wmf(2,1)    ! station 2 wet atmosphere delay
-!      wet_atm2(2) = Datmc_wmf(2,2)    ! station 2 wet atmosphere rate
-!      elev1(1)    = ELEV(1,1)         ! station 1 source elevation (radians)
-!      elev1(2)    = ELEV(1,2)         ! station 1 source elevation rate (radians/sec)
-!      elev2(1)    = ELEV(2,1)         ! station 2 source elevation (radians)
-!      elev2(2)    = ELEV(2,2)         ! station 2 source elevation rate (radians/sec)
-!      az1(1)      = AZ(1,1)           ! station 1 source azimuth angle (radians)
-!      az1(2)      = AZ(1,2)           ! station 1 source azimuth angle rate (radians/sec)
-!      az2(1)      = AZ(2,1)           ! station 2 source azimuth angle (radians)
-!      az2(2)      = AZ(2,2)           ! station 2 source azimuth angle rate (radians/sec)
-!      u_v_w(1)    = U_V(1)            ! U baseline coordinate (meters)
-!      u_v_w(2)    = U_V(2)            ! V baseline coordinate (meters)
-!      u_v_w(3)    = Wb                ! W baseline coordinate (meters)
-!       write(6,*) 'delay: ', delay_vac
-!       write(6,*) 'dryatm:', dry_atm1, dry_atm2
-!       write(6,*) 'wetatm:', wet_atm1, wet_atm2
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!     If (I_out .eq. 1) Then
+!      L = Itime
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!      write (LC,1016) RIGHT_ASC, DECLINATION, IRA,IDec, Ph_RA, Ph_Dec
+!1016  Format('  RA/Dec: ',2F20.15,'  Phase Center(',I3,',',I3,'):',2F20.15)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!      If (Base_mode .eq. 'geocenter ') Then
+!       write (LC,1011) IndexB, Iymdhms_f(L,1), Iymdhms_f(L,2),          &
+!    &        Iymdhms_f(L,3),                                           &
+!    &        Iymdhms_f(L,4), Iymdhms_f(L,5), Iymdhms_f(L,6),           &
+!    &        Site1(IndexB,L), Site2(IndexB,L), xSource,                &
+!    &        Delay_f(IndexB,L)*1.D6, Rate_f(IndexB,L)*1.D6,            &
+!    &        Atmdryd_f(IndexB,2,L)*1.D6, Atmdryr_f(IndexB,2,L)*1.D6,   &
+!    &        Atmwetd_f(IndexB,2,L)*1.D6, Atmwetr_f(IndexB,2,L)*1.D6,   &
+!             Ubase_f(IndexB,L), Vbase_f(IndexB,L), Wbase_f(IndexB,L)
+!1011 Format(I3,I7,5I3,3X,A8,2X,A8,3X,A8,/,'Delay(us):   ',2E25.16,/,   &
+ 1011 Format(I3,I7,5I3,3X,A8,2X,A8,3X,A20,/,'Delay(us):   ',2E25.16,/,   &
+     &       'Atm-dry(us): ', 2E25.16,/, 'Atm-wet(us): ', 2E25.16,/,    &
+     &       'U,V,W(m):    ', 3E25.16,/)
+!      Endif
+!
+!      If (Base_mode .eq. 'master-stn' .or. Base_mode .eq. 'baseline  ') Then
+!!       Write(LC,'("KdotB/C(us): ",2E25.16)') (DOTP(STAR,EPBASE(1,1)))/VLIGHT*1.D6,   &
+!!   &        (Delay_f(IndexB,L) - (DOTP(STAR,EPBASE(1,1)))/VLIGHT)*1.D6
+!!       Write(LC,'("R2-R1/C(us): ",2E25.16)') (R2mag - R1mag)/VLIGHT*1.D6,    &
+!!   &        (Delay_f(IndexB,L) - (R2mag - R1mag)/VLIGHT)*1.D6
+!      write (LC,1012) IndexB, Iymdhms_f(L,1), Iymdhms_f(L,2),          &
+!    &        Iymdhms_f(L,3),                                           &
+!    &        Iymdhms_f(L,4), Iymdhms_f(L,5), Iymdhms_f(L,6),           &
+!    &        Site1(IndexB,L), Site2(IndexB,L), xSource,                &
+!    &        Delay_f(IndexB,L)*1.D6, Rate_f(IndexB,L)*1.D6,            &
+!    &        DATMC(1,1)*1.D6, DATMC(1,2)*1.D6,                         &
+!    &        Datmc_wmf(1,1)*1.D6, Datmc_wmf(1,2)*1.D6,                 &
+!    &        DATMC(2,1)*1.D6, DATMC(2,2)*1.D6,                         &
+!    &        Datmc_wmf(2,1)*1.D6, Datmc_wmf(2,2)*1.D6,                 &
+!             Ubase_f(IndexB,L), Vbase_f(IndexB,L), Wbase_f(IndexB,L)
+!1012 Format(I3,I7,5I3,3X,A8,2X,A8,3X,A8,/,'Delay(us):   ',2E25.16,/,   &
+ 1012 Format(I3,I7,5I3,3X,A8,2X,A8,3X,A20,/,'Delay(us):   ',2E25.16,/,   &
+     &       'Atm-dry(us): ', 2E25.16,/, 'Atm-wet(us): ', 2E25.16,/,    &
+     &       'Atm-dry(us): ', 2E25.16,/, 'Atm-wet(us): ', 2E25.16,/,    &
+     &       'U,V,W(m):    ', 3E25.16,/)
+!      Endif
+!
+!     Endif
+!
+!
+!      write (6,*) '               '
+!     Write(6,'("NF: Elev:",4F15.10)') Elev(1,1)/CONVD,Elev(2,1)/CONVD, &
+!    &         Elev(1,2)/CONVD,Elev(2,2)/CONVD
+!     Write(6,'("NF: AZ:  ",4F15.10)') AZ(1,1)/CONVD, AZ(2,1)/CONVD,    &
+!    &         AZ(1,2)/CONVD, AZ(2,2)/CONVD
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Compare near-field to far-field:
+!     IF (NumSpace .ge. 1) THEN
+!       write(6,*) '                     '
+!       write(6,*) ' Switching to far-field model '
+!       write(6,*) '                     '
+!      CALL STRG (XJD, UTC, Isource, STAR, STAR12, Sourc8)
+!       write(6,*) 'STAR: ',  STAR
+!       write(6,*) 'STAR12: ',  STAR12
+!      CALL ATMG (R2K6, STAR, STAR12, EARTH, TCTOCF, SITEV,           &
+!    &     STAR_ABERRATED)
+!      write (6,*) '               '
+!     Write(6,'("FF: Elev:",4F15.10)') Elev(1,1)/CONVD,Elev(2,1)/CONVD, &
+!    &         Elev(1,2)/CONVD,Elev(2,2)/CONVD
+!     Write(6,'("FF: AZ:  ",4F15.10)') AZ(1,1)/CONVD, AZ(2,1)/CONVD,    &
+!    &         AZ(1,2)/CONVD, AZ(2,2)/CONVD
+!      DO I = 1,3
+!       DO J = 1,2
+!         STAR_ABERRATEDdt(I,J) = 0.D0
+!       ENDDO
+!      ENDDO
+!      CALL AXOG (KAXIS, R2K6, SITLAT, STAR, TCTOCF, SITEV, AXOFF,       &
+!    &     EARTH, STAR_ABERRATED, STAR_ABERRATEDdt, SITHEIGHT, AXTILT,  &
+!    &     ROTAXIS, AXIS2000, DAXIS2000)
+!      CALL ATMP (          SITLAT, SITHEIGHT, XJD, CT, dATMCdh)
+!      CALL AXOP (AXOFF, STAR12, EARTH, SITEV)
+!      CALL ATMC (ZPATH, DATMC)
+!      CALL AXOC (AXOFF       )
+!      CALL UVG_ab (STAR_ABERRATED, EPBASE)
+!      CALL THERY (DATMC, DIONC, DLPGR, EARTH, EPBASE, SITEP, SITEV,    &
+!    &            SITEA, SUN, STAR, XMOON, AT)
+!     Call  CONSEN ( DATMC, EARTH, EPBASE, SITEP, SITEV,                &
+!    &      SITEA, SUN, XMOON, STAR, tg2_tg1, dtg2_tg1,                 &
+!    &      delta_t_grav, d_delta_t_grav, delta_t_grav_Sun,             &
+!    &      d_delta_t_grav_Sun )
+!
+!      Dt = tg2_tg1 + DATMC(1,1) + DATMC(2,1) + Datmc_wmf(1,1) +        &
+!    &                Datmc_wmf(2,1)
+!      Rt = dtg2_tg1 + DATMC(1,2) + DATMC(2,2) + Datmc_wmf(1,2) +       &
+!    &                 Datmc_wmf(2,2)
+!
+!     Write(6,1021) Dt*1.D6, Rt*1.D6, DATMC(2,1)*1.D6, DATMC(2,2)*1.D6, &
+!    &    Datmc_wmf(2,1)*1.D6, Datmc_wmf(2,2)*1.D6, U_V(1), U_V(2), Wb
+!      Write(6,1022)  (Dt - Delay_f(IndexB,L))*1.D12,                   &
+!    &  (Rt - Rate_f(IndexB,L))*1.D12,                                  &
+!    &  (DATMC(2,1) - Atmdryd_f(IndexB,2,L))*1.D12,                     &
+!    &  (DATMC(2,2) - Atmdryr_f(IndexB,2,L))*1.D12,                     &
+!    &  (Datmc_wmf(2,1) - Atmwetd_f(IndexB,2,L))*1.D12,                 &
+!    &  (Datmc_wmf(2,2) - Atmwetr_f(IndexB,2,L))*1.D12,                 &
+!    &  U_V(1) - Ubase_f(IndexB,L),                                     &
+!    &  U_V(2) - Vbase_f(IndexB,L),                                     &
+!    &  Wb - Wbase_f(IndexB,L)
+!1021  Format(6E25.16,/,3E25.16)
+!1022  Format(2F12.4,1X,2F12.4,1X,2F12.4,1X,3F10.4)
+!     ENDIF
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+      ENDDO                        ! End of source/phase center loop
+!
+      ENDDO                        ! End of station2 loop
+      ENDDO                        ! End of station1 loop
+      ENDDO                        ! End of epoch loop
+!
+!     If (I_out .eq. 1) Close (LC)
+!
+!      write (6,*) '               '
+!      write (6,*) ' Numbaseline = ', Numbaseline
+!      write (6,*) '               '
+!
+!
+!      write (6,*) '               '
+!        Call c_out2(delay_f(1,1))
+!           delay6(1) = Delay_f(1,1)
+!           delay6(2) = Delay_f(1,2)
+!        ierc2 = c_out(delay6, poly6)
+!      write (6,*) ' poly6 ', poly6
+!!!       call  f2c1(delay6)
+!      write (6,*) '               '
+!        ierc2 = c2_out( %REF(delay_f(I11,I21,1)))
+!        ierc2 = c_out2( )
+!      write (6,*) '               '
+!
 !
 !     Go back to the main.
       RETURN

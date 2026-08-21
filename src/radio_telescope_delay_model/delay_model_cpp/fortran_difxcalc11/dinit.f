@@ -1,4 +1,4 @@
-      SUBROUTINE aINITL
+      SUBROUTINE dINITL (Kjob)
       IMPLICIT None
 !
 ! 1.    INITL
@@ -50,7 +50,7 @@
 !                           4=Jupiter, 5=Saturn, 6=Uranus, and 7=Neptune)
 !             13. AU_meters-The Astronomical unit. (meters)
 !
-!?    INCLUDE 'ccon.i'
+      INCLUDE 'ccon.i'
 !       Variables 'from':
 !              1. ILUOUT  - Output control flag.
 !
@@ -69,6 +69,10 @@
 !
       INCLUDE 'd_input.i'
 !       Variables 'from':
+!              1. NumSpace - Number of spacecrafts. If .ge. 1, we switch to
+!                            the near field mode and call subroutine SpaceI
+!                            for spline initialization of the spacecraft
+!                            positions and veloxcities.
 !
 !
 !       PROGRAM SPECIFICATIONS -
@@ -104,6 +108,16 @@
       GMPLANET(7) = GMSUN / 1.941226D4        ! Neptune
 !     GMPLANET( ) = GMSUN / 1.36566D8         ! Pluto
 !
+! GM's of the planets. From IERS 2010 and DE421 ephemeris
+!     GMPLANET(1) = GMSUN / 6023597.400017D0      ! Mercury
+!     GMPLANET(2) = GMSUN / 408523.718655D0       ! Venus
+!     GMPLANET(3) = GMSUN / 3098703.590267D0      ! Mars
+!     GMPLANET(4) = GMSUN / 1047.348625D0         ! Jupiter
+!     GMPLANET(5) = GMSUN / 3497.901768D0         ! Saturn
+!     GMPLANET(6) = GMSUN / 22902.981613D0        ! Uranus
+!     GMPLANET(7) = GMSUN / 19412.237346D0        ! Neptune
+!     GMPLANET(8) = GMSUN / 135836683.767599D0    ! Pluto
+!
 !  Compute square and cube of velocity of light. 93MAY06, D. Gordon
       VLIGHT2 = VLIGHT * VLIGHT
       VLIGHT3 = VLIGHT2 * VLIGHT
@@ -112,13 +126,23 @@
 !  necessary utility routines and for the adding to the header of the
 !  corresponding text messages.
 !
+!**    CALL dSTAI()    ! Do we need the Calc control flags?
+!
        CALL dSITI(Kjob) ! Get Ocean loading coefficients.
 !                       ! Get Ocean pole tide loading coefficients.
 !                       ! Get tilt angles. Get Axis types. Compute tilt topo matrices.
 !                       ! Compute latitudes and longitudes, and topo matrices.
 !
+       CALL dUT1I()    ! Initialize
+!
+       CALL dWOBI()    ! Initialize
+!
+!   Initialization of spacecraft ephemeris moved to subroutine dScan.
+!!!    If (NumSpace .ge. 1) CALL SPACEI(1)
+!
 !  Initialize the observation counter to 0.
-!?    KOUNT = 0
+      KOUNT = 0
+!
 !
 !     Normal conclusion.
       RETURN
@@ -217,12 +241,12 @@
 !                                  coefficients, interpolated from the Desai
 !                                  lat/lon table.
 !
-!?    INCLUDE 'ccon.i'
+      INCLUDE 'ccon.i'
 !            VARIABLES 'FROM':
 !              1. KSITC - THE SITE MODULE FLOW CONTROL FLAG.
 !              2. KSITD - THE SITE MODULE DEBUG OUTPUT FLAG.
 !
-!     INCLUDE 'cuser11.i'
+      INCLUDE 'cuser11.i'
 !       Variables from:
 !         1. Calc_user  - Calc user type. 'A' for Calc/SOLVE analysis.
 !                         'C' for VLBI correlator.
@@ -232,10 +256,11 @@
 !**         1. Intrvl(5,2) - First and last time tag of data in the current
 !                            data base. (First index: year, month, day,
 !                            hour, minute. Second index: first, last.)
-!???  INCLUDE 'param11.i'
+      INCLUDE 'param11.i'
+      INCLUDE 'rtdm_paths.i'
 !       Variables from:
-!           1. A_tilts   - Antenna tilts file name (default file).
-!           2. OPTL_file - Ocean pole tide loading file (default file).
+!           1. RTDM_TILT_FILE   - Antenna tilts file name (default file).
+!           2. RTDM_OPTL_FILE - Ocean pole tide loading file (default file).
 !
       INCLUDE 'd_input.i'
 !
@@ -285,41 +310,46 @@
 !
        Krr = 0
 !
+!  Fill LNSITE array from SITES array
+      Do J = 1, Numsit
+       Ch_Sites(J) = Sites(J)
+      Enddo
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!      Write (6,*) 'dSITI: Sites   ', Sites
+!      Write (6,*) 'dSITI: LNSITE  ', LNSITE
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!
 !***********************************************
-!  Geocenter station flag: owned by the C++ driver (delay_model.cpp), which
-!   sets SITCM's Zero_site before calling aINITL -- 0 for no geocenter
-!   site, 1 when station 1 is the geocenter (difxcalc11's dinit.f
-!   convention; enables the geocenter special-casing below and in the
-!   site/atmosphere/tide modules via Nzero).
-!*!     Zero_site = 1
-!*!     Zero_site = 0     ! no geocenter site
+!  Set geocenter station flag
+        Zero_site = 1
 !***********************************************
 !
 !  Define axis types:
-!*!   Do J = 2, Numsit
-!*!    If (AXIS(J) .eq. 'AZEL') KTYPE(J) = 3
-!*!    If (AXIS(J) .eq. 'EQUA') KTYPE(J) = 1
-!*!    If (AXIS(J) .eq. 'XYNS') KTYPE(J) = 2
-!*!    If (AXIS(J) .eq. 'XYEW') KTYPE(J) = 4
-!*!    If (AXIS(J) .eq. 'RICH') KTYPE(J) = 5
-!*!   Enddo
+      Do J = 2, Numsit
+       If (AXIS(J) .eq. 'AZEL') KTYPE(J) = 3
+       If (AXIS(J) .eq. 'EQUA') KTYPE(J) = 1
+       If (AXIS(J) .eq. 'XYNS') KTYPE(J) = 2
+       If (AXIS(J) .eq. 'XYEW') KTYPE(J) = 4
+       If (AXIS(J) .eq. 'RICH') KTYPE(J) = 5
+      Enddo
 ! Set GEOCENTR site to avoid problems:
-!!!!   KTYPE(1) = 3
+       KTYPE(1) = 3
 !
 !  External file input for ocean loading
-!*!    CALL dOCNIN(Kjob,Krr)
+       CALL dOCNIN(Kjob,Krr)
 !
 !  External file input for antenna tilts
-!*!    CALL dANTILT(Kjob,Krr)
+       CALL dANTILT(Kjob,Krr)
 !      If (KRR .ne. 0) Then
-        Do I = 1, Numsit
-         Dbtilt(1,I) = 0.0D0
-         Dbtilt(2,I) = 0.0D0
-        Enddo
+!       Do I = 1, Max_stat
+!        Dbtilt(1,I) = 0.0
+!        Dbtilt(2,I) = 0.0
+!       Enddo
 !      Endif
 !
 !  External file input for ocean pole tide loading
-!*!    CALL dOPTLIN(Kjob,Krr)
+       CALL dOPTLIN(Kjob,Krr)
 !***********************************************
 !
 !  Compute topocentric rotation matrices for each antenna axis tilt.
@@ -333,23 +363,32 @@
         Endif
 !
 !           Equatorial, X/Y N-S, or Richmond case:
-!*!     If (KTYPE(I) .eq. 1 .or. KTYPE(I) .eq. 2 .or.     &
-!*!  &      KTYPE(I) .eq. 5) Then
-!*!      Call ROTAT( Dbtilt(1,I)*CONVD/60.D0, int2(1), T1)
-!*!      Call ROTAT(-Dbtilt(2,I)*CONVD/60.D0, int2(2), T2)
-!*!      Call MMUL2(T1, T2, Rotilt(1,1,I))
-!*!     Endif
+        If (KTYPE(I) .eq. 1 .or. KTYPE(I) .eq. 2 .or.     &
+     &      KTYPE(I) .eq. 5) Then
+         Call ROTAT( Dbtilt(1,I)*CONVD/60.D0, int2(1), T1)
+         Call ROTAT(-Dbtilt(2,I)*CONVD/60.D0, int2(2), T2)
+         Call MMUL2(T1, T2, Rotilt(1,1,I))
+        Endif
 !
 !           X/Y E-W case:
-!*!     If (KTYPE(I) .eq. 4) Then
-!*!      Call ROTAT( Dbtilt(1,I)*CONVD/60.D0, int2(1), T1)
-!*!      Call ROTAT( Dbtilt(2,I)*CONVD/60.D0, int2(3), T2)
-!*!      Call MMUL2(T1, T2, Rotilt(1,1,I))
-!*!     Endif
+        If (KTYPE(I) .eq. 4) Then
+         Call ROTAT( Dbtilt(1,I)*CONVD/60.D0, int2(1), T1)
+         Call ROTAT( Dbtilt(2,I)*CONVD/60.D0, int2(3), T2)
+         Call MMUL2(T1, T2, Rotilt(1,1,I))
+        Endif
 !
        Enddo
 !
 !-----------------------------------------------------------------------------
+!
+!
+!?    If only one site zenith path delay, copy for all stations.
+!?     IF( NDO(1) .NE. NUMSIT ) THEN
+!?       DO 210 N = 2,NUMSIT
+!?10       SITZEN(N) = SITZEN(1)
+!?     ENDIF
+!
+!
 !     Calculate the neccesary site geometry.
 !      Mod added 98JAN22: Dummy out topocentric type variables for station at
 !      or near the geocenter, for correlator usage.
@@ -442,20 +481,20 @@
 !      write(6,8) ' TCROT ',  TCROT_DUMMY
 !      write(6,8) ' RTROT ',  RTROT_DUMMY
 !
-!     IF (KSITD .ne. 0) Then  !Station debug printout
-!      if (N.eq.1) Then
-!       WRITE ( 6, 1)
-!       WRITE(6,8)' EFLAT   ',EFLAT
-!       WRITE(6,8)' REARTH  ',REARTH
-!       WRITE(6,7)' NUMSIT  ',NUMSIT
-!      endif
-!   1  FORMAT (1X, 'Debug output for subroutine SITI.' )
-!      write(6,'(" For site #",i2)') N
-!      WRITE(6,4)' RY   ',((RY(J,K),J=1,3),K=1,3)
-!      WRITE(6,4)' RZ   ',((RZ(J,K),J=1,3),K=1,3)
-!      WRITE(6,4)' RGY  ',((RGY(J,K),J=1,3),K=1,3)
-!      WRITE (6,8)' Geoid Height  ',  xlatlonht(3)
-!     Endif          !Station debug printout
+      IF (KSITD .ne. 0) Then  !Station debug printout
+       if (N.eq.1) Then
+        WRITE ( 6, 1)
+        WRITE(6,8)' EFLAT   ',EFLAT
+        WRITE(6,8)' REARTH  ',REARTH
+        WRITE(6,7)' NUMSIT  ',NUMSIT
+       endif
+    1  FORMAT (1X, 'Debug output for subroutine SITI.' )
+       write(6,'(" For site #",i2)') N
+       WRITE(6,4)' RY   ',((RY(J,K),J=1,3),K=1,3)
+       WRITE(6,4)' RZ   ',((RZ(J,K),J=1,3),K=1,3)
+       WRITE(6,4)' RGY  ',((RGY(J,K),J=1,3),K=1,3)
+       WRITE (6,8)' Geoid Height  ',  xlatlonht(3)
+      Endif          !Station debug printout
       GO TO 490
 !
   491 CONTINUE
@@ -508,47 +547,47 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 !     Check KSITD for debug output.
-!     IF ( KSITD .ne. 0 ) Then  !Debug printout
-!     WRITE ( 6, 11)
-!  11 FORMAT (1X, 'Station Debug for subroutine dSITI.' )
-!     WRITE(6,8)' CFRAD   ',(CFRAD(J),J=1,NUMSIT)
-!   8 FORMAT(A,4D25.16/(1X,5D25.16))
-!     WRITE(6,7)' KTYPE   ',(KTYPE(J),J=1,NUMSIT)
-!   7 FORMAT(/,A,15I3/(1X,15I3))
-!     WRITE(6,7)' NLAST   ',NLAST
-!     WRITE(6,4)' PLAT    ',(( PLAT(J,K),J=1,3),K=1,NUMSIT)
-!   4 FORMAT(/,A,3D25.16/(9X,3D25.16))
-!     WRITE(6,4)' PLON    ',(( PLON(J,K),J=1,3),K=1,NUMSIT)
-!     WRITE(6,8)' SITAXO  ',( SITAXO(J),J=1,NUMSIT)
-!     WRITE(6,9)' SITOAM, ',((SITOAM(J,K),J=1,11),K=1,NUMSIT)
-!     WRITE(6,9)' SITOPH, ',((SITOPH(J,K),J=1,11),K=1,NUMSIT)
-!     WRITE(6,9)' SITHOA, ',(((SITHOA(J,L,K),J=1,11),L=1,2),K=1,        &
-!    & NUMSIT)
-!     WRITE(6,9)' SITHOP, ',(((SITHOP(J,L,K),J=1,11),L=1,2),K=1,        &
-!    & NUMSIT)
-!   9 FORMAT(/,A,11F9.4,/,(9X,11F9.4))
-!     WRITE(6,6)' SITXYZ  ',((SITXYZ(J,K),J=1,3),K=1,NUMSIT)
-!   6 FORMAT(/,A,3F20.4,/,(9X,3F20.4))
-!     WRITE(6,8)' SITZEN  ',(SITZEN(K),K=1,NUMSIT)
-!     WRITE(6,4)' SNRM    ',((SNRM(I,J),I=1,3),J=1,NUMSIT)
-!     WRITE(6,4)' TCROT   ',(((TCROT(I,J,K),I=1,3),J=1,3),K=1,          &
-!    & NUMSIT)
-!   5 FORMAT(/,A,/,3(3F20.4,/)/)
-!     WRITE(6,8)' XLAT    ',(XLAT(J),J=1,NUMSIT)
-!     WRITE(6,8)' XLON    ',(XLON(J),J=1,NUMSIT)
-!     WRITE(6,8)' HEIGHT    ',(HEIGHT(J),J=1,NUMSIT)
-!     WRITE(6,*)' LNSITE: '
-!     WRITE(6,3)  ((LNSITE(J,K),J=1,4),K=1,NUMSIT)
-!   3 FORMAT (8(2X,4A2))
-!      Do I = 1, NUMSIT
-!        Write(6,1012) I, Dbtilt(1,I), Dbtilt(2,I),                     &
-!    &     ((Rotilt(kj,ik,I), ik=1,3), kj=1,3)
-!1012    Format('Station #',I2,2x,2F10.5,/,'Rotilt: ',3F20.10,          &
-!    &          /,8X,3F20.10,/,8X,3F20.10)
-!      Enddo
+      IF ( KSITD .ne. 0 ) Then  !Debug printout
+      WRITE ( 6, 11)
+   11 FORMAT (1X, 'Station Debug for subroutine dSITI.' )
+      WRITE(6,8)' CFRAD   ',(CFRAD(J),J=1,NUMSIT)
+    8 FORMAT(A,4D25.16/(1X,5D25.16))
+      WRITE(6,7)' KTYPE   ',(KTYPE(J),J=1,NUMSIT)
+    7 FORMAT(/,A,15I3/(1X,15I3))
+      WRITE(6,7)' NLAST   ',NLAST
+      WRITE(6,4)' PLAT    ',(( PLAT(J,K),J=1,3),K=1,NUMSIT)
+    4 FORMAT(/,A,3D25.16/(9X,3D25.16))
+      WRITE(6,4)' PLON    ',(( PLON(J,K),J=1,3),K=1,NUMSIT)
+      WRITE(6,8)' SITAXO  ',( SITAXO(J),J=1,NUMSIT)
+      WRITE(6,9)' SITOAM, ',((SITOAM(J,K),J=1,11),K=1,NUMSIT)
+      WRITE(6,9)' SITOPH, ',((SITOPH(J,K),J=1,11),K=1,NUMSIT)
+      WRITE(6,9)' SITHOA, ',(((SITHOA(J,L,K),J=1,11),L=1,2),K=1,        &
+     & NUMSIT)
+      WRITE(6,9)' SITHOP, ',(((SITHOP(J,L,K),J=1,11),L=1,2),K=1,        &
+     & NUMSIT)
+    9 FORMAT(/,A,11F9.4,/,(9X,11F9.4))
+      WRITE(6,6)' SITXYZ  ',((SITXYZ(J,K),J=1,3),K=1,NUMSIT)
+    6 FORMAT(/,A,3F20.4,/,(9X,3F20.4))
+      WRITE(6,8)' SITZEN  ',(SITZEN(K),K=1,NUMSIT)
+      WRITE(6,4)' SNRM    ',((SNRM(I,J),I=1,3),J=1,NUMSIT)
+      WRITE(6,4)' TCROT   ',(((TCROT(I,J,K),I=1,3),J=1,3),K=1,          &
+     & NUMSIT)
+    5 FORMAT(/,A,/,3(3F20.4,/)/)
+      WRITE(6,8)' XLAT    ',(XLAT(J),J=1,NUMSIT)
+      WRITE(6,8)' XLON    ',(XLON(J),J=1,NUMSIT)
+      WRITE(6,8)' HEIGHT    ',(HEIGHT(J),J=1,NUMSIT)
+      WRITE(6,*)' LNSITE: '
+      WRITE(6,3)  ((LNSITE(J,K),J=1,4),K=1,NUMSIT)
+    3 FORMAT (8(2X,4A2))
+       Do I = 1, NUMSIT
+         Write(6,1012) I, Dbtilt(1,I), Dbtilt(2,I),                     &
+     &     ((Rotilt(kj,ik,I), ik=1,3), kj=1,3)
+ 1012    Format('Station #',I2,2x,2F10.5,/,'Rotilt: ',3F20.10,          &
+     &          /,8X,3F20.10,/,8X,3F20.10)
+       Enddo
 !
 !
-!     Endif          !Debug printout
+      Endif          !Debug printout
 !
 !     Normal conclusion.
       RETURN
@@ -557,7 +596,6 @@
 !*************************************************************************
       SUBROUTINE dUT1I()
       IMPLICIT None
-!!! Subroutine not used. Kept for possible future use !!!!
 !
 !     UT1I is the UT1 module input and initialization section.
 !     The input UT1 table MUST be a 1-day
@@ -664,7 +702,7 @@
       Real*8     yp1, ypn, xleap(5), tol, xntv
       Real*8     Dut, Dlod, Domega, Dutr, Dlodr, Domegar, Duts, Dlods, &
      &           Domegas, Atmut1, Shortp, Divutc, tab_time
-      INTEGER*4  get_leepsec, ierr, ierr4
+      INTEGER*4  get_leapsec, ierr, ierr4
       INTEGER*4  Increment, max_ut1_pts
       Integer*4  N, Itab, II, I
       INTEGER*2  KERR(8), NDO(3), Tab_len
@@ -876,7 +914,7 @@
         ATMUTC(3) = 0.0D0
 !       WRITE (6,*)  ' ATMUTC: ', ATMUTC
       Else
-       ierr = get_leepsec(xintv(1),xleap)
+       ierr = get_leapsec(xintv(1),xleap)
 !       WRITE ( 6, * )  ' UT1I/xintv: ', xintv
 !       WRITE ( 6, * )  ' UT1I/xleap: ', xleap
 !      If (ierr .ne. 0) go to ????
@@ -1026,7 +1064,6 @@
 !*************************************************************************
       SUBROUTINE dWOBI()
       Implicit None
-!!! Subroutine not used. Kept for possible future use !!!!
 !
 !     WOBI is the wobble module input and initialization section.
 !
@@ -1342,7 +1379,6 @@
 !*************************************************************************
       SUBROUTINE SPACEI(I)
       Implicit None
-!!! Subroutine not used. Kept for possible future use !!!!
 !
 !     SPACEI is the spacecraft module input and initialization section.
 !
@@ -1514,14 +1550,12 @@
 !
       SUBROUTINE dOCNIN(Kjob,Kerr)
       Implicit None
-!!! Subroutine not used. Kept for possible future use !!!!
 !
       INCLUDE 'cmxst11.i'
 !
-!?    INCLUDE 'param11.i'
-!       1. OC_file - Name of the ocean loading coefficients file
-!
-!     CHARACTER OC_file*50
+      INCLUDE 'param11.i'
+      INCLUDE 'rtdm_paths.i'
+!       1. RTDM_OC_FILE - Name of the ocean loading coefficients file
 !
       Real*8           PI, TWOPI, HALFPI, CONVD, CONVDS, CONVHS, SECDAY
       COMMON / CMATH / PI, TWOPI, HALFPI, CONVD, CONVDS, CONVHS, SECDAY
@@ -1554,7 +1588,6 @@
 !       David Gordon 2013 Jan/April - Modified for correlator usage.
 !       David Gordon 2016 July 06   - Kjob added to conserve LU numbers.
 !
-!     OC_file = 'dummy                                              '
 !   Initialize station counter
        Do I = 1, Max_stat
          Jsite(i) = 0
@@ -1562,17 +1595,17 @@
 !
 !  Open the Ocean loading data file
        If (Kjob .eq. 1) Iunit = get4unit()
-!***       Open (Unit=Iunit, File=OC_file, Status='old', Action='READ',     &
-!***     &       Err=240, Iostat=ios)
+       Open (Unit=Iunit, File=RTDM_OC_FILE, Status='old', Action='READ',     &
+     &       Err=240, Iostat=ios)
 !
-!**      If ( Index(OC_file,'blokq') .gt. 0) Then
-!**!  Blokq.dat file, find the ocean loading coefficients catalog
-!**  50   Continue
-!**       Read(iunit,'(A80)') Inbuf
-!**       If (Inbuf(1:2) .eq. '//') Go to 100
-!**       Go to 50
-!** 100   Continue
-!**      Endif
+      If ( Index(RTDM_OC_FILE,'blokq') .gt. 0) Then
+!  Blokq.dat file, find the ocean loading coefficients catalog
+  50   Continue
+       Read(iunit,'(A80)') Inbuf
+       If (Inbuf(1:2) .eq. '//') Go to 100
+       Go to 50
+ 100   Continue
+      Endif
 !
  110   Continue
        Read(iunit,'(A80)',end=200) Inbuf
@@ -1639,49 +1672,36 @@
 !
        Close(Iunit)
 !
-!  Debug
-!      Do I = 1, Numsit
-!         write(6,*) I, Dbsites(I)
-!         write(6,1011) (SITOAM(k,I), k=1,11)
-!         write(6,1011) (SITHOA(k,1,I), k=1,11)
-!         write(6,1011) (SITHOA(k,2,I), k=1,11)
-!         write(6,1012) (SITOPH(k,I), k=1,11)
-!         write(6,1012) (SITHOP(k,1,I), k=1,11)
-!         write(6,1012) (SITHOP(k,2,I), k=1,11)
-!1011     format(11F8.5)
-!1012     format(11F8.5)
-!       Enddo
-!
 !   Verify that we have ocean loading a priori's for all stations, except any
 !    site at the geocenter. If not, we must quit here and tell the user to fix
 !    the problem.
 !
         Iquit = 0
 !
-!!*   DO I = 1, Numsit
-!!*     If (Jsite(i) .eq. 0) Then
-!!*        If (I .ne. Zero_site) Then
-!!*         If (iquit.eq.0) Write(6,'(/)')
-!!*         Write(6,'("Warning - No ocean loading coefficients for ",   &
-!!*  &         A8,/, "Will continue but you really should update file ", &
-!!*  &         A128,/)')  Dbsites(I), OC_file
-!!*         Iquit = Iquit + 1
-!!*          Do k = 1, 11
-!!*           SITOAM(k,I)   = 0.D0
-!!*           SITHOA(k,1,I) = 0.D0
-!!*           SITHOA(k,2,I) = 0.D0
-!!*           SITOPH(k,I)   = 0.D0
-!!*           SITHOP(k,1,I) = 0.D0
-!!*           SITHOP(k,2,I) = 0.D0
-!!*          Enddo
-!!*        Endif
-!!*     Endif
+      DO I = 1, Numsit
+        If (Jsite(i) .eq. 0) Then
+           If (I .ne. Zero_site) Then
+            If (iquit.eq.0) Write(6,'(/)')
+            Write(6,'("Warning - No ocean loading coefficients for ",   &
+     &         A8,/, "Will continue but you really should update file ", &
+     &         A128,/)')  Dbsites(I), RTDM_OC_FILE
+            Iquit = Iquit + 1
+             Do k = 1, 11
+              SITOAM(k,I)   = 0.D0
+              SITHOA(k,1,I) = 0.D0
+              SITHOA(k,2,I) = 0.D0
+              SITOPH(k,I)   = 0.D0
+              SITHOP(k,1,I) = 0.D0
+              SITHOP(k,2,I) = 0.D0
+             Enddo
+           Endif
+        Endif
 !        If (Iquit .gt. 0) Then
 !            Write(6,'(/,"!!! Missing ocean loading!!! Update file ",/,   &
-!    &       10X, A80,/,3X, " and rerun Calc!!!",/ )') OC_file
+!    &       10X, A80,/,3X, " and rerun Calc!!!",/ )') RTDM_OC_FILE
 !            Call TERMINATE_CALC( 'dOCNIN ',int2(0), int2(0))
 !        Endif
-!!*   ENDDO
+      ENDDO
 !
        Go to 270
 !
@@ -1702,7 +1722,6 @@
 !*************************************************************************
       SUBROUTINE dANTILT(Kjob, Krr)
       Implicit None
-!!! Subroutine not used. Kept for possible future use !!!
 !
       INCLUDE 'cmxst11.i'
 !        Variables 'from':
@@ -1713,9 +1732,10 @@
 !           2. Dbtilt(2,Max_Stat)  - Antenna fixed axis tilts, in arc-minutes.
 !                                    For alt-az mounts, 1 => East tilt,
 !                                    2 => North tilt.
-!?    INCLUDE 'param11.i'
+      INCLUDE 'param11.i'
+      INCLUDE 'rtdm_paths.i'
 !        Variables 'from':
-!           1. A_tilts -  Ascii name of the antenna fixed axis tilts file.
+!           1. RTDM_TILT_FILE -  Ascii name of the antenna fixed axis tilts file.
 !
       INCLUDE 'cmxut11.i'
 !        Variables 'to':
@@ -1775,8 +1795,8 @@
 !
 !  Open the input file of antenna tilts
        If (Kjob .eq. 1) Iunit = get4unit()
-!***       Open (Unit=Iunit, File=A_tilts, Status='old', Action='READ',     &
-!***     &       Err=240, Iostat=ios)
+       Open (Unit=Iunit, File=RTDM_TILT_FILE, Status='old', Action='READ',     &
+     &       Err=240, Iostat=ios)
 !
 !   Skip first 4 lines
        Do I = 1, 4
@@ -1885,12 +1905,12 @@
 !*************************************************************************
       SUBROUTINE dOPTLIN(Kjob, Kerr)
       Implicit None
-!!! Subroutine not used. Kept for possible future use !!!!
 !
       INCLUDE 'cmxst11.i'
 !
-!?    INCLUDE 'param11.i'
-!       1. OPTL_file - Name of the ocean pole tide loading coefficients
+      INCLUDE 'param11.i'
+      INCLUDE 'rtdm_paths.i'
+!       1. RTDM_OPTL_FILE - Name of the ocean pole tide loading coefficients
 !                      file.
 !
       Character*80 Inbuf
@@ -1918,8 +1938,8 @@
 !
 !  Open the Ocean pole tide loading data file
        If (Kjob .eq. 1) Iunit = get4unit()
-!***       Open (Unit=Iunit, File=OPTL_file, Status='old', Action='READ',   &
-!***     &       Err=240, Iostat=Ios)
+       Open (Unit=Iunit, File=RTDM_OPTL_FILE, Status='old', Action='READ',   &
+     &       Err=240, Iostat=Ios)
 !
   50   Continue
        Read(Iunit,'(A80)',Err=180,End=250) Inbuf
@@ -1967,21 +1987,21 @@
 !
         iquit = 0
 !
-!**      do I = 1, Numsit
-!**        if (Jsite(I) .eq. 0 .and. I .ne. Zero_site) Then
-!**          If (iquit.eq.0) Write(6,'(/)')
-!**          Write(6,'("Warning - No ocean pole tide loading coefficients for ",  &
-!**     &         A8,/, "Will continue but you really should update file ", &
-!**     &         A50,/)')  Dbsites(I), OPTL_file
-!**          Iquit = Iquit + 1
-!**        endif
+      do I = 1, Numsit
+        if (Jsite(I) .eq. 0 .and. I .ne. Zero_site) Then
+          If (iquit.eq.0) Write(6,'(/)')
+          Write(6,'("Warning - No ocean pole tide loading coefficients for ",  &
+     &         A8,/, "Will continue but you really should update file ", &
+     &         A50,/)')  Dbsites(I), RTDM_OPTL_FILE
+          Iquit = Iquit + 1
+        endif
 !        If (Iquit .gt. 0) Then
 !            Write(6,'(/,"!!! Missing ocean pole tide loading!!! You"   &
 !    &       " really should update file ",/, A80, /,                   &
-!    &       " and rerun Calc!!!",/ )') OPTL_file
+!    &       " and rerun Calc!!!",/ )') RTDM_OPTL_FILE
 !!!!!        Call TERMINATE_CALC( 'OPTLIN ',int2(0), int2(0))
 !        Endif
-!**      enddo
+      enddo
 !
 !
 !      Write(6,'(" OPTLIN: Ocean pole tide loading coefficients: ")')

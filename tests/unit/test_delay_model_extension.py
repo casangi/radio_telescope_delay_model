@@ -7,7 +7,10 @@ import pytest
 from astropy.time import Time
 
 from radio_telescope_delay_model.calculate_uvw import _packaged_ephemeris_path
-from radio_telescope_delay_model.delay_model_cpp import almacalc, calc_available
+from radio_telescope_delay_model.delay_model_cpp import (
+    calc_available,
+    calc_delay_model,
+)
 from radio_telescope_delay_model.earth_orientation import (
     earth_orientation_parameters,
 )
@@ -33,7 +36,7 @@ def _run():
     geometric = np.empty((n_time, n_antenna))
     dry = np.empty((n_time, n_antenna))
     wet = np.empty((n_time, n_antenna))
-    almacalc(
+    calc_delay_model(
         ANTENNA_POSITION.mean(axis=0),
         ANTENNA_POSITION,
         np.zeros(n_antenna),
@@ -86,7 +89,7 @@ def test_input_validation():
     eop = earth_orientation_parameters(TIME)
     out = np.empty((len(TIME), n_antenna))
     with pytest.raises(Exception, match="antenna_position"):
-        almacalc(
+        calc_delay_model(
             ANTENNA_POSITION.mean(axis=0),
             ANTENNA_POSITION[:, :2].copy(),
             np.zeros(n_antenna),

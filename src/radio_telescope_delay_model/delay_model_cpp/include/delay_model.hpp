@@ -24,7 +24,18 @@ namespace rtdm::delay_model {
 // radians for the source per time, EOP (arcsec, arcsec, seconds), leap
 // seconds (TAI - UTC), axis offsets in metres and the JPL DE421 ephemeris
 // path. Thread safe via internal serialization.
-void alma_delay_model(
+//
+// The trailing per-antenna station parameters mirror what difxcalc11's
+// dinit.f loads from its station catalogs; each pointer may be null:
+//   axis_type                     [n_antenna]      CALC axis codes
+//                                 (1 EQUA, 2 XYNS, 3 AZEL, 4 XYEW, 5 RICH);
+//                                 null -> all 3 (alt-az).
+//   ocean_vertical_amplitude      [n_antenna,11]   metres; null -> zeros.
+//   ocean_vertical_phase          [n_antenna,11]   radians.
+//   ocean_horizontal_amplitude    [n_antenna,2,11] (west, south) metres.
+//   ocean_horizontal_phase        [n_antenna,2,11] radians.
+//   ocean_pole_tide_coefficients  [n_antenna,6]    Desai u_r/u_n/u_e Re,Im.
+void calc_delay_model(
     const double reference_position[3],
     std::size_t n_antenna,
     const double* antenna_x,
@@ -45,6 +56,12 @@ void alma_delay_model(
     const std::string& ephemeris_path,
     double* geometric_delay,
     double* dry_delay,
-    double* wet_delay);
+    double* wet_delay,
+    const int* axis_type = nullptr,
+    const double* ocean_vertical_amplitude = nullptr,
+    const double* ocean_vertical_phase = nullptr,
+    const double* ocean_horizontal_amplitude = nullptr,
+    const double* ocean_horizontal_phase = nullptr,
+    const double* ocean_pole_tide_coefficients = nullptr);
 
 }  // namespace rtdm::delay_model

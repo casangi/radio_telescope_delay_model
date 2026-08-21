@@ -1,0 +1,22 @@
+# Run MacOS tests using the shared VIPER template (as astroviper does).
+# NOTE: the macOS runners ship gfortran as gfortran-14 without the bare
+# `gfortran` alias; if the template's build step cannot find a Fortran
+# compiler, set FC=gfortran-14 in the template or add the alias step here.
+name: MacOS Tests
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+
+jobs:
+  call-testing-macos:
+    uses: nrao/gh-actions-templates-public/.github/workflows/python-testing-macos-template.yml@main
+    with:
+      # The C++ extension requires C++23 (Apple Clang >= 16).
+      xcode-version: "26"

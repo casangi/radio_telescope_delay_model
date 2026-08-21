@@ -1,0 +1,47 @@
+[project]
+name = "radio_telescope_delay_model"
+version = "0.1.0"
+description = "Radio telescope delay model: uvw and delays via CALC11 and astropy"
+authors = [{ name = "Jan-Willem Steeb", email = "jsteeb@nrao.edu" }]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+
+dependencies = [
+  "numpy",
+  "astropy",
+]
+
+[project.optional-dependencies]
+all = [
+  "pytest",
+  "pytest-cov",
+  "pytest-html",
+  "pre-commit",
+]
+
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+build.verbose = true
+cmake.build-type = "Release"
+# Pin the Fortran optimisation exactly to the CALC11 reference build (-O2):
+# with CMake's default Release "-O3" ahead of the per-source -O2 the resulting
+# objects differed from the reference by a few ULPs in the geometric delay.
+cmake.args = ["-DCMAKE_Fortran_FLAGS_RELEASE=-O2"]
+wheel.packages = ["src/radio_telescope_delay_model"]
+sdist.include = ["src/radio_telescope_delay_model/data/*"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+# Same rule set as the other VIPER packages (see astroviper's pyproject):
+#   E4/E7/E9 -- pycodestyle errors; F -- pyflakes; B -- bugbear;
+#   UP -- pyupgrade; I -- import sorting.
+select = ["E4", "E7", "E9", "F", "B", "UP", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,24 @@
+# Run Linux tests using the shared VIPER template (as astroviper does).
+# The runners ship gfortran, which the CALC11 core needs.
+name: Linux Tests
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+
+jobs:
+  call-testing-linux:
+    uses: nrao/gh-actions-templates-public/.github/workflows/python-testing-linux-template.yml@main
+    with:
+      cov_project: "radio_telescope_delay_model"
+      test-path: "tests/"
+      # The C++ extension requires C++23 (GCC >= 14).
+      gcc-version: "14"
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

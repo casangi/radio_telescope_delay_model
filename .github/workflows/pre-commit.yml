@@ -1,0 +1,28 @@
+# Run every hook in .pre-commit-config.yaml over the full repository, so CI
+# enforces exactly what `pre-commit install` enforces locally (the same
+# workflow the other VIPER packages use).
+name: pre-commit
+
+on: [push, pull_request]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pre-commit
+        run: python -m pip install --upgrade pip pre-commit
+
+      - name: Cache pre-commit hook environments
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-py3.11-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run pre-commit on the whole repository
+        run: pre-commit run --all-files --show-diff-on-failure

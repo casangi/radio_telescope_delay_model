@@ -1,3 +1,7 @@
+# The packaged CALC data files are binary / byte-exact reference data; the
+# whitespace fixers corrupted DE421_little_Endian once by treating it as text.
+exclude: ^src/radio_telescope_delay_model/data/
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0

@@ -1,19 +1,19 @@
 $$    OCEAN LOADING CATALOG for difx:
 $$     Last updated 2015-March-16 at GSFC
-$$
-$$  To add additional stations:
+$$     
+$$  To add additional stations: 
 $$      go to http://holt.oso.chalmers.se/loading/
 $$      select 'TPXO.7.2'
 $$      select 'vertical and horizontal displacements'
 $$      select 'NO' for centre of mass motion
 $$      choose 'BLQ' output
 $$      Enter site name, X, Y, Z (meters)
-$$      Format (A8,16X,1X,3F16.3), X,Y,Z left justified as below:
+$$      Format (A8,16X,1X,3F16.3), X,Y,Z left justified as below: 
 $$ 'MADRID64                      4849092.701     -360180.778     4115108.983'
-$$
+$$   
 $$   For difxcalc usage, edit the output to add the 2-digit code in
-$$    columns 13-14 of the line that contains the station name.
-$$
+$$    columns 13-14 of the line that contains the station name. 
+$$   
 $$-----------------------------------------------------------------------------
 $$
 $$ Ocean loading displacements
@@ -32,21 +32,21 @@ $$   TANGENTL    EW
 $$   TANGENTL    NS
 $$
 $$ Displacement is defined positive in upwards, South and West direction.
-$$ The phase lag is relative to Greenwich and lags positive. The
-$$ Gutenberg-Bullen Greens function is used. In the ocean tide model the
-$$ deficit of tidal water mass has been corrected by subtracting a uniform
+$$ The phase lag is relative to Greenwich and lags positive. The 
+$$ Gutenberg-Bullen Greens function is used. In the ocean tide model the 
+$$ deficit of tidal water mass has been corrected by subtracting a uniform 
 $$ layer of water with a certain phase lag globally.
 $$
 $$ Complete <model name> : No interpolation of ocean model was necessary
-$$ <model name>_PP       : Ocean model has been interpolated near the station
+$$ <model name>_PP       : Ocean model has been interpolated near the station 
 $$                         (PP = Post-Processing)
-$$
+$$ 
 $$ Ocean tide model: TPXO.7.2, Ssa tide from TPXO.6.2
-$$
+$$ 
 $$
 $$ END HEADER
 $$
-  ALGOPARK
+  ALGOPARK  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ ALGOPARK,                  RADI TANG  lon/lat:  281.9273   45.9555  224.046
@@ -57,7 +57,7 @@ $$ ALGOPARK,                  RADI TANG  lon/lat:  281.9273   45.9555  224.046
   -162.1 -155.6  175.9 -163.0 -100.8 -159.9 -109.3  165.8  100.8   59.0    9.3
     29.9   69.2   36.2   71.1  121.9 -176.0  124.9  166.2   73.3   20.7    3.9
 $$
-  AUSTINTX
+  AUSTINTX  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ AUSTINTX,                  RADI TANG  lon/lat:  262.3043   30.3393  189.544
@@ -79,7 +79,7 @@ $$ BADARY,                    RADI TANG  lon/lat:  102.2339   51.7703  821.607
    153.4  131.4  155.8  126.3 -108.4 -136.2 -111.4 -152.7  -27.0  -54.8 -155.7
     82.3   65.8   89.4   65.6  153.5  131.1  150.8  117.3  158.2  112.5   13.0
 $$
-  BLOOMIND
+  BLOOMIND  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ BLOOMIND,                  RADI TANG  lon/lat:  273.5016   39.1793  217.872
@@ -101,7 +101,7 @@ $$ BR-VLBA,                   RADI TANG  lon/lat:  240.3167   48.1312  250.478
   -107.0  -70.8 -129.9  -75.7 -112.8 -126.9 -115.2 -134.7  152.4  141.9  146.2
    129.0  123.0  110.1  118.5 -165.7  179.0 -168.1  171.1  117.6   71.2    8.6
 $$
-  CARROLGA
+  CARROLGA  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ CARROLGA,                  RADI TANG  lon/lat:  274.8904   33.5726  299.490
@@ -123,7 +123,7 @@ $$ CRIMEA,                    RADI TANG  lon/lat:   33.9796   44.3976   50.202
     28.7   39.0    9.0   35.1  119.4   67.5  113.7   32.6 -168.5 -156.6 -176.4
   -105.1  -79.1 -130.5  -87.0   30.2   24.3   29.2   36.2 -165.9 -167.9 -177.4
 $$
-  CTVASBAY
+  CTVASBAY  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ CTVASBAY,                  RADI TANG  lon/lat:  284.0811   45.4000   47.298
@@ -200,7 +200,7 @@ $$ EFLSBERG,                  RADI TANG  lon/lat:    6.8836   50.5248  416.722
     87.3  124.9   66.9  122.1   92.0   34.3   88.5  -22.8 -173.7 -166.4 -177.9
     39.0   63.7   38.9   57.9   56.1  -34.0   47.8 -160.9   68.5   18.8    3.3
 $$
-  ELY
+  ELY       
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ ELY,                       RADI TANG  lon/lat:  245.1570   39.2932 1886.083
@@ -222,7 +222,7 @@ $$ FD-VLBA,                   RADI TANG  lon/lat:  256.0552   30.6350 1606.421
    125.3  124.4   97.8  117.5 -143.4 -160.8 -146.1 -170.5  125.6   93.9   15.0
     92.2  106.8   83.5  103.1  134.5  139.5  130.0  151.7   60.0   26.0    3.6
 $$
-  FLAGSTAF
+  FLAGSTAF  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ FLAGSTAF,                  RADI TANG  lon/lat:  248.3652   35.2147 2144.844
@@ -233,7 +233,7 @@ $$ FLAGSTAF,                  RADI TANG  lon/lat:  248.3652   35.2147 2144.844
   -153.8 -102.8  164.7  -98.8 -133.5 -149.2 -135.9 -157.8  132.2  106.9   18.2
     88.7  109.7   74.4  104.8  164.3  156.9  161.2  156.0   73.4   33.4    4.6
 $$
-  FTD 7900
+  FTD 7900  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ FTD 7900,                  RADI TANG  lon/lat:  256.0527   30.6358 1583.269
@@ -266,7 +266,7 @@ $$ GBT-VLBA,                  RADI TANG  lon/lat:  280.1602   38.4331  823.688
   -174.7 -169.3  162.7 -178.3  -90.8  154.5 -103.0   93.8  117.3   74.1   11.5
    -50.5   26.0 -123.0   31.1  125.6 -138.3  129.2 -171.5   14.5   -3.2    0.4
 $$
-  GILCREEK
+  GILCREEK  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ GILCREEK,                  RADI TANG  lon/lat:  212.5025   64.9784  332.102
@@ -277,7 +277,7 @@ $$ GILCREEK,                  RADI TANG  lon/lat:  212.5025   64.9784  332.102
     66.2  -41.9   31.4  -49.8   -9.5  -37.4  -13.3  -54.4  172.2  155.9  169.8
    -82.9  -48.4 -102.9  -54.6 -103.8 -116.1 -105.7 -121.7  127.8   98.7   15.8
 $$
-  ALASKANO
+  ALASKANO  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ GILCREEK,                  RADI TANG  lon/lat:  212.5025   64.9784  332.102
@@ -288,7 +288,7 @@ $$ GILCREEK,                  RADI TANG  lon/lat:  212.5025   64.9784  332.102
     66.2  -41.9   31.4  -49.8   -9.5  -37.4  -13.3  -54.4  172.2  155.9  169.8
    -82.9  -48.4 -102.9  -54.6 -103.8 -116.1 -105.7 -121.7  127.8   98.7   15.8
 $$
-  GOLDVENU  GV
+  GOLDVENU  GV 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ GOLDVENU,                  RADI TANG  lon/lat:  243.2051   35.2477 1062.840
@@ -321,7 +321,7 @@ $$ HARTRAO,                   RADI TANG  lon/lat:   27.6854  -25.8897 1415.710
     49.9  -54.9   47.1  -57.2 -127.5 -167.1 -131.1  165.3  -69.8  -95.1 -174.4
     68.9   86.1   61.0   79.9  138.8  152.3  133.0 -123.6  176.6  171.2  174.3
 $$
-  HARTDBBC  HD
+  HARTDBBC  HD 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ HARTRAO,                   RADI TANG  lon/lat:   27.6854  -25.8897 1415.710
@@ -332,7 +332,7 @@ $$ HARTRAO,                   RADI TANG  lon/lat:   27.6854  -25.8897 1415.710
     49.9  -54.9   47.1  -57.2 -127.5 -167.1 -131.1  165.3  -69.8  -95.1 -174.4
     68.9   86.1   61.0   79.9  138.8  152.3  133.0 -123.6  176.6  171.2  174.3
 $$
-  HATCREEK
+  HATCREEK  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ HATCREEK,                  RADI TANG  lon/lat:  238.5295   40.8173 1009.269
@@ -343,7 +343,7 @@ $$ HATCREEK,                  RADI TANG  lon/lat:  238.5295   40.8173 1009.269
   -117.6  -76.7 -143.2  -80.9 -120.9 -134.5 -123.2 -141.6  148.1  136.3  108.2
     94.4  110.8   77.8  105.7  178.9  165.0  176.0  158.6   80.6   39.3    5.3
 $$
-  HOHNBERG
+  HOHNBERG  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ HOHNBERG,                  RADI TANG  lon/lat:   11.0179   47.8010 1005.731
@@ -354,7 +354,7 @@ $$ HOHNBERG,                  RADI TANG  lon/lat:   11.0179   47.8010 1005.731
     80.1  113.0   59.4  111.1  102.4   30.4   98.0  -32.0 -178.1 -164.1 -177.7
    -40.6   -6.6  -39.5  -12.2   48.1    2.7   44.1  143.7  155.4 -178.0 -177.3
 $$
-  HRAS 085
+  HRAS 085  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ HRAS 085,                  RADI TANG  lon/lat:  256.0527   30.6367 1595.006
@@ -376,7 +376,7 @@ $$ KATH12M,                   RADI TANG  lon/lat:  132.1524  -14.3755  189.272
     82.8  107.6   70.4  105.3 -170.5  170.3 -172.2  160.0  -29.4  -65.3 -170.1
     49.0  105.7   14.0  101.0  -10.3  -15.9  -16.3  -28.1 -172.1 -170.3 -178.4
 $$
-  KIRSBERG
+  KIRSBERG  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ KIRSBERG,                  RADI TANG  lon/lat:   14.2862   51.2142  261.201
@@ -420,7 +420,7 @@ $$ LA-VLBA,                   RADI TANG  lon/lat:  253.7544   35.7751 1962.432
   -167.4 -167.8  155.5  176.1 -135.8 -152.8 -138.5 -162.3  130.6  102.3   17.1
     94.6  109.8   82.9  105.5  151.4  147.4  147.6  151.3   84.7   35.2    4.6
 $$
-  LEONRDOK
+  LEONRDOK  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ LEONRDOK,                  RADI TANG  lon/lat:  264.2049   35.9090  226.183
@@ -431,7 +431,7 @@ $$ LEONRDOK,                  RADI TANG  lon/lat:  264.2049   35.9090  226.183
   -179.2  173.9  154.3  164.8 -139.7 -161.1 -143.5 -171.7  128.0   94.2   15.7
    132.4  114.9  120.4  110.9  107.4   95.0  103.0  130.7   74.7   23.5    2.9
 $$
-  MAMMOTHL
+  MAMMOTHL  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MAMMOTHL,                  RADI TANG  lon/lat:  241.0548   37.6416 2310.396
@@ -442,7 +442,7 @@ $$ MAMMOTHL,                  RADI TANG  lon/lat:  241.0548   37.6416 2310.396
   -125.6  -75.5 -155.5  -78.8 -126.0 -140.0 -128.2 -147.6  141.6  124.5   35.4
     92.0  110.4   75.8  105.2  177.6  164.8  174.5  159.5   73.3   35.6    4.9
 $$
-  MCD 7850
+  MCD 7850  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MCD 7850,                  RADI TANG  lon/lat:  255.9849   30.6805 2004.208
@@ -453,7 +453,7 @@ $$ MCD 7850,                  RADI TANG  lon/lat:  255.9849   30.6805 2004.208
    125.7  124.5   98.1  117.6 -143.3 -160.7 -146.1 -170.4  125.6   93.9   14.9
     92.1  106.8   83.2  103.1  135.0  139.8  130.5  151.7   60.2   26.0    3.6
 $$
-  MILESMON
+  MILESMON  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MILESMON,                  RADI TANG  lon/lat:  254.1392   46.3965  703.438
@@ -475,7 +475,7 @@ $$ AIRA,                      RADI TANG  lon/lat:  130.5999   31.8238  322.405
     30.5   54.2   28.9   46.2 -165.3  172.7 -168.6  158.4  -47.3  -59.7 -161.3
    -67.4  -43.9  -76.2  -45.7   94.4   77.3   92.4   65.4   39.8   30.7    3.9
 $$
-  AZORES
+  AZORES    
 $$ TPXO.7.2_PP ID: 2014-01-17 20:55:23
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ AZORES,                    RADI TANG  lon/lat:  334.3424   37.7409   58.597
@@ -486,7 +486,7 @@ $$ AZORES,                    RADI TANG  lon/lat:  334.3424   37.7409   58.597
    -82.4  -53.9 -101.7  -56.7 -134.8  160.9 -137.8  104.9   64.7   -3.4    1.4
    -64.7  -22.1  -89.1  -24.5  -43.0 -125.8  -51.9 -177.5   -2.4   -8.2   -2.1
 $$
-  BERMUDA
+  BERMUDA   
 $$ TPXO.7.2_PP ID: 2014-01-17 20:55:29
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ BERMUDA,                   RADI TANG  lon/lat:  295.3305   32.3612  -30.769
@@ -497,7 +497,7 @@ $$ BERMUDA,                   RADI TANG  lon/lat:  295.3305   32.3612  -30.769
    156.5  167.0  142.4  158.8  149.7  108.3  149.4   87.9  137.2   71.2    8.5
   -145.8 -109.4 -170.4 -111.0  -86.6 -114.9  -89.9 -149.6    6.4   -1.5    0.1
 $$
-  BLKBUTTE
+  BLKBUTTE  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:55:35
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ BLKBUTTE,                  RADI TANG  lon/lat:  244.2802   33.6637  489.346
@@ -508,7 +508,7 @@ $$ BLKBUTTE,                  RADI TANG  lon/lat:  244.2802   33.6637  489.346
    169.8  122.4  128.7  113.5 -133.2 -148.5 -135.8 -156.8  131.6  108.6   18.6
     89.0  111.3   73.1  105.6  174.8  165.1  172.2  161.6   61.2   31.0    4.4
 $$
-  BREST
+  BREST     
 $$ TPXO.7.2_PP ID: 2014-01-17 20:56:07
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ BREST,                     RADI TANG  lon/lat:  355.4962   48.4079  104.412
@@ -519,7 +519,7 @@ $$ BREST,                     RADI TANG  lon/lat:  355.4962   48.4079  104.412
     95.3  129.3   74.9  128.6   88.3   -6.3   82.1  -71.4  175.7 -170.2 -178.5
     33.6   67.8   21.3   66.5   21.5  -89.2   12.3 -154.0   28.4   -0.9    0.8
 $$
-  CARNUSTY
+  CARNUSTY  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:56:26
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ CARNUSTY,                  RADI TANG  lon/lat:  357.2170   56.4785   57.822
@@ -541,7 +541,7 @@ $$ CHICHI10,                  RADI TANG  lon/lat:  142.1950   27.0672  107.522
    -48.3  -16.3  -59.7  -19.8  164.3  142.5  160.4  134.4  -47.0  -66.8 -164.2
    -40.8   27.2  -77.7   34.9  116.6  105.6  113.6   98.2    6.3   10.5    2.1
 $$
-  CHLBOLTN
+  CHLBOLTN  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:56:49
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ CHLBOLTN,                  RADI TANG  lon/lat:  358.5616   51.1450  146.794
@@ -552,7 +552,7 @@ $$ CHLBOLTN,                  RADI TANG  lon/lat:  358.5616   51.1450  146.794
    129.9  175.4  109.0  176.5  107.1    6.8  101.6  -53.5  171.5 -173.0 -178.8
     91.1  105.9   88.5  106.2   62.4  -60.5   56.6 -132.9   85.7   25.6    4.8
 $$
-  CTVASTJ
+  CTVASTJ   
 $$ TPXO.7.2_PP ID: 2014-01-17 20:57:33
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ CTVASTJ,                   RADI TANG  lon/lat:  307.3208   47.5952  155.060
@@ -563,7 +563,7 @@ $$ CTVASTJ,                   RADI TANG  lon/lat:  307.3208   47.5952  155.060
    -31.0  174.9  -73.9  160.2  -61.1 -122.8  -67.0  162.8   42.1   25.5    4.7
      6.6   48.3   -7.9   47.0  -32.3 -115.6  -67.3 -168.0   17.0   -2.1    1.2
 $$
-  DEADMANL
+  DEADMANL  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:57:40
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ DEADMANL,                  RADI TANG  lon/lat:  243.7211   34.2550  835.558
@@ -607,7 +607,7 @@ $$ FORTLEZA,                  RADI TANG  lon/lat:  321.5741   -3.8779   23.078
     19.8   42.7    5.4   37.2  138.3  -12.8  130.3  -41.7  172.3  166.1  163.1
     51.6   83.5   28.1   80.6  120.0   92.5  113.7   68.1 -179.5  176.7  178.3
 $$
-  FORTORDS
+  FORTORDS  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:58:35
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ FORTORDS,                  RADI TANG  lon/lat:  238.2278   36.5894  250.114
@@ -618,7 +618,7 @@ $$ FORTORDS,                  RADI TANG  lon/lat:  238.2278   36.5894  250.114
   -136.2  -90.5 -167.8  -94.8 -127.3 -141.0 -129.4 -148.1  142.9  128.4   49.5
     94.5  111.5   77.6  106.3 -176.4  169.8 -179.4  163.4   66.5   34.0    4.8
 $$
-  GGAO7108
+  GGAO7108  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:58:56
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ GGAO7108,                  RADI TANG  lon/lat:  283.1735   39.0219   12.443
@@ -651,7 +651,7 @@ $$ GIFU3,                     RADI TANG  lon/lat:  136.7395   35.4623   53.845
      3.7   40.3   19.9   34.8 -168.0  164.3 -169.6  160.9  -42.4  -50.7 -143.5
    -72.0  -50.0  -80.4  -61.7   86.9   67.7   84.6   55.3   45.2   29.9    4.0
 $$
-  GORF7102
+  GORF7102  
 $$ TPXO.7.2_PP ID: 2014-01-17 20:59:50
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ GORF7102,                  RADI TANG  lon/lat:  283.1719   39.0207   17.937
@@ -673,7 +673,7 @@ $$ GORF7102,                  RADI TANG  lon/lat:  283.1719   39.0207   17.937
   -175.0 -166.6  165.0 -172.5  -42.1    3.7  -45.6   44.0  113.3   68.6   10.8
    -20.4   15.4  -55.4   -5.1  172.4 -142.7 -169.1 -166.0   -0.3  -11.8   -0.4
 $$
-  GRASSE
+  GRASSE    
 $$ TPXO.7.2_PP ID: 2014-01-17 21:00:04
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ GRASSE,                    RADI TANG  lon/lat:    6.9207   43.7546 1318.623
@@ -684,7 +684,7 @@ $$ GRASSE,                    RADI TANG  lon/lat:    6.9207   43.7546 1318.623
     77.3  106.0   58.3  103.1   91.2    2.7   86.9  -64.9  173.5 -158.2 -177.7
    -67.5  -28.5  -86.4  -34.7   70.6  127.4   66.5  133.9 -173.5 -165.1 -176.3
 $$
-  HALEAKAL
+  HALEAKAL  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:00:16
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ HALEAKAL,                  RADI TANG  lon/lat:  203.7439   20.7076 3067.829
@@ -695,7 +695,7 @@ $$ HALEAKAL,                  RADI TANG  lon/lat:  203.7439   20.7076 3067.829
    169.5 -164.9  166.7 -167.3   39.3   12.7   36.5   -2.1 -163.7   93.0    6.6
     88.5  120.4   81.4  114.1  108.4   90.6  105.0   82.2   -0.9    1.9    0.3
 $$
-  HAYSTACK  HS
+  HAYSTACK  HS 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:00:36
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ HAYSTACK,                  RADI TANG  lon/lat:  288.5118   42.6233  116.672
@@ -739,7 +739,7 @@ $$ HOBART26,                  RADI TANG  lon/lat:  147.4405  -42.8036   65.090
    103.3  134.5  102.4  128.5 -160.8 -166.0 -169.5  179.8  -23.1  -45.4 -161.3
    102.4   96.5   95.3   93.4 -141.3 -160.3 -142.2 -171.7 -167.1 -169.7 -178.1
 $$
-  HOFN
+  HOFN      
 $$ TPXO.7.2_PP ID: 2014-01-17 21:02:13
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ HOFN,                      RADI TANG  lon/lat:  344.8026   64.2677   78.382
@@ -750,7 +750,7 @@ $$ HOFN,                      RADI TANG  lon/lat:  344.8026   64.2677   78.382
   -175.9 -129.1  158.5 -127.0   96.6  131.1  112.2  107.7  113.3   59.9   12.9
    147.7 -169.0  121.5 -170.3  112.3   14.7  104.4  -44.0  149.0  156.3  170.2
 $$
-  HOHENFRG
+  HOHENFRG  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:02:23
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ HOHENFRG,                  RADI TANG  lon/lat:   10.4765   53.0507  149.868
@@ -772,7 +772,7 @@ $$ JPL MV1,                   RADI TANG  lon/lat:  241.8267   34.2051  424.245
   -165.4 -152.3  153.1 -146.3 -131.6 -146.3 -134.1 -154.1  134.7  114.5   22.2
     96.6  113.7   80.4  108.1 -176.3  171.4 -179.2  165.7   65.7   35.0    4.8
 $$
-  KAINAN    KY
+  KAINAN    KY 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:03:10
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KAINAN,                    RADI TANG  lon/lat:  135.2299   34.1560   60.449
@@ -783,7 +783,7 @@ $$ KAINAN,                    RADI TANG  lon/lat:  135.2299   34.1560   60.449
      6.5   43.0   38.9   39.0 -171.4  147.5 -172.2  158.6  -41.4  -52.6 -152.0
    -73.0  -72.5  -75.9  -48.0   81.6   51.5   82.0   54.1   48.0   32.7    4.3
 $$
-  KANOZAN
+  KANOZAN   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:03:31
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KANOZAN,                   RADI TANG  lon/lat:  139.9530   35.2551  373.230
@@ -794,7 +794,7 @@ $$ KANOZAN,                   RADI TANG  lon/lat:  139.9530   35.2551  373.230
    -20.8   20.0  -41.9   13.5 -174.1  164.0 -174.5  159.3  -36.9  -45.2 -126.0
    -82.6  -69.4  -79.7  -66.5   85.8   66.8   83.8   49.6   45.4   31.8    4.1
 $$
-  KARLBURG
+  KARLBURG  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:04:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KARLBURG,                  RADI TANG  lon/lat:   13.6093   53.9836   77.074
@@ -827,7 +827,7 @@ $$ KASHIM34,                  RADI TANG  lon/lat:  140.6601   35.9559   78.426
    -13.0   26.7  -33.9   21.1 -170.9  168.6 -171.0  163.0  -34.9  -42.4  -98.5
    -77.1  -65.4  -89.5  -71.9   92.3   73.6   91.0   62.4   37.9   28.8    3.9
 $$
-  KASHIMA
+  KASHIMA   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:05:17
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KASHIMA,                   RADI TANG  lon/lat:  140.6627   35.9541   80.089
@@ -838,7 +838,7 @@ $$ KASHIMA,                   RADI TANG  lon/lat:  140.6627   35.9541   80.089
    -13.1   26.7  -33.9   21.1 -170.9  168.6 -171.0  163.0  -34.9  -42.4  -98.5
    -77.0  -65.3  -89.5  -71.9   92.3   73.6   91.0   62.4   37.8   28.8    3.9
 $$
-  KAUAI
+  KAUAI     
 $$ TPXO.7.2_PP ID: 2014-01-17 21:05:23
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KAUAI,                     RADI TANG  lon/lat:  200.3348   22.1263 1168.316
@@ -849,7 +849,7 @@ $$ KAUAI,                     RADI TANG  lon/lat:  200.3348   22.1263 1168.316
    160.2 -172.0  157.0 -175.4   39.6   13.8   37.0   -0.9 -150.9   86.3    6.2
     97.0  124.9   93.6  118.9  112.8   94.5  109.6   85.4    0.0    2.2    0.4
 $$
-  KODIAK
+  KODIAK    
 $$ TPXO.7.2_PP ID: 2014-01-17 21:06:23
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KODIAK,                    RADI TANG  lon/lat:  207.5028   57.7400   31.412
@@ -860,7 +860,7 @@ $$ KODIAK,                    RADI TANG  lon/lat:  207.5028   57.7400   31.412
     88.5  124.3   60.1  114.5   45.2   19.2   39.6    5.2 -123.4   74.1    7.4
    -91.2  -56.6 -111.4  -61.5 -110.1 -121.6 -112.3 -127.3  142.6  129.3   36.9
 $$
-  KOGANEI   KG
+  KOGANEI   KG 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:06:41
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KOGANEI,                   RADI TANG  lon/lat:  139.4881   35.7106  125.418
@@ -871,7 +871,7 @@ $$ KOGANEI,                   RADI TANG  lon/lat:  139.4881   35.7106  125.418
    -13.7   26.1   -9.8   25.6 -171.8  166.5 -176.8  153.5  -37.8  -45.4 -123.2
    -81.1  -67.5  -91.6  -74.6   85.9   66.9   84.5   56.4   46.5   31.7    4.1
 $$
-  KOGANEI3  K3
+  KOGANEI3  K3 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:06:58
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KOGANEI3,                  RADI TANG  lon/lat:  139.4876   35.7070  114.546
@@ -893,7 +893,7 @@ $$ KOKEE,                     RADI TANG  lon/lat:  200.3349   22.1266 1176.595
    160.2 -172.0  157.0 -175.4   39.6   13.8   37.0   -0.9 -150.9   86.3    6.2
     97.0  124.9   93.6  119.0  112.8   94.5  109.6   85.4    0.0    2.2    0.4
 $$
-  LEFTKOK
+  LEFTKOK   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:07:04
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KOKEE,                     RADI TANG  lon/lat:  200.3349   22.1266 1176.595
@@ -904,7 +904,7 @@ $$ KOKEE,                     RADI TANG  lon/lat:  200.3349   22.1266 1176.595
    160.2 -172.0  157.0 -175.4   39.6   13.8   37.0   -0.9 -150.9   86.3    6.2
     97.0  124.9   93.6  119.0  112.8   94.5  109.6   85.4    0.0    2.2    0.4
 $$
-  KWAJAL26
+  KWAJAL26  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:07:10
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ KWAJAL26,                  RADI TANG  lon/lat:  167.4821    9.3988   57.370
@@ -915,7 +915,7 @@ $$ KWAJAL26,                  RADI TANG  lon/lat:  167.4821    9.3988   57.370
    -44.7  -42.6  -50.6  -44.1   53.5   39.4   52.7   29.9  -76.4 -132.5 -173.8
    178.8  156.5  170.1  150.2   82.3   81.0   82.2   76.6  -12.1   -8.1   -0.5
 $$
-  MARCUS    MR
+  MARCUS    MR 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:07:16
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MARCUS,                    RADI TANG  lon/lat:  153.9842   24.2899   41.517
@@ -926,7 +926,7 @@ $$ MARCUS,                    RADI TANG  lon/lat:  153.9842   24.2899   41.517
    -57.2  -29.7  -64.7  -33.1   95.1   88.1   93.0   80.5  -51.9  -74.1 -165.0
    118.3  131.3  167.6  125.3  111.7  101.1  110.2   93.2   -1.4    5.0    1.3
 $$
-  MARPOINT  MD
+  MARPOINT  MD 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:07:37
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MARPOINT,                  RADI TANG  lon/lat:  282.7694   38.3742  -13.536
@@ -970,7 +970,7 @@ $$ METSAHOV,                  RADI TANG  lon/lat:   24.3931   60.2178   79.972
     48.2   83.4   25.2   94.3  104.1   46.3   98.3    0.7 -168.5 -163.8 -177.2
    173.5 -152.2  123.4 -164.5   58.5  -41.1   57.0 -132.9   63.1   33.8    4.7
 $$
-  METSHOVI
+  METSHOVI  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:09:40
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ METSHOVI,                  RADI TANG  lon/lat:   24.3842   60.2420   59.677
@@ -981,7 +981,7 @@ $$ METSHOVI,                  RADI TANG  lon/lat:   24.3842   60.2420   59.677
     48.1   83.2   25.1   94.0  104.1   46.3   98.3    0.7 -168.4 -163.8 -177.2
    173.3 -152.3  123.5 -164.5   58.7  -41.1   57.1 -132.9   62.9   33.8    4.7
 $$
-  MIAMI20
+  MIAMI20   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:10:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MIAMI20,                   RADI TANG  lon/lat:  279.6153   25.6138  -11.794
@@ -992,7 +992,7 @@ $$ MIAMI20,                   RADI TANG  lon/lat:  279.6153   25.6138  -11.794
    179.2  176.7  158.9  171.9   31.6   38.3   33.6   17.7  129.6   93.7   14.3
   -162.4 -105.0  170.7 -103.9    5.1  -34.2    7.2  -93.3    9.2    1.6    0.7
 $$
-  MIURA     MU
+  MIURA     MU 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:10:40
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MIURA,                     RADI TANG  lon/lat:  139.6504   35.2074  105.159
@@ -1003,7 +1003,7 @@ $$ MIURA,                     RADI TANG  lon/lat:  139.6504   35.2074  105.159
    -19.3   21.2  -22.6   19.5 -173.6  164.4 -177.8  153.3  -37.5  -45.9 -129.2
    -84.0  -70.1  -85.2  -70.8   83.8   64.9   82.1   49.4   48.7   33.0    4.2
 $$
-  MIYAZAKI  MY
+  MIYAZAKI  MY 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:11:19
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MIYAZAKI,                  RADI TANG  lon/lat:  131.4828   32.0908  107.059
@@ -1014,7 +1014,7 @@ $$ MIYAZAKI,                  RADI TANG  lon/lat:  131.4828   32.0908  107.059
     41.3   63.6   40.7   55.8 -156.4 -177.8 -159.1  168.2  -45.6  -60.8 -161.0
    -70.1  -46.9  -78.6  -49.6   92.0   76.5   90.3   63.1   40.8   30.9    4.0
 $$
-  MOJ 7288
+  MOJ 7288  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MOJ 7288,                  RADI TANG  lon/lat:  243.1085   35.3312  896.170
@@ -1025,7 +1025,7 @@ $$ MOJ 7288,                  RADI TANG  lon/lat:  243.1085   35.3312  896.170
   -148.5  -85.3  169.7  -83.2 -130.2 -145.0 -132.7 -152.9  135.9  115.1   22.6
     91.2  110.9   75.3  105.6  176.6  165.3  173.6  160.8   67.3   33.4    4.7
 $$
-  MOJAVE12
+  MOJAVE12  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MOJAVE12,                  RADI TANG  lon/lat:  243.1124   35.3316  910.202
@@ -1036,7 +1036,7 @@ $$ MOJAVE12,                  RADI TANG  lon/lat:  243.1124   35.3316  910.202
   -148.5  -85.2  169.7  -83.2 -130.2 -145.0 -132.7 -152.9  135.9  115.1   22.6
     91.2  110.9   75.3  105.6  176.6  165.3  173.6  160.8   67.3   33.4    4.7
 $$
-  MOJAVLBA
+  MOJAVLBA  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ MOJAVE12,                  RADI TANG  lon/lat:  243.1124   35.3316  910.202
@@ -1058,7 +1058,7 @@ $$ NL-VLBA,                   RADI TANG  lon/lat:  268.4259   41.7714  222.233
   -163.7 -155.5  171.6 -163.7 -130.0 -155.7 -134.6 -168.4  124.4   87.5   13.8
    126.0  112.1  115.2  109.0  118.7  113.0  114.9  138.3  103.6   35.1    4.5
 $$
-  NRAO 140  GB
+  NRAO 140  GB 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO 140,                  RADI TANG  lon/lat:  280.1642   38.4378  812.495
@@ -1069,7 +1069,7 @@ $$ NRAO 140,                  RADI TANG  lon/lat:  280.1642   38.4378  812.495
   -174.7 -169.3  162.7 -178.3  -90.7  154.5 -103.0   93.7  117.3   74.1   11.5
    -50.4   26.1 -122.7   31.1  125.7 -138.3  129.3 -171.5   14.5   -3.2    0.4
 $$
-  NRAO20    GN
+  NRAO20    GN 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO20,                    RADI TANG  lon/lat:  280.1745   38.4369  806.638
@@ -1080,7 +1080,7 @@ $$ NRAO20,                    RADI TANG  lon/lat:  280.1745   38.4369  806.638
   -174.7 -169.3  162.6 -178.3  -90.5  154.3 -102.7   93.3  117.3   74.1   11.5
    -50.3   25.9 -122.0   30.9  125.8 -138.3  129.4 -171.5   14.4   -3.2    0.4
 $$
-  NRAO85 1  G1
+  NRAO85 1  G1 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO85 1,                  RADI TANG  lon/lat:  280.1718   38.4359  807.687
@@ -1091,7 +1091,7 @@ $$ NRAO85 1,                  RADI TANG  lon/lat:  280.1718   38.4359  807.687
   -174.7 -169.3  162.6 -178.3  -90.6  154.3 -102.8   93.4  117.3   74.1   11.5
    -50.4   25.9 -122.2   31.0  125.8 -138.3  129.4 -171.5   14.5   -3.2    0.4
 $$
-  LEFT85 1
+  LEFT85 1  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO85 1,                  RADI TANG  lon/lat:  280.1718   38.4359  807.687
@@ -1102,7 +1102,7 @@ $$ NRAO85 1,                  RADI TANG  lon/lat:  280.1718   38.4359  807.687
   -174.7 -169.3  162.6 -178.3  -90.6  154.3 -102.8   93.4  117.3   74.1   11.5
    -50.4   25.9 -122.2   31.0  125.8 -138.3  129.4 -171.5   14.5   -3.2    0.4
 $$
-  NRAO85 3  G3
+  NRAO85 3  G3 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO85 3,                  RADI TANG  lon/lat:  280.1566   38.4296  785.847
@@ -1113,7 +1113,7 @@ $$ NRAO85 3,                  RADI TANG  lon/lat:  280.1566   38.4296  785.847
   -174.7 -169.3  162.7 -178.3  -90.8  154.5 -103.0   93.9  117.3   74.1   11.5
    -50.6   26.0 -123.2   31.1  125.6 -138.3  129.1 -171.5   14.5   -3.2    0.4
 $$
-  WIDE85 3
+  WIDE85 3  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO85 3,                  RADI TANG  lon/lat:  280.1566   38.4296  785.847
@@ -1124,7 +1124,7 @@ $$ NRAO85 3,                  RADI TANG  lon/lat:  280.1566   38.4296  785.847
   -174.7 -169.3  162.7 -178.3  -90.8  154.5 -103.0   93.9  117.3   74.1   11.5
    -50.6   26.0 -123.2   31.1  125.6 -138.3  129.1 -171.5   14.5   -3.2    0.4
 $$
-  VLBA85 3
+  VLBA85 3  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ NRAO85 3,                  RADI TANG  lon/lat:  280.1566   38.4296  785.847
@@ -1146,7 +1146,7 @@ $$ OV-VLBA,                   RADI TANG  lon/lat:  241.7229   37.2317 1196.313
   -127.6  -75.0 -159.0  -78.0 -126.8 -141.0 -129.1 -148.7  140.4  122.3   30.9
     91.6  110.3   75.5  105.2  176.8  164.5  173.7  159.4   72.6   35.2    4.8
 $$
-  OVR 7853
+  OVR 7853  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ OVR 7853,                  RADI TANG  lon/lat:  241.7062   37.2326 1178.057
@@ -1157,7 +1157,7 @@ $$ OVR 7853,                  RADI TANG  lon/lat:  241.7062   37.2326 1178.057
   -127.6  -75.1 -159.0  -78.0 -126.8 -141.0 -129.1 -148.7  140.4  122.3   31.0
     91.6  110.3   75.5  105.2  176.9  164.5  173.7  159.4   72.6   35.2    4.8
 $$
-  OVRO 130  OO
+  OVRO 130  OO 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ OVRO 130,                  RADI TANG  lon/lat:  241.7173   37.2315 1200.783
@@ -1168,7 +1168,7 @@ $$ OVRO 130,                  RADI TANG  lon/lat:  241.7173   37.2315 1200.783
   -127.6  -75.0 -159.0  -78.0 -126.8 -141.0 -129.1 -148.7  140.4  122.3   31.0
     91.6  110.3   75.5  105.2  176.8  164.5  173.7  159.4   72.6   35.2    4.8
 $$
-  OVRO 90
+  OVRO 90   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ OVRO 130,                  RADI TANG  lon/lat:  241.7173   37.2315 1200.783
@@ -1190,7 +1190,7 @@ $$ PARKES,                    RADI TANG  lon/lat:  148.2635  -32.9984  414.658
     83.3  118.7   73.9  115.3 -166.4  177.1 -171.5  164.1  -53.0 -116.2 -172.4
      6.5   52.0  -10.7   44.4 -121.3 -145.3 -123.8 -159.2 -170.7 -171.9 -178.9
 $$
-  PENTICTN
+  PENTICTN  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ PENTICTN,                  RADI TANG  lon/lat:  240.3801   49.3226  529.904
@@ -1223,7 +1223,7 @@ $$ PIETOWN,                   RADI TANG  lon/lat:  251.8808   34.3010 2364.684
   -176.4  169.3  142.8  148.8 -136.7 -153.2 -139.2 -162.3  129.4  101.3   16.4
     89.8  108.7   77.2  104.3  154.9  150.8  151.2  153.4   74.1   32.2    4.4
 $$
-  PLATTVIL
+  PLATTVIL  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ PLATTVIL,                  RADI TANG  lon/lat:  255.2737   40.1828 1501.372
@@ -1234,7 +1234,7 @@ $$ PLATTVIL,                  RADI TANG  lon/lat:  255.2737   40.1828 1501.372
   -145.3 -111.1 -175.7 -117.4 -130.8 -148.4 -133.7 -158.3  133.4  106.0   18.8
    103.3  112.7   91.3  108.4  154.1  146.8  150.5  149.1  106.0   46.2    5.6
 $$
-  QUINCY
+  QUINCY    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ QUINCY,                    RADI TANG  lon/lat:  239.0556   39.9746 1105.666
@@ -1245,7 +1245,7 @@ $$ QUINCY,                    RADI TANG  lon/lat:  239.0556   39.9746 1105.666
   -118.9  -76.3 -145.2  -80.3 -122.1 -135.8 -124.4 -143.0  146.5  133.5   81.2
     94.1  110.8   77.5  105.7  179.0  165.3  176.1  159.1   78.9   38.5    5.2
 $$
-  ROBLED32  61
+  ROBLED32  61 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ ROBLED32,                  RADI TANG  lon/lat:  355.7510   40.4287  840.569
@@ -1256,7 +1256,7 @@ $$ ROBLED32,                  RADI TANG  lon/lat:  355.7510   40.4287  840.569
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.6 -143.2 -176.5
    -59.6  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.3  -18.3  -78.4
 $$
-  SOURDOGH
+  SOURDOGH  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ SOURDOGH,                  RADI TANG  lon/lat:  214.5163   62.6639  747.987
@@ -1267,7 +1267,7 @@ $$ SOURDOGH,                  RADI TANG  lon/lat:  214.5163   62.6639  747.987
     17.3  -24.5    2.3  -35.5  -20.5  -44.8  -24.2  -60.3  169.6  155.1  170.0
    -80.9  -46.7 -102.7  -53.2 -105.4 -118.8 -107.4 -124.9  138.9  120.3   31.1
 $$
-  TIGOWTZL
+  TIGOWTZL  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ TIGOWTZL,                  RADI TANG  lon/lat:   12.8776   49.1445  658.896
@@ -1278,7 +1278,7 @@ $$ TIGOWTZL,                  RADI TANG  lon/lat:   12.8776   49.1445  658.896
     79.0  113.1   57.7  111.5  100.6   36.0   97.4  -22.4 -175.6 -164.3 -177.6
    -36.6   -5.5  -21.2  -10.3   47.0   -5.5   42.1  142.3  143.8  120.4 -178.4
 $$
-  TRYSILNO
+  TRYSILNO  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ TRYSILNO,                  RADI TANG  lon/lat:   12.3816   61.4228  724.163
@@ -1300,7 +1300,7 @@ $$ URUMQI,                    RADI TANG  lon/lat:   87.1781   43.4715 2033.212
   -160.4 -166.0 -172.1 -174.1  -21.1  -31.0  -23.7  -27.8  -36.7  -83.8 -168.1
    143.2  138.8  124.7  135.4   55.6   72.3   72.8   50.8 -177.5  170.3  174.5
 $$
-  VERNAL
+  VERNAL    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ VERNAL,                    RADI TANG  lon/lat:  250.4293   40.3270 1590.820
@@ -1311,7 +1311,7 @@ $$ VERNAL,                    RADI TANG  lon/lat:  250.4293   40.3270 1590.820
   -131.1  -84.6 -160.6  -88.1 -128.2 -144.3 -130.8 -153.4  136.9  113.4   22.4
     98.0  111.9   84.5  107.3  164.5  154.8  161.2  153.1  101.5   46.1    5.8
 $$
-  VLA-N8    Y2
+  VLA-N8    Y2 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ VLA-N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.478
@@ -1322,7 +1322,7 @@ $$ VLA-N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.478
    178.5  159.3  138.3  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA       Y1
+  VLA       Y1 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ VLA-N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.478
@@ -1333,7 +1333,7 @@ $$ VLA-N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.478
    178.5  159.3  138.3  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA       Y
+  VLA       Y  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ VLA-N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.478
@@ -1377,7 +1377,7 @@ $$ WETTZELL,                  RADI TANG  lon/lat:   12.8775   49.1450  669.126
     79.0  113.1   57.7  111.5  100.6   36.0   97.4  -22.4 -175.6 -164.3 -177.6
    -36.6   -5.5  -21.2  -10.3   47.0   -5.5   42.1  142.3  143.8  120.4 -178.4
 $$
-  WHTHORSE
+  WHTHORSE  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ WHTHORSE,                  RADI TANG  lon/lat:  224.9229   60.7112  708.478
@@ -1388,7 +1388,7 @@ $$ WHTHORSE,                  RADI TANG  lon/lat:  224.9229   60.7112  708.478
    -74.4  -47.8  -90.7  -56.0  -75.6  -89.0  -78.0 -100.7  164.1  155.5  169.8
    -93.1  -59.0 -116.1  -57.3 -118.2 -135.2 -122.0 -139.6  136.2  115.3   22.2
 $$
-  YEBES
+  YEBES     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YEBES,                     RADI TANG  lon/lat:  356.9106   40.5242  979.856
@@ -1421,7 +1421,7 @@ $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
     69.3   94.1   52.0   90.4   60.6  -38.1   53.7  -92.4  155.0 -143.1 -177.0
    -61.7  -24.6  -82.5  -27.8  -16.1 -169.5  -24.6  143.7  -12.1  -20.5 -151.1
 $$
-  YEBESDBC  YD
+  YEBESDBC  YD 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
@@ -1432,7 +1432,7 @@ $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
     69.3   94.1   52.0   90.4   60.6  -38.1   53.7  -92.4  155.0 -143.1 -177.0
    -61.7  -24.6  -82.5  -27.8  -16.1 -169.5  -24.6  143.7  -12.1  -20.5 -151.1
 $$
-  YEBEDBBC
+  YEBEDBBC  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
@@ -1443,7 +1443,7 @@ $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
     69.3   94.1   52.0   90.4   60.6  -38.1   53.7  -92.4  155.0 -143.1 -177.0
    -61.7  -24.6  -82.5  -27.8  -16.1 -169.5  -24.6  143.7  -12.1  -20.5 -151.1
 $$
-  YEBDBBC
+  YEBDBBC      
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
@@ -1454,7 +1454,7 @@ $$ YEBES40M,                  RADI TANG  lon/lat:  356.9131   40.5247  988.957
     69.3   94.1   52.0   90.4   60.6  -38.1   53.7  -92.4  155.0 -143.1 -177.0
    -61.7  -24.6  -82.5  -27.8  -16.1 -169.5  -24.6  143.7  -12.1  -20.5 -151.1
 $$
-  YELLOWKN
+  YELLOWKN  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YELLOWKN,                  RADI TANG  lon/lat:  245.5276   62.4794  176.912
@@ -1465,7 +1465,7 @@ $$ YELLOWKN,                  RADI TANG  lon/lat:  245.5276   62.4794  176.912
   -105.7  -69.0 -125.1  -73.0  -98.0 -115.2 -100.7 -128.0  146.2  125.9   31.3
   -122.1  -88.3 -158.8 -111.6 -143.1 -162.9 -144.9 -174.6  105.2   61.8    8.3
 $$
-  YLOW7296
+  YLOW7296  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YLOW7296,                  RADI TANG  lon/lat:  245.5207   62.4806  178.887
@@ -1476,7 +1476,7 @@ $$ YLOW7296,                  RADI TANG  lon/lat:  245.5207   62.4806  178.887
   -105.7  -69.0 -125.1  -73.0  -98.0 -115.2 -100.7 -128.0  146.2  125.9   31.3
   -122.1  -88.3 -158.7 -111.5 -143.1 -162.9 -144.9 -174.5  105.2   61.8    8.3
 $$
-  YUMA
+  YUMA      
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Jan-17
 $$ YUMA,                      RADI TANG  lon/lat:  245.7969   32.9391  238.848
@@ -1498,7 +1498,7 @@ $$ ZELENCHK,                  RADI TANG  lon/lat:   41.5652   43.7878 1175.070
      2.3    2.8  -14.2   -1.5  117.0   67.9  110.1   41.3 -161.8 -153.7 -175.9
   -121.4 -102.0 -148.8 -112.0   23.5   19.7   23.0   22.6 -165.2 -168.7 -177.6
 $$
-  MIZNAO10  MN
+  MIZNAO10  MN 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:26:20
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MIZNAO10,                  RADI TANG  lon/lat:  141.1323   39.1334  110.961
@@ -1509,7 +1509,7 @@ $$ MIZNAO10,                  RADI TANG  lon/lat:  141.1323   39.1334  110.961
    -10.1   32.1  -27.4   28.7 -171.8  169.6 -173.0  161.0  -36.9  -37.4  -43.1
    -83.4  -81.7  -89.4  -87.4   94.5   76.1   92.3   61.5   52.8   33.7    4.3
 $$
-  MIZUSGSI  MZ
+  MIZUSGSI  MZ 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:26:40
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MIZUSGSI,                  RADI TANG  lon/lat:  141.2040   39.1104  173.158
@@ -1520,7 +1520,7 @@ $$ MIZUSGSI,                  RADI TANG  lon/lat:  141.2040   39.1104  173.158
    -10.2   32.0  -27.8   28.6 -171.9  169.6 -173.0  161.0  -36.5  -37.1  -41.8
    -83.6  -81.9  -89.6  -87.6   94.5   76.2   92.4   61.6   52.6   33.7    4.3
 $$
-  MK-VLBA   MK
+  MK-VLBA   MK 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:26:59
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MK-VLBA,                   RADI TANG  lon/lat:  204.5445   19.8014 3763.017
@@ -1542,7 +1542,7 @@ $$ MON PEAK,                  RADI TANG  lon/lat:  243.5772   32.8918 1838.696
    151.7  119.5  118.1  113.2 -134.4 -149.9 -137.2 -158.1  130.0  107.4   18.1
     89.6  111.1   73.6  105.5  177.4  167.1  174.7  163.0   57.8   30.3    4.4
 $$
-  MV2ONSLA
+  MV2ONSLA  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:28:00
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ MV2ONSLA,                  RADI TANG  lon/lat:   11.9254   57.3955   43.425
@@ -1575,7 +1575,7 @@ $$ NOBEY 6M,                  RADI TANG  lon/lat:  138.4722   35.9409 1391.986
     -8.3   30.9   -6.4   27.4 -170.3  166.7 -173.2  157.8  -40.2  -47.3 -130.2
    -75.9  -60.0  -84.9  -67.4   87.2   67.9   85.3   56.2   44.2   29.9    4.0
 $$
-  NOME
+  NOME      
 $$ TPXO.7.2_PP ID: 2014-01-17 21:28:35
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ NOME,                      RADI TANG  lon/lat:  194.6288   64.5627  331.655
@@ -1597,7 +1597,7 @@ $$ NOTO,                      RADI TANG  lon/lat:   14.9891   36.8761  143.217
     62.1   86.7   43.9   85.7  150.1  113.6  148.1 -108.3  168.8 -157.2 -177.6
    -52.8   -0.7  -88.1   -5.0   40.7   81.0   39.9  105.2 -131.5 -136.1 -175.8
 $$
-  NOTOX
+  NOTOX     
 $$ TPXO.7.2_PP ID: 2014-01-17 21:28:56
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ NOTO,                      RADI TANG  lon/lat:   14.9891   36.8761  143.217
@@ -1619,7 +1619,7 @@ $$ NYALES20,                  RADI TANG  lon/lat:   11.8697   78.9291   87.397
    -12.4   33.0  -43.8   35.0   97.0   57.5  111.7   12.1 -165.1 -161.6 -175.3
    -19.8   20.7  -43.6   32.0  141.3   70.8  130.4    0.2   38.2   16.9    1.4
 $$
-  OCOTILLO
+  OCOTILLO  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:30:00
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ OCOTILLO,                  RADI TANG  lon/lat:  244.2038   32.7901  -36.782
@@ -1664,7 +1664,7 @@ $$ ONSALA60,                  RADI TANG  lon/lat:   11.9264   57.3958   59.316
     82.8  119.1   58.8  124.2  102.7   37.6  103.0   -7.0 -162.3 -165.0 -177.7
    103.2  143.9   81.3  144.1   46.6  -66.3   42.7 -176.4   69.3   38.5    8.9
 $$
-  ONSALA85  O8
+  ONSALA85  O8 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:32:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ ONSALA85,                  RADI TANG  lon/lat:   11.9178   57.3931   58.483
@@ -1675,7 +1675,7 @@ $$ ONSALA85,                  RADI TANG  lon/lat:   11.9178   57.3931   58.483
     82.9  119.1   58.8  124.2  102.7   37.6  103.0   -7.0 -162.3 -165.0 -177.7
    103.2  143.9   81.3  144.1   46.6  -66.3   42.6 -176.4   69.1   38.3    8.8
 $$
-  PBLOSSOM
+  PBLOSSOM  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:32:24
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ PBLOSSOM,                  RADI TANG  lon/lat:  242.0776   34.5121  890.639
@@ -1686,7 +1686,7 @@ $$ PBLOSSOM,                  RADI TANG  lon/lat:  242.0776   34.5121  890.639
   -160.5 -124.0  157.4 -115.8 -131.2 -145.9 -133.6 -153.6  135.2  114.8   22.5
     95.1  112.9   78.9  107.4 -178.0  169.9  179.0  164.5   65.8   34.4    4.8
 $$
-  PINFLATS
+  PINFLATS  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:32:32
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ PINFLATS,                  RADI TANG  lon/lat:  243.5412   33.6092 1235.597
@@ -1697,7 +1697,7 @@ $$ PINFLATS,                  RADI TANG  lon/lat:  243.5412   33.6092 1235.597
    169.1  127.6  129.9  120.0 -133.4 -148.6 -136.0 -156.7  131.8  109.6   19.2
     90.8  111.5   74.8  105.9  177.5  166.9  174.7  162.6   61.1   31.6    4.5
 $$
-  PRESIDIO
+  PRESIDIO  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:32:53
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ PRESIDIO,                  RADI TANG  lon/lat:  237.5449   37.8053  -29.501
@@ -1719,7 +1719,7 @@ $$ PT REYES,                  RADI TANG  lon/lat:  237.0634   38.1035   -2.240
   -128.6  -85.7 -157.4  -90.0 -124.7 -138.2 -126.9 -145.0  146.2  134.2   90.8
     99.8  114.0   82.3  109.0 -173.4  172.7 -176.0  165.6   74.0   38.4    5.2
 $$
-  PVERDES
+  PVERDES   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:33:45
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ PVERDES,                   RADI TANG  lon/lat:  241.5964   33.7438   69.168
@@ -1730,7 +1730,7 @@ $$ PVERDES,                   RADI TANG  lon/lat:  241.5964   33.7438   69.168
   -173.1  172.2  146.8  169.0 -132.4 -147.2 -134.9 -154.9  133.9  113.8   21.8
     97.6  114.1   81.4  108.5 -174.8  172.7 -177.8  166.8   64.8   35.2    4.9
 $$
-  RICHMOND
+  RICHMOND  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:34:19
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ RICHMOND,                  RADI TANG  lon/lat:  279.6153   25.6138  -13.648
@@ -1741,7 +1741,7 @@ $$ RICHMOND,                  RADI TANG  lon/lat:  279.6153   25.6138  -13.648
    179.2  176.7  158.9  171.9   31.6   38.3   33.6   17.7  129.6   93.7   14.3
   -162.4 -105.0  170.7 -103.9    5.1  -34.2    7.2  -93.3    9.2    1.6    0.7
 $$
-  SAGARA    SJ
+  SAGARA    SJ 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:34:43
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SAGARA,                    RADI TANG  lon/lat:  138.1829   34.6776  151.393
@@ -1752,7 +1752,7 @@ $$ SAGARA,                    RADI TANG  lon/lat:  138.1829   34.6776  151.393
     -8.0   30.4   -8.9   25.4 -169.7  165.7 -171.5  159.4  -39.2  -49.3 -141.8
    -80.7  -64.5  -87.0  -68.0   82.6   63.1   81.1   51.6   52.1   34.7    4.4
 $$
-  SANPAULA
+  SANPAULA  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:34:57
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SANPAULA,                  RADI TANG  lon/lat:  241.0012   34.3879  185.224
@@ -1763,7 +1763,7 @@ $$ SANPAULA,                  RADI TANG  lon/lat:  241.0012   34.3879  185.224
   -153.4 -101.5  166.1 -100.1 -130.4 -144.9 -132.7 -152.4  136.1  116.6   23.9
     98.0  114.2   81.6  108.7 -174.5  172.7 -177.5  166.6   66.5   35.8    4.9
 $$
-  SANTIA12
+  SANTIA12  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:35:06
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SANTIA12,                  RADI TANG  lon/lat:  289.3317  -33.1515  730.398
@@ -1785,7 +1785,7 @@ $$ SC-VLBA,                   RADI TANG  lon/lat:  295.4164   17.7566  -15.023
     67.6   90.7   59.6   88.6   80.6   57.0   74.1   32.6  149.4  114.8   11.5
   -156.8 -123.7 -176.4 -126.0  -54.1  -93.5  -50.2 -130.3  175.5  168.4 -179.4
 $$
-  SEATTLE1
+  SEATTLE1  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:35:21
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SEATTLE1,                  RADI TANG  lon/lat:  237.7509   47.6857  -16.930
@@ -1807,7 +1807,7 @@ $$ SESHAN25,                  RADI TANG  lon/lat:  121.1997   31.0992   29.416
   -162.8 -125.8 -179.7 -138.8 -116.3 -139.1 -119.2 -156.4  -13.2  -82.4 -167.8
    -26.3    4.4  -39.2    1.9  127.4  101.7  123.4   88.4   53.1   43.0    4.1
 $$
-  SEST      SE
+  SEST      SE 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:36:00
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SEST,                      RADI TANG  lon/lat:  289.2676  -29.2635 2415.818
@@ -1818,7 +1818,7 @@ $$ SEST,                      RADI TANG  lon/lat:  289.2676  -29.2635 2415.818
     51.5   93.1   23.4   81.4   36.2  -13.4   32.9  -43.9  110.3   71.2    9.9
    108.3  115.3   78.6  122.9  118.3   82.3  113.5   62.4 -175.5 -177.6  179.3
 $$
-  SINTOTU   SI
+  SINTOTU   SI 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:36:16
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SINTOTU,                   RADI TANG  lon/lat:  141.8446   43.5288  118.562
@@ -1840,7 +1840,7 @@ $$ SINTOTU3,                  RADI TANG  lon/lat:  141.8446   43.5288  118.823
    -13.2   35.6  -42.8   32.4 -173.4  169.6 -174.8  160.8  -36.2  -32.2  -21.2
   -147.3 -126.4 -124.5 -125.6   86.4   70.6   84.0   52.6   96.1   47.5    5.5
 $$
-  SNDPOINT
+  SNDPOINT  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:37:21
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SNDPOINT,                  RADI TANG  lon/lat:  199.5245   55.3523   92.549
@@ -1851,7 +1851,7 @@ $$ SNDPOINT,                  RADI TANG  lon/lat:  199.5245   55.3523   92.549
    110.8  149.7   77.0  142.2   37.5   13.0   34.6    0.8 -169.0  149.8  137.7
    -34.9  -27.7  -57.3  -31.9 -111.1 -124.1 -114.3 -129.1  130.4  113.5   16.6
 $$
-  SUWON     SU
+  SUWON     SU 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:37:56
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SUWON,                     RADI TANG  lon/lat:  127.0542   37.2754   81.495
@@ -1884,7 +1884,7 @@ $$ SYOWA,                     RADI TANG  lon/lat:   39.5863  -69.0063   51.050
     21.1   94.1    3.4   90.5   20.6   12.8   21.4    3.1 -155.7 -152.7 -175.6
   -103.9  -90.0 -112.4  -93.0  151.5  129.9  149.8  116.1   30.3   17.3    4.0
 $$
-  TIANMA65  T6
+  TIANMA65  T6 
 $$ TPXO.7.2_PP ID: 2014-06-20 20:20:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TIANMA65,                  RADI TANG  lon/lat:  121.1360   31.0921   49.159
@@ -1895,7 +1895,7 @@ $$ TIANMA65,                  RADI TANG  lon/lat:  121.1360   31.0921   49.159
   -164.0 -127.4  179.3 -140.6 -116.2 -138.9 -119.0 -156.3  -13.3  -82.4 -167.8
    -26.1    4.6  -38.8    1.7  127.6  101.9  123.6   88.7   53.6   43.2    4.1
 $$
-  TATEYAMA  TA
+  TATEYAMA  TA 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:39:17
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TATEYAMA,                  RADI TANG  lon/lat:  139.8486   34.9370  126.133
@@ -1906,7 +1906,7 @@ $$ TATEYAMA,                  RADI TANG  lon/lat:  139.8486   34.9370  126.133
    -24.0   17.1  -38.1   12.6 -175.3  162.5 -177.6  155.3  -37.3  -46.0 -131.6
    -81.9  -68.5  -86.4  -69.9   85.9   66.7   84.3   52.5   45.1   31.7    4.1
 $$
-  TIDBIN64  TI
+  TIDBIN64  TI 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:39:24
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TIDBIN64,                  RADI TANG  lon/lat:  148.9813  -35.4024  688.768
@@ -1928,7 +1928,7 @@ $$ TIGOCONC,                  RADI TANG  lon/lat:  286.9749  -36.8427  170.953
     76.5  113.4   52.5  107.5   43.1   -9.2   39.2  -41.3  134.1  115.2   20.8
   -130.4 -135.0  177.2 -151.3  127.3   90.1  123.1   69.8 -168.1 -173.2 -179.5
 $$
-  TITIJIMA  TJ
+  TITIJIMA  TJ 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:39:47
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TITIJIMA,                  RADI TANG  lon/lat:  142.1945   27.0980   98.978
@@ -1939,7 +1939,7 @@ $$ TITIJIMA,                  RADI TANG  lon/lat:  142.1945   27.0980   98.978
    -48.2  -16.2  -59.7  -19.7  164.4  142.6  160.5  134.5  -47.0  -66.9 -164.2
    -40.7   27.4  -77.6   35.0  116.7  105.8  113.7   98.3    6.3   10.5    2.1
 $$
-  TOMAKO11
+  TOMAKO11  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:40:10
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TOMAKO11,                  RADI TANG  lon/lat:  141.5970   42.6738   89.897
@@ -1950,7 +1950,7 @@ $$ TOMAKO11,                  RADI TANG  lon/lat:  141.5970   42.6738   89.897
    -11.7   35.2  -37.1   31.8 -174.1  168.7 -175.2  160.0  -35.7  -32.5  -22.3
   -151.2 -127.6 -141.6 -128.7   74.6   56.2   72.4   39.7  117.8   59.1    6.2
 $$
-  TOULOUSE
+  TOULOUSE  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:40:15
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TOULOUSE,                  RADI TANG  lon/lat:    1.4834   43.5592  192.109
@@ -1972,7 +1972,7 @@ $$ TROMSONO,                  RADI TANG  lon/lat:   18.9395   69.6630  132.953
    -19.6   15.7  -49.9   -0.3  120.8   47.7  119.3   -5.4 -160.6 -162.5 -176.3
   -176.1 -136.3  154.3 -140.0   82.0  -84.2   77.1 -161.6   40.2   22.8    3.7
 $$
-  TSUKU3
+  TSUKU3    
 $$ TPXO.7.2_PP ID: 2014-01-17 21:41:09
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TSUKU3,                    RADI TANG  lon/lat:  140.0872   36.1056   69.640
@@ -1994,7 +1994,7 @@ $$ TSUKUB32,                  RADI TANG  lon/lat:  140.0887   36.1031   84.739
    -12.8   27.1  -28.4   22.3 -171.3  167.8 -172.2  161.0  -36.6  -43.5 -107.6
    -78.9  -66.8  -91.8  -75.0   89.4   70.4   88.2   61.0   42.2   30.1    4.0
 $$
-  TSUKUBA
+  TSUKUBA   
 $$ TPXO.7.2_PP ID: 2014-01-17 21:41:42
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ TSUKUBA,                   RADI TANG  lon/lat:  140.0870   36.1056   69.216
@@ -2005,7 +2005,7 @@ $$ TSUKUBA,                   RADI TANG  lon/lat:  140.0870   36.1056   69.216
    -12.8   27.1  -28.3   22.3 -171.3  167.8 -172.2  161.0  -36.6  -43.5 -107.6
    -78.9  -66.8  -91.7  -75.0   89.4   70.4   88.2   61.0   42.2   30.1    4.0
 $$
-  UCHINOUR  UC
+  UCHINOUR  UC 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:42:17
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ UCHINOUR,                  RADI TANG  lon/lat:  131.0784   31.2543  375.649
@@ -2016,7 +2016,7 @@ $$ UCHINOUR,                  RADI TANG  lon/lat:  131.0784   31.2543  375.649
     35.2   57.4   33.5   50.4 -159.4  177.6 -162.0  164.5  -46.4  -62.7 -162.4
    -69.1  -46.8  -79.2  -48.7   95.8   79.3   93.8   66.8   36.9   29.5    3.9
 $$
-  USUDA64   UD
+  USUDA64   UD 
 $$ TPXO.7.2_PP ID: 2014-01-17 21:42:28
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ USUDA64,                   RADI TANG  lon/lat:  138.3628   36.1324 1532.734
@@ -2049,7 +2049,7 @@ $$ VERAMZSW,                  RADI TANG  lon/lat:  141.1326   39.1335  116.504
    -10.1   32.1  -27.4   28.7 -171.8  169.6 -173.0  161.0  -36.9  -37.4  -43.1
    -83.4  -81.7  -89.4  -87.4   94.5   76.1   92.3   61.5   52.8   33.7    4.3
 $$
-  VICTORIA
+  VICTORIA  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:43:05
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ VICTORIA,                  RADI TANG  lon/lat:  236.5130   48.3895   25.196
@@ -2060,7 +2060,7 @@ $$ VICTORIA,                  RADI TANG  lon/lat:  236.5130   48.3895   25.196
   -107.9  -74.0 -131.4  -79.4 -111.3 -125.1 -113.7 -132.1  157.2  150.8  165.8
    166.3  145.9  138.2  139.9 -154.6 -170.1 -157.0 -178.3  125.4   87.9   10.8
 $$
-  VNDNBERG
+  VNDNBERG  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:43:29
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ VNDNBERG,                  RADI TANG  lon/lat:  239.3836   34.5561  -12.178
@@ -2093,7 +2093,7 @@ $$ WESTFORD,                  RADI TANG  lon/lat:  288.5062   42.6129   86.765
   -126.2 -127.7 -151.7 -138.7  -21.0   20.0  -12.0   45.9   89.3   49.5    8.5
    -19.6   11.0  -33.0   14.2  166.3 -155.9  173.3  177.9   -3.1  -19.1   -1.1
 $$
-  YAKATAGA
+  YAKATAGA  
 $$ TPXO.7.2_PP ID: 2014-01-17 21:44:57
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ YAKATAGA,                  RADI TANG  lon/lat:  217.5135   60.0815   21.607
@@ -2136,7 +2136,7 @@ $$ GEOCENTR                             RADI TANG lon/lat:
     84.1  121.9   74.2  116.3 -166.0  179.5 -166.8  154.8  -82.7  -64.3 -172.6
      6.3   51.5  -10.5   33.3 -121.3 -145.5 -123.1 -161.4 -169.4 -174.5 -178.8
 $$
-  MADRID64  RO
+  MADRID64  RO 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ MADRID64,                  RADI TANG  lon/lat:  355.7520   40.4312  864.807
@@ -2147,7 +2147,7 @@ $$ MADRID64,                  RADI TANG  lon/lat:  355.7520   40.4312  864.807
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.6 -143.2 -176.5
    -59.6  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.2  -18.3  -77.9
 $$
-  GOLDMARS  14
+  GOLDMARS  14 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ GOLDMARS,                  RADI TANG  lon/lat:  243.1105   35.4259 1001.383
@@ -2158,7 +2158,7 @@ $$ GOLDMARS,                  RADI TANG  lon/lat:  243.1105   35.4259 1001.383
   -147.0  -83.5  171.7  -82.1 -130.1 -144.8 -132.5 -152.8  136.1  115.3   22.8
     91.1  110.8   75.3  105.5  176.5  165.2  173.4  160.6   67.6   33.5    4.7
 $$
-  GOLDECHO
+  GOLDECHO  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ GOLDECHO,                  RADI TANG  lon/lat:  243.1945   35.2999  961.801
@@ -2169,7 +2169,7 @@ $$ GOLDECHO,                  RADI TANG  lon/lat:  243.1945   35.2999  961.801
   -149.3  -85.9  168.7  -83.5 -130.3 -145.1 -132.8 -153.1  135.8  114.8   22.4
     91.1  110.9   75.2  105.5  176.4  165.2  173.4  160.7   67.2   33.3    4.6
 $$
-  KALYAZIN
+  KALYAZIN  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ KALYAZIN,                  RADI TANG  lon/lat:   37.9003   57.2230  178.079
@@ -2180,7 +2180,7 @@ $$ KALYAZIN,                  RADI TANG  lon/lat:   37.9003   57.2230  178.079
     31.2   54.3    7.2   59.4   96.3   45.6   91.2   10.2 -163.8 -157.8 -176.3
   -130.5 -107.6 -164.7 -123.1   38.8  -17.8   37.8  -22.7   82.8   45.1    5.4
 $$
-  ATCA-104  AT
+  ATCA-104  AT 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ ATCA-104,                  RADI TANG  lon/lat:  149.5648  -30.3129  252.021
@@ -2191,7 +2191,7 @@ $$ ATCA-104,                  RADI TANG  lon/lat:  149.5648  -30.3129  252.021
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  MOPRA     MP
+  MOPRA     MP 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2014-Feb- 3
 $$ MOPRA,                     RADI TANG  lon/lat:  149.0996  -31.2678  867.324
@@ -2202,7 +2202,7 @@ $$ MOPRA,                     RADI TANG  lon/lat:  149.0996  -31.2678  867.324
     78.8  114.9   66.6  111.5 -165.8  176.4 -171.0  162.8  -64.1 -126.6 -173.2
     -8.1   41.2  -19.2   34.2 -121.2 -145.5 -123.6 -159.5 -170.9 -171.8 -178.9
 $$
-  VANDENBG
+  VANDENBG  
 $$ TPXO.7.2_PP ID: 2014-02-03 23:17:41
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ VANDENBG,                  RADI TANG  lon/lat:  239.5001   34.5663  600.387
@@ -2213,7 +2213,7 @@ $$ VANDENBG,                  RADI TANG  lon/lat:  239.5001   34.5663  600.387
   -141.8  -86.4 -178.3  -89.2 -128.9 -143.0 -131.0 -150.2  138.4  120.1   27.5
     95.7  112.6   79.1  107.1 -174.6  172.1 -177.6  165.9   62.9   33.6    4.7
 $$
-  VERAIRIK  VR
+  VERAIRIK  VR 
 $$ TPXO.7.2_PP ID: 2014-02-03 23:18:25
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ VERAIRIK,                  RADI TANG  lon/lat:  130.4399   31.7479  573.458
@@ -2224,7 +2224,7 @@ $$ VERAIRIK,                  RADI TANG  lon/lat:  130.4399   31.7479  573.458
     28.7   52.7   26.9   44.7 -167.1  170.8 -170.5  156.4  -47.7  -59.5 -161.4
    -67.2  -43.8  -76.2  -45.4   95.1   77.7   93.0   66.0   39.5   30.6    3.9
 $$
-  VERAOGSW  VO
+  VERAOGSW  VO 
 $$ TPXO.7.2_PP ID: 2014-02-03 23:18:31
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ VERAOGSW,                  RADI TANG  lon/lat:  142.2166   27.0918  273.093
@@ -2235,7 +2235,7 @@ $$ VERAOGSW,                  RADI TANG  lon/lat:  142.2166   27.0918  273.093
    -48.1  -16.0  -59.6  -19.5  164.9  143.0  161.0  135.0  -47.2  -67.3 -164.4
    -40.7   27.6  -77.7   35.2  116.7  105.7  113.7   98.3    6.3   10.5    2.1
 $$
-  USSURISK  US
+  USSURISK  US 
 $$ TPXO.7.2_PP ID: 2014-02-03 23:18:42
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ USSURISK,                  RADI TANG  lon/lat:  131.7573   44.0161  155.032
@@ -2246,7 +2246,7 @@ $$ USSURISK,                  RADI TANG  lon/lat:  131.7573   44.0161  155.032
     26.7   61.0   65.1   55.2 -162.1  177.7 -164.7  167.2  -20.1  -29.0  -18.9
    -62.1  -51.5  -56.1  -52.9  124.0  106.9  121.9   87.6  172.5  114.4   12.1
 $$
-  DAITO
+  DAITO     
 $$ TPXO.7.2_PP ID: 2014-02-03 23:18:48
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ DAITO,                     RADI TANG  lon/lat:  131.2334   25.8289   52.723
@@ -2257,7 +2257,7 @@ $$ DAITO,                     RADI TANG  lon/lat:  131.2334   25.8289   52.723
     26.0   45.2   27.5   39.1 -156.9  174.6 -159.4  162.9  -48.0  -78.9 -167.4
    -57.8  -31.5  -80.9  -28.8  131.3  115.4  128.8  105.1   13.1   14.5    2.6
 $$
-  SHANGHAI
+  SHANGHAI  
 $$ TPXO.7.2_PP ID: 2014-02-03 23:19:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SHANGHAI,                  RADI TANG  lon/lat:  121.4296   31.1902   17.780
@@ -2268,7 +2268,7 @@ $$ SHANGHAI,                  RADI TANG  lon/lat:  121.4296   31.1902   17.780
   -156.8 -118.8 -174.4 -132.0 -117.1 -140.3 -120.1 -157.1  -12.5  -82.1 -167.7
    -27.4    3.8  -40.7    3.4  126.2  100.9  122.4   87.2   51.9   42.5    4.1
 $$
-  YAMAGUCH  YM
+  YAMAGUCH  YM 
 $$ TPXO.7.2_PP ID: 2014-02-03 23:20:03
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ YAMAGUCH,                  RADI TANG  lon/lat:  131.5571   34.2160  165.618
@@ -2279,7 +2279,7 @@ $$ YAMAGUCH,                  RADI TANG  lon/lat:  131.5571   34.2160  165.618
     38.1   67.1   42.4   49.0 -157.4 -173.0 -163.5  163.9  -45.3  -54.1 -155.6
    -45.8  -30.8  -59.9  -30.4   91.5   70.8   90.1   61.9   49.0   31.8    4.1
 $$
-  CEDUNA    CD
+  CEDUNA    CD 
 $$ TPXO.7.2_PP ID: 2014-02-03 23:20:17
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ CEDUNA,                    RADI TANG  lon/lat:  133.8098  -31.8677  164.608
@@ -2290,7 +2290,7 @@ $$ CEDUNA,                    RADI TANG  lon/lat:  133.8098  -31.8677  164.608
     98.1  111.0  115.9  108.5 -168.2  179.8 -171.9  170.8  -37.4  -86.1 -171.6
    109.5  112.7  169.2  110.1 -111.3 -131.7 -115.0 -145.2 -173.6 -175.5 -179.6
 $$
-  SEJONG  KV
+  SEJONG  KV 
 $$ TPXO.7.2_PP ID: 2014-06-30 18:50:41
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2014
 $$ SEJONG,                    RADI TANG  lon/lat:  127.3034   36.5227  194.621
@@ -2301,7 +2301,7 @@ $$ SEJONG,                    RADI TANG  lon/lat:  127.3034   36.5227  194.621
    150.8  136.9  141.8  115.6 -157.0  177.9 -158.5  169.1  -53.8  -51.2 -152.9
      2.1  -14.1   -2.0  -32.6  103.5   82.9  104.1   74.2  131.7   54.1    5.4
 $$
-  VLA_W1    W1
+  VLA_W1    W1   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W1,                    RADI TANG  lon/lat:  252.3817   34.0785 2115.308
@@ -2312,7 +2312,7 @@ $$ VLA_W1,                    RADI TANG  lon/lat:  252.3817   34.0785 2115.308
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W2    W2
+  VLA_W2    W2 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W2,                    RADI TANG  lon/lat:  252.3813   34.0786 2115.385
@@ -2323,7 +2323,7 @@ $$ VLA_W2,                    RADI TANG  lon/lat:  252.3813   34.0786 2115.385
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W3    W3
+  VLA_W3    W3 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W3,                    RADI TANG  lon/lat:  252.3809   34.0784 2115.443
@@ -2334,7 +2334,7 @@ $$ VLA_W3,                    RADI TANG  lon/lat:  252.3809   34.0784 2115.443
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W4    W4
+  VLA_W4    W4 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W4,                    RADI TANG  lon/lat:  252.3803   34.0781 2115.462
@@ -2345,7 +2345,7 @@ $$ VLA_W4,                    RADI TANG  lon/lat:  252.3803   34.0781 2115.462
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W5    W5
+  VLA_W5    W5 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W5,                    RADI TANG  lon/lat:  252.3797   34.0777 2115.555
@@ -2356,7 +2356,7 @@ $$ VLA_W5,                    RADI TANG  lon/lat:  252.3797   34.0777 2115.555
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W6    W6
+  VLA_W6    W6 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W6,                    RADI TANG  lon/lat:  252.3790   34.0773 2115.605
@@ -2367,7 +2367,7 @@ $$ VLA_W6,                    RADI TANG  lon/lat:  252.3790   34.0773 2115.605
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W7    W7
+  VLA_W7    W7 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W7,                    RADI TANG  lon/lat:  252.3782   34.0769 2115.709
@@ -2378,7 +2378,7 @@ $$ VLA_W7,                    RADI TANG  lon/lat:  252.3782   34.0769 2115.709
    178.4  159.2  138.2  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W8    W8
+  VLA_W8    W8 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W8,                    RADI TANG  lon/lat:  252.3773   34.0764 2115.833
@@ -2389,7 +2389,7 @@ $$ VLA_W8,                    RADI TANG  lon/lat:  252.3773   34.0764 2115.833
    178.4  159.2  138.2  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W9    W9
+  VLA_W9    W9 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W9,                    RADI TANG  lon/lat:  252.3763   34.0758 2115.946
@@ -2400,7 +2400,7 @@ $$ VLA_W9,                    RADI TANG  lon/lat:  252.3763   34.0758 2115.946
    178.4  159.2  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W10   W10
+  VLA_W10   W10 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W10,                   RADI TANG  lon/lat:  252.3753   34.0752 2116.423
@@ -2411,7 +2411,7 @@ $$ VLA_W10,                   RADI TANG  lon/lat:  252.3753   34.0752 2116.423
    178.4  159.2  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W12   W12
+  VLA_W12   W12 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W12,                   RADI TANG  lon/lat:  252.3730   34.0739 2117.078
@@ -2422,7 +2422,7 @@ $$ VLA_W12,                   RADI TANG  lon/lat:  252.3730   34.0739 2117.078
    178.4  159.2  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_W14   W14
+  VLA_W14   W14 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W14,                   RADI TANG  lon/lat:  252.3703   34.0724 2117.115
@@ -2433,7 +2433,7 @@ $$ VLA_W14,                   RADI TANG  lon/lat:  252.3703   34.0724 2117.115
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.1   73.6   31.8    4.3
 $$
-  VLA_W16   W16
+  VLA_W16   W16 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W16,                   RADI TANG  lon/lat:  252.3674   34.0708 2116.715
@@ -2444,7 +2444,7 @@ $$ VLA_W16,                   RADI TANG  lon/lat:  252.3674   34.0708 2116.715
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.8  149.5  153.1   73.6   31.8    4.3
 $$
-  VLA_W18   W18
+  VLA_W18   W18 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W18,                   RADI TANG  lon/lat:  252.3642   34.0690 2117.180
@@ -2455,7 +2455,7 @@ $$ VLA_W18,                   RADI TANG  lon/lat:  252.3642   34.0690 2117.180
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.9  149.5  153.1   73.6   31.8    4.3
 $$
-  VLA_W20   W20
+  VLA_W20   W20 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W20,                   RADI TANG  lon/lat:  252.3607   34.0671 2118.202
@@ -2466,7 +2466,7 @@ $$ VLA_W20,                   RADI TANG  lon/lat:  252.3607   34.0671 2118.202
    178.4  159.1  138.2  141.3 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.2  149.9  149.5  153.1   73.5   31.8    4.3
 $$
-  VLA_W24   W24
+  VLA_W24   W24 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W24,                   RADI TANG  lon/lat:  252.3530   34.0627 2123.107
@@ -2477,7 +2477,7 @@ $$ VLA_W24,                   RADI TANG  lon/lat:  252.3530   34.0627 2123.107
    178.3  159.1  138.1  141.3 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.3  149.9  149.5  153.1   73.5   31.8    4.3
 $$
-  VLA_W28   W28
+  VLA_W28   W28 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W28,                   RADI TANG  lon/lat:  252.3444   34.0579 2133.990
@@ -2488,7 +2488,7 @@ $$ VLA_W28,                   RADI TANG  lon/lat:  252.3444   34.0579 2133.990
    178.3  159.0  138.1  141.2 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.7  104.2  153.3  149.9  149.6  153.1   73.5   31.8    4.3
 $$
-  VLA_W32   W32
+  VLA_W32   W32 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W32,                   RADI TANG  lon/lat:  252.3348   34.0525 2120.854
@@ -2499,7 +2499,7 @@ $$ VLA_W32,                   RADI TANG  lon/lat:  252.3348   34.0525 2120.854
    178.3  159.0  138.1  141.2 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     89.9  108.6   77.6  104.2  153.3  149.9  149.6  153.1   73.4   31.7    4.3
 $$
-  VLA_W36   W36
+  VLA_W36   W36 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W36,                   RADI TANG  lon/lat:  252.3243   34.0466 2114.079
@@ -2510,7 +2510,7 @@ $$ VLA_W36,                   RADI TANG  lon/lat:  252.3243   34.0466 2114.079
    178.3  158.9  138.0  141.1 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     89.9  108.6   77.6  104.2  153.3  149.9  149.6  153.1   73.4   31.7    4.3
 $$
-  VLA_W40   W40
+  VLA_W40   W40 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W40,                   RADI TANG  lon/lat:  252.3129   34.0402 2113.048
@@ -2521,7 +2521,7 @@ $$ VLA_W40,                   RADI TANG  lon/lat:  252.3129   34.0402 2113.048
    178.2  158.9  138.0  141.0 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     89.9  108.6   77.6  104.2  153.3  150.0  149.6  153.1   73.3   31.7    4.3
 $$
-  VLA_W48   W48
+  VLA_W48   W48 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W48,                   RADI TANG  lon/lat:  252.2877   34.0260 2115.461
@@ -2532,7 +2532,7 @@ $$ VLA_W48,                   RADI TANG  lon/lat:  252.2877   34.0260 2115.461
    178.2  158.8  137.9  140.9 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     89.8  108.6   77.5  104.2  153.4  150.0  149.7  153.1   73.2   31.7    4.3
 $$
-  VLA_W56   W56
+  VLA_W56   W56 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W56,                   RADI TANG  lon/lat:  252.2592   34.0100 2109.758
@@ -2543,7 +2543,7 @@ $$ VLA_W56,                   RADI TANG  lon/lat:  252.2592   34.0100 2109.758
    178.1  158.6  137.7  140.7 -137.3 -153.9 -139.8 -163.0  128.9  100.5   16.2
     89.8  108.5   77.4  104.2  153.5  150.1  149.8  153.2   73.1   31.7    4.3
 $$
-  VLA_W64   W64
+  VLA_W64   W64 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W64,                   RADI TANG  lon/lat:  252.2278   33.9923 2105.375
@@ -2554,7 +2554,7 @@ $$ VLA_W64,                   RADI TANG  lon/lat:  252.2278   33.9923 2105.375
    178.0  158.5  137.6  140.5 -137.3 -153.9 -139.8 -163.0  128.9  100.5   16.2
     89.7  108.5   77.4  104.1  153.5  150.1  149.8  153.2   73.0   31.6    4.3
 $$
-  VLA_W72   R72
+  VLA_W72   R72 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_W72,                   RADI TANG  lon/lat:  252.1933   33.9728 2096.520
@@ -2565,7 +2565,7 @@ $$ VLA_W72,                   RADI TANG  lon/lat:  252.1933   33.9728 2096.520
    177.9  158.4  137.5  140.3 -137.3 -153.9 -139.8 -163.0  128.9  100.4   16.2
     89.6  108.5   77.3  104.1  153.6  150.2  149.9  153.2   72.8   31.6    4.3
 $$
-  VLA_E1    E1
+  VLA_E1    E1 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E1,                    RADI TANG  lon/lat:  252.3817   34.0781 2115.349
@@ -2576,7 +2576,7 @@ $$ VLA_E1,                    RADI TANG  lon/lat:  252.3817   34.0781 2115.349
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E2    E2
+  VLA_E2    E2 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E2,                    RADI TANG  lon/lat:  252.3821   34.0786 2115.349
@@ -2587,7 +2587,7 @@ $$ VLA_E2,                    RADI TANG  lon/lat:  252.3821   34.0786 2115.349
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E3    E3
+  VLA_E3    E3 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E3,                    RADI TANG  lon/lat:  252.3826   34.0785 2115.328
@@ -2598,7 +2598,7 @@ $$ VLA_E3,                    RADI TANG  lon/lat:  252.3826   34.0785 2115.328
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E4    E4
+  VLA_E4    E4 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E4,                    RADI TANG  lon/lat:  252.3831   34.0783 2115.354
@@ -2609,7 +2609,7 @@ $$ VLA_E4,                    RADI TANG  lon/lat:  252.3831   34.0783 2115.354
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E5    E5
+  VLA_E5    E5 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E5,                    RADI TANG  lon/lat:  252.3838   34.0780 2115.350
@@ -2620,7 +2620,7 @@ $$ VLA_E5,                    RADI TANG  lon/lat:  252.3838   34.0780 2115.350
    178.4  159.2  138.2  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E6    E6
+  VLA_E6    E6 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E6,                    RADI TANG  lon/lat:  252.3846   34.0777 2115.340
@@ -2631,7 +2631,7 @@ $$ VLA_E6,                    RADI TANG  lon/lat:  252.3846   34.0777 2115.340
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_E7    E7
+  VLA_E7    E7 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E7,                    RADI TANG  lon/lat:  252.3854   34.0773 2114.981
@@ -2642,7 +2642,7 @@ $$ VLA_E7,                    RADI TANG  lon/lat:  252.3854   34.0773 2114.981
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E8    E8
+  VLA_E8    E8 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E8,                    RADI TANG  lon/lat:  252.3864   34.0770 2114.318
@@ -2653,7 +2653,7 @@ $$ VLA_E8,                    RADI TANG  lon/lat:  252.3864   34.0770 2114.318
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E9    E9
+  VLA_E9    E9 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E9,                    RADI TANG  lon/lat:  252.3875   34.0766 2113.823
@@ -2664,7 +2664,7 @@ $$ VLA_E9,                    RADI TANG  lon/lat:  252.3875   34.0766 2113.823
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E10   E10
+  VLA_E10   E10 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E10,                   RADI TANG  lon/lat:  252.3886   34.0761 2113.700
@@ -2675,7 +2675,7 @@ $$ VLA_E10,                   RADI TANG  lon/lat:  252.3886   34.0761 2113.700
    178.4  159.1  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E12   E12
+  VLA_E12   E12 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E12,                   RADI TANG  lon/lat:  252.3912   34.0751 2114.162
@@ -2686,7 +2686,7 @@ $$ VLA_E12,                   RADI TANG  lon/lat:  252.3912   34.0751 2114.162
    178.3  159.0  138.2  141.4 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E14   E14
+  VLA_E14   E14 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E14,                   RADI TANG  lon/lat:  252.3941   34.0740 2114.995
@@ -2697,7 +2697,7 @@ $$ VLA_E14,                   RADI TANG  lon/lat:  252.3941   34.0740 2114.995
    178.3  159.0  138.2  141.3 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E16   E16
+  VLA_E16   E16 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E16,                   RADI TANG  lon/lat:  252.3973   34.0728 2115.300
@@ -2708,7 +2708,7 @@ $$ VLA_E16,                   RADI TANG  lon/lat:  252.3973   34.0728 2115.300
    178.3  158.9  138.1  141.3 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.1  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E18   E18
+  VLA_E18   E18 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E18,                   RADI TANG  lon/lat:  252.4008   34.0714 2118.758
@@ -2719,7 +2719,7 @@ $$ VLA_E18,                   RADI TANG  lon/lat:  252.4008   34.0714 2118.758
    178.3  158.9  138.1  141.3 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.1  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E20   E20
+  VLA_E20   E20 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E20,                   RADI TANG  lon/lat:  252.4046   34.0699 2124.551
@@ -2730,7 +2730,7 @@ $$ VLA_E20,                   RADI TANG  lon/lat:  252.4046   34.0699 2124.551
    178.2  158.8  138.1  141.2 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.1  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E24   E24
+  VLA_E24   E24 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E24,                   RADI TANG  lon/lat:  252.4129   34.0667 2127.724
@@ -2741,7 +2741,7 @@ $$ VLA_E24,                   RADI TANG  lon/lat:  252.4129   34.0667 2127.724
    178.1  158.7  138.0  141.2 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.1  149.8  149.4  153.0   73.6   31.8    4.3
 $$
-  VLA_E28   E28
+  VLA_E28   E28 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E28,                   RADI TANG  lon/lat:  252.4224   34.0630 2134.146
@@ -2752,7 +2752,7 @@ $$ VLA_E28,                   RADI TANG  lon/lat:  252.4224   34.0630 2134.146
    178.0  158.6  137.9  141.1 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.1  149.7  149.3  153.0   73.6   31.8    4.3
 $$
-  VLA_E32   E32
+  VLA_E32   E32 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E32,                   RADI TANG  lon/lat:  252.4329   34.0589 2136.524
@@ -2763,7 +2763,7 @@ $$ VLA_E32,                   RADI TANG  lon/lat:  252.4329   34.0589 2136.524
    177.9  158.4  137.9  140.9 -137.3 -153.9 -139.9 -163.1  129.0  100.4   16.2
     90.1  108.6   77.8  104.2  153.0  149.7  149.3  153.0   73.6   31.8    4.3
 $$
-  VLA_E36   E36
+  VLA_E36   E36 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E36,                   RADI TANG  lon/lat:  252.4444   34.0545 2142.800
@@ -2774,7 +2774,7 @@ $$ VLA_E36,                   RADI TANG  lon/lat:  252.4444   34.0545 2142.800
    177.8  158.2  137.8  140.8 -137.4 -153.9 -139.9 -163.1  129.0  100.4   16.2
     90.1  108.6   77.8  104.2  153.0  149.7  149.2  153.0   73.6   31.8    4.3
 $$
-  VLA_E40   E40
+  VLA_E40   E40 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E40,                   RADI TANG  lon/lat:  252.4568   34.0496 2147.124
@@ -2785,7 +2785,7 @@ $$ VLA_E40,                   RADI TANG  lon/lat:  252.4568   34.0496 2147.124
    177.7  158.0  137.7  140.7 -137.4 -154.0 -139.9 -163.2  129.0  100.4   16.2
     90.1  108.6   77.9  104.2  152.9  149.7  149.2  153.0   73.6   31.7    4.3
 $$
-  VLA_E48   E48
+  VLA_E48   E48 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E48,                   RADI TANG  lon/lat:  252.4844   34.0389 2142.346
@@ -2796,7 +2796,7 @@ $$ VLA_E48,                   RADI TANG  lon/lat:  252.4844   34.0389 2142.346
    177.5  157.6  137.4  140.4 -137.4 -154.0 -139.9 -163.2  128.9  100.4   16.2
     90.1  108.6   77.9  104.2  152.9  149.6  149.1  153.0   73.6   31.7    4.3
 $$
-  VLA_E56   E56
+  VLA_E56   E56 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E56,                   RADI TANG  lon/lat:  252.5155   34.0268 2142.886
@@ -2807,7 +2807,7 @@ $$ VLA_E56,                   RADI TANG  lon/lat:  252.5155   34.0268 2142.886
    177.2  157.2  137.2  140.1 -137.4 -154.0 -139.9 -163.2  128.9  100.3   16.2
     90.1  108.6   77.9  104.2  152.7  149.5  149.0  152.9   73.5   31.7    4.3
 $$
-  VLA_E64   E64
+  VLA_E64   E64 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E64,                   RADI TANG  lon/lat:  252.5500   34.0134 2162.828
@@ -2818,7 +2818,7 @@ $$ VLA_E64,                   RADI TANG  lon/lat:  252.5500   34.0134 2162.828
    176.8  156.7  136.9  139.8 -137.5 -154.1 -140.0 -163.3  128.9  100.3   16.2
     90.2  108.5   78.0  104.2  152.6  149.5  148.9  152.9   73.5   31.7    4.3
 $$
-  VLA_E72   E72
+  VLA_E72   E72 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_E72,                   RADI TANG  lon/lat:  252.5882   33.9998 2095.708
@@ -2829,7 +2829,7 @@ $$ VLA_E72,                   RADI TANG  lon/lat:  252.5882   33.9998 2095.708
    176.5  156.2  136.6  139.5 -137.5 -154.1 -140.0 -163.3  128.9  100.2   16.1
     90.2  108.5   78.0  104.2  152.5  149.4  148.7  152.9   73.5   31.7    4.3
 $$
-  VLA_N1    N1
+  VLA_N1    N1 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N1,                    RADI TANG  lon/lat:  252.3817   34.0788 2115.323
@@ -2840,7 +2840,7 @@ $$ VLA_N1,                    RADI TANG  lon/lat:  252.3817   34.0788 2115.323
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_N2    N2
+  VLA_N2    N2 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N2,                    RADI TANG  lon/lat:  252.3816   34.0793 2115.208
@@ -2851,7 +2851,7 @@ $$ VLA_N2,                    RADI TANG  lon/lat:  252.3816   34.0793 2115.208
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.1  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_N3    N3
+  VLA_N3    N3 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N3,                    RADI TANG  lon/lat:  252.3816   34.0797 2115.127
@@ -2862,7 +2862,7 @@ $$ VLA_N3,                    RADI TANG  lon/lat:  252.3816   34.0797 2115.127
    178.4  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_N4    N4
+  VLA_N4    N4 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N4,                    RADI TANG  lon/lat:  252.3815   34.0800 2115.051
@@ -2873,7 +2873,7 @@ $$ VLA_N4,                    RADI TANG  lon/lat:  252.3815   34.0800 2115.051
    178.5  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.6   31.8    4.3
 $$
-  VLA_N5    N5
+  VLA_N5    N5 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N5,                    RADI TANG  lon/lat:  252.3815   34.0806 2114.913
@@ -2884,7 +2884,7 @@ $$ VLA_N5,                    RADI TANG  lon/lat:  252.3815   34.0806 2114.913
    178.5  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.0  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N6    N6
+  VLA_N6    N6 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N6,                    RADI TANG  lon/lat:  252.3814   34.0812 2114.774
@@ -2895,7 +2895,7 @@ $$ VLA_N6,                    RADI TANG  lon/lat:  252.3814   34.0812 2114.774
    178.5  159.2  138.3  141.5 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N7    N7
+  VLA_N7    N7 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N7,                    RADI TANG  lon/lat:  252.3813   34.0819 2114.641
@@ -2906,7 +2906,7 @@ $$ VLA_N7,                    RADI TANG  lon/lat:  252.3813   34.0819 2114.641
    178.5  159.3  138.3  141.5 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N8    N8
+  VLA_N8    N8 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.473
@@ -2917,7 +2917,7 @@ $$ VLA_N8,                    RADI TANG  lon/lat:  252.3813   34.0827 2114.473
    178.5  159.3  138.3  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N9    N9
+  VLA_N9    N9 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N9,                    RADI TANG  lon/lat:  252.3812   34.0836 2114.269
@@ -2928,7 +2928,7 @@ $$ VLA_N9,                    RADI TANG  lon/lat:  252.3812   34.0836 2114.269
    178.5  159.3  138.3  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N10   N10
+  VLA_N10   N10 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N10,                   RADI TANG  lon/lat:  252.3811   34.0846 2114.045
@@ -2939,7 +2939,7 @@ $$ VLA_N10,                   RADI TANG  lon/lat:  252.3811   34.0846 2114.045
    178.5  159.3  138.3  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N12   N12
+  VLA_N12   N12 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N12,                   RADI TANG  lon/lat:  252.3808   34.0867 2113.565
@@ -2950,7 +2950,7 @@ $$ VLA_N12,                   RADI TANG  lon/lat:  252.3808   34.0867 2113.565
    178.5  159.4  138.4  141.6 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N14   N14
+  VLA_N14   N14 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N14,                   RADI TANG  lon/lat:  252.3806   34.0891 2113.257
@@ -2961,7 +2961,7 @@ $$ VLA_N14,                   RADI TANG  lon/lat:  252.3806   34.0891 2113.257
    178.6  159.4  138.4  141.7 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N16   N16
+  VLA_N16   N16 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N16,                   RADI TANG  lon/lat:  252.3803   34.0917 2113.244
@@ -2972,7 +2972,7 @@ $$ VLA_N16,                   RADI TANG  lon/lat:  252.3803   34.0917 2113.244
    178.6  159.5  138.4  141.7 -137.3 -153.9 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N18   N18
+  VLA_N18   N18 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N18,                   RADI TANG  lon/lat:  252.3800   34.0946 2113.275
@@ -2983,7 +2983,7 @@ $$ VLA_N18,                   RADI TANG  lon/lat:  252.3800   34.0946 2113.275
    178.7  159.5  138.5  141.8 -137.3 -153.8 -139.8 -163.0  129.0  100.5   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N20   N20
+  VLA_N20   N20 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N20,                   RADI TANG  lon/lat:  252.3797   34.0977 2113.925
@@ -2994,7 +2994,7 @@ $$ VLA_N20,                   RADI TANG  lon/lat:  252.3797   34.0977 2113.925
    178.7  159.6  138.5  141.8 -137.3 -153.8 -139.8 -163.0  129.0  100.6   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.7   31.8    4.3
 $$
-  VLA_N24   N24
+  VLA_N24   N24 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N24,                   RADI TANG  lon/lat:  252.3789   34.1055 2115.167
@@ -3005,7 +3005,7 @@ $$ VLA_N24,                   RADI TANG  lon/lat:  252.3789   34.1055 2115.167
    178.8  159.8  138.6  142.0 -137.3 -153.8 -139.8 -163.0  129.0  100.6   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.8   31.8    4.3
 $$
-  VLA_N28   N28
+  VLA_N28   N28 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N28,                   RADI TANG  lon/lat:  252.3781   34.1124 2114.398
@@ -3016,7 +3016,7 @@ $$ VLA_N28,                   RADI TANG  lon/lat:  252.3781   34.1124 2114.398
    178.9  160.0  138.7  142.1 -137.3 -153.8 -139.8 -163.0  129.1  100.6   16.2
     90.1  108.6   77.8  104.2  153.2  149.8  149.5  153.0   73.8   31.9    4.3
 $$
-  VLA_N32   N32
+  VLA_N32   N32 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N32,                   RADI TANG  lon/lat:  252.3772   34.1211 2115.872
@@ -3027,7 +3027,7 @@ $$ VLA_N32,                   RADI TANG  lon/lat:  252.3772   34.1211 2115.872
    179.0  160.2  138.8  142.3 -137.2 -153.8 -139.7 -163.0  129.1  100.6   16.2
     90.1  108.6   77.8  104.2  153.3  149.8  149.5  153.0   73.9   31.9    4.3
 $$
-  VLA_N36   N36
+  VLA_N36   N36 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N36,                   RADI TANG  lon/lat:  252.3762   34.1306 2117.104
@@ -3038,7 +3038,7 @@ $$ VLA_N36,                   RADI TANG  lon/lat:  252.3762   34.1306 2117.104
    179.1  160.4  139.0  142.5 -137.2 -153.8 -139.7 -163.0  129.1  100.6   16.2
     90.1  108.6   77.8  104.2  153.3  149.8  149.5  153.0   73.9   31.9    4.3
 $$
-  VLA_N40   N40
+  VLA_N40   N40 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N40,                   RADI TANG  lon/lat:  252.3751   34.1408 2118.823
@@ -3049,7 +3049,7 @@ $$ VLA_N40,                   RADI TANG  lon/lat:  252.3751   34.1408 2118.823
    179.3  160.6  139.1  142.7 -137.2 -153.8 -139.7 -163.0  129.1  100.6   16.2
     90.1  108.6   77.8  104.3  153.3  149.8  149.6  153.0   74.0   31.9    4.3
 $$
-  VLA_N48   N48
+  VLA_N48   N48 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N48,                   RADI TANG  lon/lat:  252.3727   34.1636 2121.547
@@ -3060,7 +3060,7 @@ $$ VLA_N48,                   RADI TANG  lon/lat:  252.3727   34.1636 2121.547
    179.6  161.1  139.4  143.1 -137.2 -153.8 -139.7 -162.9  129.1  100.7   16.3
     90.2  108.6   77.9  104.3  153.3  149.8  149.6  153.0   74.1   32.0    4.3
 $$
-  VLA_N56   N56
+  VLA_N56   N56 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N56,                   RADI TANG  lon/lat:  252.3700   34.1893 2122.113
@@ -3071,7 +3071,7 @@ $$ VLA_N56,                   RADI TANG  lon/lat:  252.3700   34.1893 2122.113
    179.9  161.8  139.7  143.6 -137.1 -153.7 -139.7 -162.9  129.2  100.7   16.3
     90.2  108.7   77.9  104.3  153.4  149.9  149.6  153.0   74.2   32.0    4.3
 $$
-  VLA_N64   N64
+  VLA_N64   N64 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N64,                   RADI TANG  lon/lat:  252.3670   34.2177 2125.563
@@ -3082,7 +3082,7 @@ $$ VLA_N64,                   RADI TANG  lon/lat:  252.3670   34.2177 2125.563
   -179.7  162.4  140.1  144.2 -137.1 -153.7 -139.6 -162.9  129.2  100.8   16.3
     90.2  108.7   77.9  104.3  153.4  149.9  149.7  153.0   74.4   32.1    4.3
 $$
-  VLA_N72   N72
+  VLA_N72   N72 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ VLA_N72,                   RADI TANG  lon/lat:  252.3637   34.2488 2133.487
@@ -3093,7 +3093,7 @@ $$ VLA_N72,                   RADI TANG  lon/lat:  252.3637   34.2488 2133.487
   -179.3  163.2  140.5  144.8 -137.1 -153.6 -139.6 -162.8  129.2  100.9   16.3
     90.3  108.7   78.0  104.3  153.4  149.9  149.7  153.0   74.5   32.1    4.3
 $$
-  DSS14
+  DSS14     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ DSS14,                     RADI TANG  lon/lat:  243.1105   35.4259 1001.323
@@ -3104,7 +3104,7 @@ $$ DSS14,                     RADI TANG  lon/lat:  243.1105   35.4259 1001.323
   -147.0  -83.5  171.7  -82.1 -130.1 -144.8 -132.5 -152.8  136.1  115.3   22.8
     91.1  110.8   75.3  105.5  176.5  165.2  173.4  160.6   67.6   33.5    4.7
 $$
-  GOLDS_TS
+  GOLDS_TS  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ GOLDS_TS,                  RADI TANG  lon/lat:  243.1271   35.3396  945.381
@@ -3115,7 +3115,7 @@ $$ GOLDS_TS,                  RADI TANG  lon/lat:  243.1271   35.3396  945.381
   -148.4  -85.1  169.8  -83.1 -130.2 -145.0 -132.7 -152.9  135.9  115.1   22.6
     91.2  110.9   75.3  105.6  176.6  165.3  173.5  160.8   67.3   33.4    4.7
 $$
-  DSS54
+  DSS54     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ DSS54,                     RADI TANG  lon/lat:  355.7459   40.4256  837.052
@@ -3126,7 +3126,7 @@ $$ DSS54,                     RADI TANG  lon/lat:  355.7459   40.4256  837.052
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.5 -143.2 -176.5
    -59.5  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.3  -18.3  -78.5
 $$
-  DSS63
+  DSS63     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ DSS63,                     RADI TANG  lon/lat:  355.7520   40.4312  864.873
@@ -3137,7 +3137,7 @@ $$ DSS63,                     RADI TANG  lon/lat:  355.7520   40.4312  864.873
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.6 -143.2 -176.5
    -59.6  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.2  -18.3  -77.9
 $$
-  DSS64
+  DSS64      
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ DSS64     !,               RADI TANG  lon/lat:  355.7486   40.4272  833.835
@@ -3148,7 +3148,7 @@ $$ DSS64     !,               RADI TANG  lon/lat:  355.7486   40.4272  833.835
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.6 -143.2 -176.5
    -59.6  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.3  -18.3  -78.5
 $$
-  ROBLD_TS
+  ROBLD_TS  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ ROBLD_TS,                  RADI TANG  lon/lat:  355.7503   40.4274  826.781
@@ -3159,7 +3159,7 @@ $$ ROBLD_TS,                  RADI TANG  lon/lat:  355.7503   40.4274  826.781
     67.7   92.1   50.6   88.3   61.8  -38.7   55.1  -93.2  154.6 -143.2 -176.5
    -59.6  -22.4  -80.2  -25.6  -19.5 -164.3  -28.8  146.3  -10.3  -18.3  -78.6
 $$
-  DSS43
+  DSS43     
 $$ TPXO.7.2_PP ID: 2015-03-16 20:22:29
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ DSS43,                     RADI TANG  lon/lat:  148.9813  -35.4024  688.902
@@ -3170,7 +3170,7 @@ $$ DSS43,                     RADI TANG  lon/lat:  148.9813  -35.4024  688.902
     91.2  125.2   84.6  121.1 -170.7  172.8 -175.9  159.3  -39.4  -91.8 -170.2
     16.8   60.6   -6.0   51.1 -121.3 -145.3 -123.8 -158.9 -170.5 -172.1 -178.9
 $$
-  TDBIN_TS
+  TDBIN_TS  
 $$ TPXO.7.2_PP ID: 2015-03-16 20:22:36
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ TDBIN_TS,                  RADI TANG  lon/lat:  148.9831  -35.4005  684.134
@@ -3181,7 +3181,7 @@ $$ TDBIN_TS,                  RADI TANG  lon/lat:  148.9831  -35.4005  684.134
     91.2  125.2   84.6  121.1 -170.7  172.8 -175.9  159.3  -39.4  -91.8 -170.2
     16.8   60.5   -6.0   51.0 -121.3 -145.3 -123.8 -158.9 -170.5 -172.1 -178.9
 $$
-  GBANK_TS
+  GBANK_TS  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ GBANK_TS,                  RADI TANG  lon/lat:  280.1776   38.4333  807.087
@@ -3192,7 +3192,7 @@ $$ GBANK_TS,                  RADI TANG  lon/lat:  280.1776   38.4333  807.087
   -174.7 -169.3  162.6 -178.3  -90.5  154.2 -102.6   93.1  117.3   74.1   11.5
    -50.3   25.8 -121.9   30.9  125.9 -138.3  129.5 -171.5   14.4   -3.2    0.4
 $$
-  MIYUN50
+  MIYUN50   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ MIYUN50,                   RADI TANG  lon/lat:  116.9760   40.5580  177.673
@@ -3203,7 +3203,7 @@ $$ MIYUN50,                   RADI TANG  lon/lat:  116.9760   40.5580  177.673
    113.9  107.5  124.3  102.7 -127.5 -152.5 -127.2 -163.3  -15.0  -48.2 -147.5
    -14.8   10.7  -14.9    8.0  135.7  113.2  133.3   98.7 -174.8  129.9   13.4
 $$
-  OVRO_MMA
+  OVRO_MMA  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ OVRO_MMA,                  RADI TANG  lon/lat:  241.7166   37.2334 1188.052
@@ -3214,7 +3214,7 @@ $$ OVRO_MMA,                  RADI TANG  lon/lat:  241.7166   37.2334 1188.052
   -127.6  -75.0 -159.0  -78.0 -126.8 -141.0 -129.1 -148.7  140.4  122.3   31.0
     91.6  110.3   75.5  105.2  176.8  164.5  173.7  159.4   72.6   35.2    4.8
 $$
-  KP12      KP
+  KP12      KP 
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ KP12,                      RADI TANG  lon/lat:  248.3851   31.9533 1894.512
@@ -3225,7 +3225,7 @@ $$ KP12,                      RADI TANG  lon/lat:  248.3851   31.9533 1894.512
   -165.0 -131.0  162.6 -151.7 -139.4 -154.4 -141.2 -162.5  125.7   98.3   14.9
     84.5  110.8   70.2  105.3  164.1  159.3  162.0  159.2   58.3   28.7    4.1
 $$
-  ASKAP29
+  ASKAP29   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ ASKAP29,                   RADI TANG  lon/lat:  116.6372  -26.6902  355.482
@@ -3236,7 +3236,7 @@ $$ ASKAP29,                   RADI TANG  lon/lat:  116.6372  -26.6902  355.482
   -125.4  -69.7 -147.0  -70.0  150.3  142.3  146.5  133.1  -17.1  -29.6  -81.7
   -144.5  -87.2 -170.3  -90.7  -49.4  -86.4  -55.0 -108.8 -171.0 -174.9 -179.2
 $$
-  KATHERIN
+  KATHERIN  
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ KATHERIN,                  RADI TANG  lon/lat:  132.1524  -14.3755  189.049
@@ -3247,7 +3247,7 @@ $$ KATHERIN,                  RADI TANG  lon/lat:  132.1524  -14.3755  189.049
     82.8  107.6   70.4  105.3 -170.5  170.3 -172.2  160.0  -29.4  -65.3 -170.1
     49.0  105.7   14.0  101.0  -10.3  -15.9  -16.3  -28.1 -172.1 -170.3 -178.4
 $$
-  AT_W104
+  AT_W104   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W104,                   RADI TANG  lon/lat:  149.5648  -30.3129  252.020
@@ -3258,7 +3258,7 @@ $$ AT_W104,                   RADI TANG  lon/lat:  149.5648  -30.3129  252.020
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_N2
+  AT_N2     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_N2,                     RADI TANG  lon/lat:  149.5644  -30.3126  251.961
@@ -3269,7 +3269,7 @@ $$ AT_N2,                     RADI TANG  lon/lat:  149.5644  -30.3126  251.961
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_N5
+  AT_N5     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_N5,                     RADI TANG  lon/lat:  149.5644  -30.3122  251.916
@@ -3280,7 +3280,7 @@ $$ AT_N5,                     RADI TANG  lon/lat:  149.5644  -30.3122  251.916
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_N7
+  AT_N7     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_N7,                     RADI TANG  lon/lat:  149.5644  -30.3119  251.887
@@ -3291,7 +3291,7 @@ $$ AT_N7,                     RADI TANG  lon/lat:  149.5644  -30.3119  251.887
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_N11
+  AT_N11    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_N11,                    RADI TANG  lon/lat:  149.5644  -30.3114  251.828
@@ -3302,7 +3302,7 @@ $$ AT_N11,                    RADI TANG  lon/lat:  149.5644  -30.3114  251.828
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_N14
+  AT_N14    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_N14,                    RADI TANG  lon/lat:  149.5644  -30.3109  251.785
@@ -3313,7 +3313,7 @@ $$ AT_N14,                    RADI TANG  lon/lat:  149.5644  -30.3109  251.785
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W0
+  AT_W0     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W0,                     RADI TANG  lon/lat:  149.5813  -30.3129  253.775
@@ -3324,7 +3324,7 @@ $$ AT_W0,                     RADI TANG  lon/lat:  149.5813  -30.3129  253.775
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W2
+  AT_W2     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W2,                     RADI TANG  lon/lat:  149.5810  -30.3129  253.738
@@ -3335,7 +3335,7 @@ $$ AT_W2,                     RADI TANG  lon/lat:  149.5810  -30.3129  253.738
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W4
+  AT_W4     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W4,                     RADI TANG  lon/lat:  149.5807  -30.3129  253.701
@@ -3346,7 +3346,7 @@ $$ AT_W4,                     RADI TANG  lon/lat:  149.5807  -30.3129  253.701
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W6
+  AT_W6     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W6,                     RADI TANG  lon/lat:  149.5804  -30.3129  253.663
@@ -3357,7 +3357,7 @@ $$ AT_W6,                     RADI TANG  lon/lat:  149.5804  -30.3129  253.663
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W8
+  AT_W8     
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W8,                     RADI TANG  lon/lat:  149.5800  -30.3129  253.626
@@ -3368,7 +3368,7 @@ $$ AT_W8,                     RADI TANG  lon/lat:  149.5800  -30.3129  253.626
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W10
+  AT_W10    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W10,                    RADI TANG  lon/lat:  149.5797  -30.3129  253.589
@@ -3379,7 +3379,7 @@ $$ AT_W10,                    RADI TANG  lon/lat:  149.5797  -30.3129  253.589
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W12
+  AT_W12    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W12,                    RADI TANG  lon/lat:  149.5794  -30.3129  253.552
@@ -3390,7 +3390,7 @@ $$ AT_W12,                    RADI TANG  lon/lat:  149.5794  -30.3129  253.552
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W14
+  AT_W14    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W14,                    RADI TANG  lon/lat:  149.5791  -30.3129  253.516
@@ -3401,7 +3401,7 @@ $$ AT_W14,                    RADI TANG  lon/lat:  149.5791  -30.3129  253.516
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W16
+  AT_W16    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W16,                    RADI TANG  lon/lat:  149.5788  -30.3129  253.479
@@ -3412,7 +3412,7 @@ $$ AT_W16,                    RADI TANG  lon/lat:  149.5788  -30.3129  253.479
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.3  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W32
+  AT_W32    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W32,                    RADI TANG  lon/lat:  149.5762  -30.3129  253.193
@@ -3423,7 +3423,7 @@ $$ AT_W32,                    RADI TANG  lon/lat:  149.5762  -30.3129  253.193
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.1  -71.8 -131.6 -173.6
    -14.9   37.4  -22.8   30.5 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W45
+  AT_W45    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W45,                    RADI TANG  lon/lat:  149.5741  -30.3129  252.967
@@ -3434,7 +3434,7 @@ $$ AT_W45,                    RADI TANG  lon/lat:  149.5741  -30.3129  252.967
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W64
+  AT_W64    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W64,                    RADI TANG  lon/lat:  149.5711  -30.3129  252.648
@@ -3445,7 +3445,7 @@ $$ AT_W64,                    RADI TANG  lon/lat:  149.5711  -30.3129  252.648
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W84
+  AT_W84    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W84,                    RADI TANG  lon/lat:  149.5679  -30.3129  252.327
@@ -3456,7 +3456,7 @@ $$ AT_W84,                    RADI TANG  lon/lat:  149.5679  -30.3129  252.327
     76.5  112.7   63.0  109.4 -165.3  176.1 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W98
+  AT_W98    
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W98,                    RADI TANG  lon/lat:  149.5657  -30.3129  252.111
@@ -3467,7 +3467,7 @@ $$ AT_W98,                    RADI TANG  lon/lat:  149.5657  -30.3129  252.111
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W100
+  AT_W100   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W100,                   RADI TANG  lon/lat:  149.5654  -30.3129  252.080
@@ -3478,7 +3478,7 @@ $$ AT_W100,                   RADI TANG  lon/lat:  149.5654  -30.3129  252.080
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W102
+  AT_W102   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W102,                   RADI TANG  lon/lat:  149.5651  -30.3129  252.050
@@ -3489,7 +3489,7 @@ $$ AT_W102,                   RADI TANG  lon/lat:  149.5651  -30.3129  252.050
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W106
+  AT_W106   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W106,                   RADI TANG  lon/lat:  149.5644  -30.3129  251.990
@@ -3500,7 +3500,7 @@ $$ AT_W106,                   RADI TANG  lon/lat:  149.5644  -30.3129  251.990
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.8  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W109
+  AT_W109   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W109,                   RADI TANG  lon/lat:  149.5640  -30.3129  251.946
@@ -3511,7 +3511,7 @@ $$ AT_W109,                   RADI TANG  lon/lat:  149.5640  -30.3129  251.946
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W110
+  AT_W110   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W110,                   RADI TANG  lon/lat:  149.5638  -30.3129  251.931
@@ -3522,7 +3522,7 @@ $$ AT_W110,                   RADI TANG  lon/lat:  149.5638  -30.3129  251.931
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W111
+  AT_W111   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W111,                   RADI TANG  lon/lat:  149.5636  -30.3129  251.916
@@ -3533,7 +3533,7 @@ $$ AT_W111,                   RADI TANG  lon/lat:  149.5636  -30.3129  251.916
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W112
+  AT_W112   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W112,                   RADI TANG  lon/lat:  149.5635  -30.3129  251.901
@@ -3544,7 +3544,7 @@ $$ AT_W112,                   RADI TANG  lon/lat:  149.5635  -30.3129  251.901
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W113
+  AT_W113   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W113,                   RADI TANG  lon/lat:  149.5633  -30.3129  251.887
@@ -3555,7 +3555,7 @@ $$ AT_W113,                   RADI TANG  lon/lat:  149.5633  -30.3129  251.887
     76.5  112.7   63.0  109.4 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W124
+  AT_W124   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W124,                   RADI TANG  lon/lat:  149.5616  -30.3129  251.728
@@ -3566,7 +3566,7 @@ $$ AT_W124,                   RADI TANG  lon/lat:  149.5616  -30.3129  251.728
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W125
+  AT_W125   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W125,                   RADI TANG  lon/lat:  149.5614  -30.3129  251.713
@@ -3577,7 +3577,7 @@ $$ AT_W125,                   RADI TANG  lon/lat:  149.5614  -30.3129  251.713
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W128
+  AT_W128   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W128,                   RADI TANG  lon/lat:  149.5609  -30.3129  251.672
@@ -3588,7 +3588,7 @@ $$ AT_W128,                   RADI TANG  lon/lat:  149.5609  -30.3129  251.672
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W129
+  AT_W129   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W129,                   RADI TANG  lon/lat:  149.5608  -30.3129  251.657
@@ -3599,7 +3599,7 @@ $$ AT_W129,                   RADI TANG  lon/lat:  149.5608  -30.3129  251.657
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W140
+  AT_W140   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W140,                   RADI TANG  lon/lat:  149.5590  -30.3129  251.505
@@ -3610,7 +3610,7 @@ $$ AT_W140,                   RADI TANG  lon/lat:  149.5590  -30.3129  251.505
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W147
+  AT_W147   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W147,                   RADI TANG  lon/lat:  149.5579  -30.3129  251.410
@@ -3621,7 +3621,7 @@ $$ AT_W147,                   RADI TANG  lon/lat:  149.5579  -30.3129  251.410
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W148
+  AT_W148   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W148,                   RADI TANG  lon/lat:  149.5578  -30.3129  251.397
@@ -3632,7 +3632,7 @@ $$ AT_W148,                   RADI TANG  lon/lat:  149.5578  -30.3129  251.397
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.4  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W163
+  AT_W163   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W163,                   RADI TANG  lon/lat:  149.5554  -30.3129  251.201
@@ -3643,7 +3643,7 @@ $$ AT_W163,                   RADI TANG  lon/lat:  149.5554  -30.3129  251.201
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.5  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W168
+  AT_W168   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W168,                   RADI TANG  lon/lat:  149.5546  -30.3129  251.137
@@ -3654,7 +3654,7 @@ $$ AT_W168,                   RADI TANG  lon/lat:  149.5546  -30.3129  251.137
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.5  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W172
+  AT_W172   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W172,                   RADI TANG  lon/lat:  149.5539  -30.3129  251.087
@@ -3665,7 +3665,7 @@ $$ AT_W172,                   RADI TANG  lon/lat:  149.5539  -30.3129  251.087
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.5  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W173
+  AT_W173   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W173,                   RADI TANG  lon/lat:  149.5538  -30.3129  251.074
@@ -3676,7 +3676,7 @@ $$ AT_W173,                   RADI TANG  lon/lat:  149.5538  -30.3129  251.074
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.5  -22.8   30.6 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W182
+  AT_W182   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W182,                   RADI TANG  lon/lat:  149.5524  -30.3129  250.964
@@ -3687,7 +3687,7 @@ $$ AT_W182,                   RADI TANG  lon/lat:  149.5524  -30.3129  250.964
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.6 -173.6
    -14.8   37.5  -22.8   30.7 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W189
+  AT_W189   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W189,                   RADI TANG  lon/lat:  149.5512  -30.3129  250.880
@@ -3698,7 +3698,7 @@ $$ AT_W189,                   RADI TANG  lon/lat:  149.5512  -30.3129  250.880
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.5 -173.6
    -14.8   37.5  -22.8   30.7 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W190
+  AT_W190   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W190,                   RADI TANG  lon/lat:  149.5511  -30.3129  250.868
@@ -3709,7 +3709,7 @@ $$ AT_W190,                   RADI TANG  lon/lat:  149.5511  -30.3129  250.868
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.5 -173.6
    -14.8   37.5  -22.8   30.7 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W195
+  AT_W195   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W195,                   RADI TANG  lon/lat:  149.5503  -30.3129  250.809
@@ -3720,7 +3720,7 @@ $$ AT_W195,                   RADI TANG  lon/lat:  149.5503  -30.3129  250.809
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.5 -173.6
    -14.8   37.5  -22.8   30.7 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W196
+  AT_W196   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W196,                   RADI TANG  lon/lat:  149.5501  -30.3129  250.798
@@ -3731,7 +3731,7 @@ $$ AT_W196,                   RADI TANG  lon/lat:  149.5501  -30.3129  250.798
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.2  -71.8 -131.5 -173.6
    -14.8   37.5  -22.8   30.7 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  AT_W392
+  AT_W392   
 $$ Complete TPXO.7.2
 $$ Computed by OLFG, H.-G. Scherneck, Onsala Space Observatory 2015-Mar-16
 $$ AT_W392,                   RADI TANG  lon/lat:  149.5189  -30.3129  249.184
@@ -3742,7 +3742,7 @@ $$ AT_W392,                   RADI TANG  lon/lat:  149.5189  -30.3129  249.184
     76.5  112.7   63.0  109.3 -165.3  176.2 -170.7  162.3  -71.7 -131.5 -173.6
    -14.7   37.6  -22.7   30.8 -121.5 -145.8 -123.9 -159.8 -171.0 -171.8 -178.8
 $$
-  TDBIN_TS
+  TDBIN_TS  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:00:53
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ TDBIN_TS,                  RADI TANG  lon/lat:  148.9831  -35.4005  684.134
@@ -3753,7 +3753,7 @@ $$ TDBIN_TS,                  RADI TANG  lon/lat:  148.9831  -35.4005  684.134
     91.2  125.2   84.6  121.1 -170.7  172.8 -175.9  159.3  -39.4  -91.8 -170.2
     16.8   60.5   -6.0   51.0 -121.3 -145.3 -123.8 -158.9 -170.5 -172.1 -178.9
 $$
-  ARECIBO   AR
+  ARECIBO   AR 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:00
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ ARECIBO,                   RADI TANG  lon/lat:  293.2473   18.3442  451.185
@@ -3764,7 +3764,7 @@ $$ ARECIBO,                   RADI TANG  lon/lat:  293.2473   18.3442  451.185
     86.4   99.7   80.1   97.1   78.6   58.1   73.0   35.4  142.5  101.2    9.8
   -157.5 -122.0 -178.1 -124.6  -41.6  -75.0  -37.2 -112.2  168.6  162.6  179.6
 $$
-  CAMB32    CM
+  CAMB32    CM 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:12
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ CAMB32,                    RADI TANG  lon/lat:    0.0372   52.1669   83.466
@@ -3775,7 +3775,7 @@ $$ CAMB32,                    RADI TANG  lon/lat:    0.0372   52.1669   83.466
    118.8  162.6   98.9  165.4  117.1   10.2  110.6  -48.3  164.7 -176.0 -179.0
      6.0   42.8   -3.2   51.9   60.9  -69.7   54.7 -144.7   54.6   17.0    3.3
 $$
-  JB_Mk_2   JB
+  JB_Mk_2   JB        
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:22
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ JB_Mk_2,                   RADI TANG  lon/lat:  357.6961   53.2340  143.774
@@ -3786,7 +3786,7 @@ $$ JB_Mk_2,                   RADI TANG  lon/lat:  357.6961   53.2340  143.774
    108.3  152.3   93.3  157.1  117.1   10.6  112.4  -49.3  170.2 -174.7 -179.0
    116.6  151.3   95.0  148.2   44.8  -84.6   38.7 -155.2   44.9   15.9    3.2
 $$
-  JODLMKI   JB
+  JODLMKI   JB  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:32
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ JODLMKI,                   RADI TANG  lon/lat:  357.6914   53.2365  179.412
@@ -3797,7 +3797,7 @@ $$ JODLMKI,                   RADI TANG  lon/lat:  357.6914   53.2365  179.412
    108.2  152.3   93.3  157.1  117.1   10.6  112.4  -49.2  170.2 -174.7 -179.0
    116.7  151.4   95.1  148.3   44.8  -84.6   38.6 -155.3   44.9   15.9    3.2
 $$
-  TORUN     TR
+  TORUN     TR 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:39
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ TORUN,                     RADI TANG  lon/lat:   18.5641   53.0955  133.607
@@ -3808,7 +3808,7 @@ $$ TORUN,                     RADI TANG  lon/lat:   18.5641   53.0955  133.607
     71.4  108.6   48.7  107.7  101.0   43.8   98.0   -5.4 -171.1 -163.9 -177.4
    -94.0  -51.1   95.2  -70.8   47.6  -17.7   38.0  140.7  122.8   71.1   10.2
 $$
-  USSURIYS  US
+  USSURIYS  US 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:01:49
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ USSURIYS,                  RADI TANG  lon/lat:  131.7573   44.0161  152.120
@@ -3819,7 +3819,7 @@ $$ USSURIYS,                  RADI TANG  lon/lat:  131.7573   44.0161  152.120
     26.7   61.0   65.1   55.2 -162.1  177.7 -164.7  167.2  -20.1  -29.0  -18.9
    -62.1  -51.5  -56.1  -52.9  124.0  106.9  121.9   87.6  172.5  114.4   12.1
 $$
-  WB_RT0    WB
+  WB_RT0    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:02:15
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT0,                    RADI TANG  lon/lat:    6.5918   52.9153   70.189
@@ -3830,7 +3830,7 @@ $$ WB_RT0,                    RADI TANG  lon/lat:    6.5918   52.9153   70.189
    110.7  158.4   86.0  154.3   81.7   64.0   78.4    7.2 -166.7 -166.7 -177.8
     71.1  107.2   56.5   99.7   60.7  -25.4   40.9 -164.9   55.7   19.6    3.2
 $$
-  WB_RT1    WB
+  WB_RT1    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:02:41
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT1,                    RADI TANG  lon/lat:    6.5940   52.9153   70.130
@@ -3841,7 +3841,7 @@ $$ WB_RT1,                    RADI TANG  lon/lat:    6.5940   52.9153   70.130
    110.7  158.4   86.0  154.3   81.7   64.0   78.4    7.1 -166.7 -166.7 -177.8
     71.1  107.2   56.5   99.8   60.7  -25.4   40.9 -164.9   55.7   19.6    3.2
 $$
-  WB_RT2    WB
+  WB_RT2    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:03:07
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT2,                    RADI TANG  lon/lat:    6.5961   52.9153   70.074
@@ -3852,7 +3852,7 @@ $$ WB_RT2,                    RADI TANG  lon/lat:    6.5961   52.9153   70.074
    110.7  158.4   85.9  154.3   81.7   63.9   78.4    7.1 -166.7 -166.7 -177.8
     71.1  107.3   56.6   99.8   60.7  -25.4   40.9 -165.0   55.7   19.6    3.2
 $$
-  WB_RT3    WB
+  WB_RT3    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:03:33
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT3,                    RADI TANG  lon/lat:    6.5982   52.9153   70.015
@@ -3863,7 +3863,7 @@ $$ WB_RT3,                    RADI TANG  lon/lat:    6.5982   52.9153   70.015
    110.7  158.4   85.9  154.3   81.7   63.9   78.4    7.1 -166.7 -166.7 -177.8
     71.2  107.4   56.6   99.9   60.7  -25.4   40.9 -165.0   55.7   19.6    3.2
 $$
-  WB_RT4    WB
+  WB_RT4    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:03:59
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT4,                    RADI TANG  lon/lat:    6.6004   52.9153   69.965
@@ -3874,7 +3874,7 @@ $$ WB_RT4,                    RADI TANG  lon/lat:    6.6004   52.9153   69.965
    110.7  158.3   85.9  154.2   81.7   63.9   78.4    7.1 -166.7 -166.7 -177.8
     71.2  107.4   56.6   99.9   60.7  -25.3   40.9 -165.0   55.7   19.6    3.2
 $$
-  WB_RT5    WB
+  WB_RT5    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:04:25
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT5,                    RADI TANG  lon/lat:    6.6025   52.9153   69.919
@@ -3885,7 +3885,7 @@ $$ WB_RT5,                    RADI TANG  lon/lat:    6.6025   52.9153   69.919
    110.7  158.3   85.9  154.2   81.7   63.9   78.4    7.1 -166.8 -166.7 -177.8
     71.3  107.5   56.7   99.9   60.7  -25.3   40.9 -165.0   55.7   19.6    3.2
 $$
-  WB_RT6    WB
+  WB_RT6    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:04:51
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT6,                    RADI TANG  lon/lat:    6.6047   52.9153   69.870
@@ -3896,7 +3896,7 @@ $$ WB_RT6,                    RADI TANG  lon/lat:    6.6047   52.9153   69.870
    110.7  158.3   85.9  154.2   81.7   63.9   78.5    7.0 -166.8 -166.7 -177.8
     71.3  107.5   56.7  100.0   60.6  -25.3   40.9 -165.0   55.7   19.6    3.2
 $$
-  WB_RT7    WB
+  WB_RT7    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:05:17
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT7,                    RADI TANG  lon/lat:    6.6068   52.9153   70.911
@@ -3907,7 +3907,7 @@ $$ WB_RT7,                    RADI TANG  lon/lat:    6.6068   52.9153   70.911
    110.7  158.3   85.9  154.2   81.7   63.8   78.5    7.0 -166.8 -166.7 -177.8
     71.4  107.6   56.8  100.0   60.6  -25.3   40.9 -165.1   55.7   19.6    3.2
 $$
-  WB_RT8    WB
+  WB_RT8    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:05:43
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT8,                    RADI TANG  lon/lat:    6.6089   52.9153   69.793
@@ -3918,7 +3918,7 @@ $$ WB_RT8,                    RADI TANG  lon/lat:    6.6089   52.9153   69.793
    110.7  158.3   85.9  154.2   81.7   63.8   78.5    7.0 -166.8 -166.7 -177.8
     71.4  107.6   56.8  100.1   60.6  -25.3   40.9 -165.1   55.7   19.6    3.2
 $$
-  WB_RT9    WB
+  WB_RT9    WB 
 $$ TPXO.7.2_PP ID: 2015-03-16 21:06:08
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_RT9,                    RADI TANG  lon/lat:    6.6111   52.9153   69.754
@@ -3929,7 +3929,7 @@ $$ WB_RT9,                    RADI TANG  lon/lat:    6.6111   52.9153   69.754
    110.7  158.3   85.9  154.2   81.7   63.8   78.5    7.0 -166.8 -166.7 -177.8
     71.4  107.7   56.8  100.1   60.6  -25.2   40.9 -165.1   55.8   19.6    3.2
 $$
-  WB_Tied   WB
+  WB_Tied   WB        
 $$ TPXO.7.2_PP ID: 2015-03-16 21:06:35
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ WB_Tied,                   RADI TANG  lon/lat:    6.6333   52.9153   71.211
@@ -3940,7 +3940,7 @@ $$ WB_Tied,                   RADI TANG  lon/lat:    6.6333   52.9153   71.211
    111.3  159.5   86.4  154.9   80.7   64.9   77.6    7.5 -166.3 -166.6 -177.8
     72.4  108.4   57.4  100.3   60.1  -26.0   40.5 -166.1   55.7   19.6    3.2
 $$
-  DARNHALL
+  DARNHALL  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:06:45
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ DARNHALL,                  RADI TANG  lon/lat:  357.4644   53.1563  111.880
@@ -3951,7 +3951,7 @@ $$ DARNHALL,                  RADI TANG  lon/lat:  357.4644   53.1563  111.880
    115.0  159.9   98.4  166.2  117.1   11.4  112.4  -48.6  171.1 -174.5 -178.9
    119.0  156.1   97.0  152.7   44.2  -84.8   38.0 -155.0   45.0   15.8    3.2
 $$
-  DEFFORD
+  DEFFORD   
 $$ TPXO.7.2_PP ID: 2015-03-16 21:06:56
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ DEFFORD,                   RADI TANG  lon/lat:  357.8556   52.1006   89.628
@@ -3962,7 +3962,7 @@ $$ DEFFORD,                   RADI TANG  lon/lat:  357.8556   52.1006   89.628
    126.3  170.2  105.2  171.2  111.7    9.3  106.7  -51.2  171.3 -173.7 -178.9
    106.4  139.8   88.5  137.0   51.7  -74.2   45.7 -145.4   57.5   17.8    3.4
 $$
-  KNOCKIN
+  KNOCKIN   
 $$ TPXO.7.2_PP ID: 2015-03-16 21:07:11
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ KNOCKIN,                   RADI TANG  lon/lat:  357.0029   52.7903  131.437
@@ -3973,7 +3973,7 @@ $$ KNOCKIN,                   RADI TANG  lon/lat:  357.0029   52.7903  131.437
    128.6  173.5  107.8  177.4  114.9   11.6  110.2  -48.8  172.6 -174.0 -178.9
    122.3  161.9  100.6  157.5   44.7  -82.3   38.8 -151.6   48.3   16.3    3.2
 $$
-  TABLEY
+  TABLEY    
 $$ TPXO.7.2_PP ID: 2015-03-16 21:07:22
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ TABLEY,                    RADI TANG  lon/lat:  357.5546   53.2887  100.411
@@ -3984,7 +3984,7 @@ $$ TABLEY,                    RADI TANG  lon/lat:  357.5546   53.2887  100.411
    107.0  151.9   93.5  158.2  117.6   11.2  112.9  -48.6  170.7 -174.6 -179.0
    118.3  154.4   96.4  151.3   44.1  -85.2   37.9 -155.7   44.5   15.9    3.2
 $$
-  USUDA_TS
+  USUDA_TS  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:07:32
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ USUDA_TS,                  RADI TANG  lon/lat:  138.3584   36.1324 1591.167
@@ -3995,7 +3995,7 @@ $$ USUDA_TS,                  RADI TANG  lon/lat:  138.3584   36.1324 1591.167
     -7.2   31.9   -6.7   27.8 -170.1  167.0 -172.4  158.9  -40.7  -47.3 -129.5
    -74.0  -57.8  -83.3  -65.8   88.3   68.9   86.3   57.1   42.6   28.9    4.0
 $$
-  YAMAGU32
+  YAMAGU32  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:08:22
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ YAMAGU32,                  RADI TANG  lon/lat:  131.5571   34.2160  165.618
@@ -4006,7 +4006,7 @@ $$ YAMAGU32,                  RADI TANG  lon/lat:  131.5571   34.2160  165.618
     38.1   67.1   42.4   49.0 -157.4 -173.0 -163.5  163.9  -45.3  -54.1 -155.6
    -45.8  -30.8  -59.9  -30.4   91.5   70.8   90.1   61.9   49.0   31.8    4.1
 $$
-  PICOVEL
+  PICOVEL   
 $$ TPXO.7.2_PP ID: 2015-03-16 21:08:31
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ PICOVEL,                   RADI TANG  lon/lat:  356.6074   37.0662 2921.720
@@ -4017,7 +4017,7 @@ $$ PICOVEL,                   RADI TANG  lon/lat:  356.6074   37.0662 2921.720
     59.4   81.8   43.4   77.8   42.0  -55.4   30.4 -105.0   71.9  -92.1 -161.9
    -63.9  -24.1  -87.1  -27.8   -3.6 -176.4  -12.4  146.6  -25.9  -34.8 -171.6
 $$
-  YARRAGAD
+  YARRAGAD  
 $$ TPXO.7.2_PP ID: 2015-03-16 21:08:42
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ YARRAGAD,                  RADI TANG  lon/lat:  115.3456  -29.0471  247.965
@@ -4028,7 +4028,7 @@ $$ YARRAGAD,                  RADI TANG  lon/lat:  115.3456  -29.0471  247.965
   -127.0  -70.6 -151.9  -71.0  151.0  145.7  147.0  138.3  -15.3  -25.6  -41.6
   -154.3  -98.0 -178.9 -102.6  -69.1 -101.9  -74.4 -122.6 -170.8 -175.6 -179.3
 $$
-  DSS34
+  DSS34     
 $$ TPXO.7.2_PP ID: 2015-03-16 21:08:49
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ DSS34,                     RADI TANG  lon/lat:  148.9820  -35.3985  692.027
@@ -4039,7 +4039,7 @@ $$ DSS34,                     RADI TANG  lon/lat:  148.9820  -35.3985  692.027
     91.2  125.2   84.6  121.1 -170.7  172.8 -175.9  159.3  -39.4  -91.8 -170.2
     16.8   60.5   -6.0   51.0 -121.3 -145.3 -123.8 -158.9 -170.5 -172.1 -178.9
 $$
-  KVNYS
+  KVNYS     
 $$ TPXO.7.2_PP ID: 2015-03-16 21:09:22
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ KVNYS,                     RADI TANG  lon/lat:  126.9410   37.5652  121.601
@@ -4050,7 +4050,7 @@ $$ KVNYS,                     RADI TANG  lon/lat:  126.9410   37.5652  121.601
     53.6   83.9   67.2   72.0 -153.5 -176.5 -160.1  172.8  -52.4  -49.3 -149.1
    -28.4  -23.6  -37.1  -29.1  115.6   98.2  107.8   82.0  171.7   65.6    6.2
 $$
-  KVNUS
+  KVNUS     
 $$ TPXO.7.2_PP ID: 2015-03-16 21:09:54
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ KVNUS,                     RADI TANG  lon/lat:  129.2498   35.5456  160.612
@@ -4061,7 +4061,7 @@ $$ KVNUS,                     RADI TANG  lon/lat:  129.2498   35.5456  160.612
     69.0   83.0   81.9   73.8 -159.1  179.6 -161.6  167.2  -36.8  -46.8 -147.4
    -20.2    3.3  -29.8   -3.8   96.6   77.6   95.5   67.7   85.8   44.6    5.0
 $$
-  KVNTN
+  KVNTN     
 $$ TPXO.7.2_PP ID: 2015-03-16 21:10:14
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ KVNTN,                     RADI TANG  lon/lat:  126.4596   33.2890  441.479
@@ -4072,7 +4072,7 @@ $$ KVNTN,                     RADI TANG  lon/lat:  126.4596   33.2890  441.479
    105.2  127.1  102.7  120.2 -143.2 -165.2 -144.0 -175.7  -58.1  -62.7 -162.0
    -23.3   11.1  -32.0    8.5   92.9   73.1   90.5   65.5   48.8   40.2    4.3
 $$
-  GMRT
+  GMRT      
 $$ TPXO.7.2_PP ID: 2015-03-16 21:10:23
 $$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2015
 $$ GMRT,                      RADI TANG  lon/lat:   74.0497   19.0979  495.137

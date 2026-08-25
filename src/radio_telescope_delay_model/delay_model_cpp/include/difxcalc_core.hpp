@@ -32,6 +32,11 @@ constexpr int kMaxEpochsPerInterval = 6;
 // Returns the number of samples written. Thread safe via serialization on
 // the same mutex as the almacalc driver (the cores are separate extensions
 // but share process-global state like Fortran unit numbers).
+// `add_atmosphere` mirrors difxcalc's `-dry -wet` flags together: false
+// leaves the dry/wet troposphere out of the total delay and the exact-mode
+// uvw (the dry/wet output arrays are tabulated either way) -- the model
+// convention for phased arrays whose real-time phasing already removes the
+// troposphere (EHT phased ALMA).
 std::size_t run_difxcalc11(
     const std::string& calc_file,
     const std::string& ocean_loading_file,
@@ -39,6 +44,7 @@ std::size_t run_difxcalc11(
     const std::string& ocean_pole_tide_file,
     const std::string& de421_file,
     const std::string& leap_second_file,
+    bool add_atmosphere,
     std::size_t n_antenna,
     std::size_t max_samples,
     int* ymdhms,

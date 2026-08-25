@@ -317,3 +317,54 @@ def test_calc_straddles_leap_second_insertion():
         ANTENNA_POSITION, STRADDLE_TIME, PHASE_CENTER
     )
     np.testing.assert_allclose(uvw, uvw_astropy, atol=0.05)
+
+
+@pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
+def test_difxcalc11_atmosphere_switch():
+    """``add_atmosphere=False`` (difxcalc's ``-dry -wet``) removes exactly
+    the tabulated dry+wet from the total delay and changes the exact-mode
+    uvw; ``atmosphere_free_station`` splices per-antenna models -- the
+    phased-array (EHT ALMA) convention."""
+    from radio_telescope_delay_model.difxcalc11_core import (
+        difxcalc11_samples,
+        evaluate_samples,
+    )
+
+    names = [f"S{k}" for k in range(ANTENNA_POSITION.shape[0])]
+    on = difxcalc11_samples(ANTENNA_POSITION, TIME, PHASE_CENTER, station_name=names)
+    off = difxcalc11_samples(
+        ANTENNA_POSITION, TIME, PHASE_CENTER, station_name=names, add_atmosphere=False
+    )
+    np.testing.assert_allclose(
+        off["delay"], on["delay"] - on["dry"] - on["wet"], rtol=0, atol=5e-15
+    )
+    np.testing.assert_array_equal(off["dry"], on["dry"])
+    np.testing.assert_array_equal(off["wet"], on["wet"])
+    assert np.abs(on["u"] - off["u"]).max() > 1e-3  # atmosphere-in-uvw is real
+
+    mixed, antenna1, antenna2 = calculate_uvw_calc(
+        ANTENNA_POSITION,
+        TIME,
+        PHASE_CENTER,
+        mode="difxcalc11",
+        station_name=names,
+        atmosphere_free_station=[names[0]],
+    )
+    epochs = np.atleast_1d(TIME.unix)
+    per_antenna = np.stack(
+        [evaluate_samples(on, q, epochs) for q in ("u", "v", "w")], axis=2
+    )
+    free = np.stack([evaluate_samples(off, q, epochs) for q in ("u", "v", "w")], axis=2)
+    per_antenna[:, 0, :] = free[:, 0, :]
+    np.testing.assert_array_equal(
+        mixed, per_antenna[:, antenna2, :] - per_antenna[:, antenna1, :]
+    )
+    with pytest.raises(ValueError, match="atmosphere_free_station"):
+        calculate_uvw_calc(
+            ANTENNA_POSITION,
+            TIME,
+            PHASE_CENTER,
+            mode="difxcalc11",
+            station_name=names,
+            atmosphere_free_station=["NOPE"],
+        )

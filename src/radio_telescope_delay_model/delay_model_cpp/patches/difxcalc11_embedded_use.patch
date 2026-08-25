@@ -1,0 +1,11 @@
+--- a/cut1m.f
++++ b/cut1m.f
+@@ -1948,7 +1948,7 @@
+ !
+ !  Somewhat arbitrarily we start with 41.
+ !
+-      Data ipoint/40/,if7/6/,iutot/3/,iumax/60/
++      Data ipoint/40/,if7/6/,iutot/3/,iumax/2000000000/
+ !
+   100 ipoint = ipoint+1
+       iutot = iutot + 1

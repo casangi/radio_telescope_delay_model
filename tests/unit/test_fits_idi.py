@@ -5,8 +5,9 @@ EHT 2021 track e21d15 (job E21D15.1, 3C273, band 1); its uvw were written by
 difx2fits from the difxcalc11 ``.im`` model in float32 light-seconds, so
 this pins the embedded difxcalc11 pipeline against a real archive at the
 file's own precision floor (float32 light-seconds: ~1 m ulp on the longest
-baselines, plus correlation-time-vs-final EOP differences; measured median
-~0.06 m, max ~1.7 m across all 21 baselines).
+baselines, plus the ~1.8 m ALMA-position inconsistency of this delivery;
+measured per-component median ~0.09 m, max ~2.1 m across all 21 baselines --
+EOP choice moves these by under a centimeter).
 """
 
 import os
@@ -44,6 +45,29 @@ def test_difxcalc11_reproduces_eht_archive_uvw():
     # The wrong orientation misses by the full uvw scale.
     flipped = np.abs(-result["model_uvw"] - result["file_uvw"]).max()
     assert flipped > 1.0e6
+
+
+@pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")
+def test_atmosphere_free_alma_reaches_storage_floor():
+    """With the production convention -- the file's own EOPs and an
+    atmosphere-free phased ALMA (its real-time phasing removes the
+    troposphere, so the correlator model must not add it) -- every baseline
+    reaches the float32 storage floor with no fitted parameters at all,
+    including the 2.6 km AA-AX baseline that the plain model misses by the
+    full ALMA line-of-sight troposphere (~1.8 m at this scan's elevation)."""
+    data = read_fits_idi(DATA)
+    result = compare_uvw(
+        data, method="difxcalc11", eop=data["eop"], atmosphere_free_station=["AA"]
+    )
+    residual = np.linalg.norm(result["residual"], axis=1)
+    aa_ax = ((data["antenna1"] == 0) & (data["antenna2"] == 1)) | (
+        (data["antenna1"] == 1) & (data["antenna2"] == 0)
+    )
+    # Vector-norm metrics; the medians sit at the float32 storage floor
+    # (measured 0.136 median / 0.373 max / 0.09 mm AA-AX).
+    assert np.median(residual) < 0.2
+    assert residual.max() < 0.45
+    assert np.median(residual[aa_ax]) < 0.005  # sub-5 mm on the 2.6 km baseline
 
 
 @pytest.mark.skipif(not calc_available(), reason="CALC11 extension not built")

@@ -161,7 +161,12 @@ def read_fits_idi(path, max_rows: int | None = None) -> dict:
     }
 
 
-def compare_uvw(data: dict, method: str = "difxcalc11", eop=None) -> dict:
+def compare_uvw(
+    data: dict,
+    method: str = "difxcalc11",
+    eop=None,
+    atmosphere_free_station=None,
+) -> dict:
     """Compute uvw for every row of a ``read_fits_idi`` result and compare.
 
     ``method`` is ``"difxcalc11"`` (the embedded difxcalc11 pipeline -- the
@@ -173,6 +178,11 @@ def compare_uvw(data: dict, method: str = "difxcalc11", eop=None) -> dict:
     model -- pass ``data["eop"]`` to use the file's own CALC-table values
     (the EOPs the correlator actually used), removing the
     correlation-time-vs-IERS-final EOP difference from the residuals.
+
+    ``atmosphere_free_station`` (``"difxcalc11"`` only): station names
+    modeled without the troposphere -- the convention for phased arrays
+    whose real-time phasing removes it. EHT DiFX archives are correlated
+    with an atmosphere-free ALMA (pass ``["AA"]``).
 
     Rows whose baseline code lists the higher antenna first are compared
     against the negated model baseline (``uvw(i, j) = -uvw(j, i)``).
@@ -205,6 +215,7 @@ def compare_uvw(data: dict, method: str = "difxcalc11", eop=None) -> dict:
                 station_name=data["station_name"],
                 mount_type=data["mount_type"],
                 eop=eop,
+                atmosphere_free_station=atmosphere_free_station,
             )
         elif method == "calc":
             model, b1, b2 = calculate_uvw_calc(

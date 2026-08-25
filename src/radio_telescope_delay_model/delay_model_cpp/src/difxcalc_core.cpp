@@ -78,6 +78,12 @@ extern "C" void dstart_(const int* num_scans, const int* kjob);
 extern "C" void dinitl_(const int* kjob);
 extern "C" void dscan_(const int* iscan, const int* kjob);
 extern "C" void ddrivr_(const int* iscan, const int* interval);
+// rtdm helpers (fortran_support/rtdm_close_units.f): release the Fortran
+// unit numbers this run acquired -- and only those; the unit table is
+// process-global and the almacalc extension keeps its own files open --
+// so repeated embedded runs never exhaust the unit space.
+extern "C" void rtdm_units_snapshot_();
+extern "C" void rtdm_close_new_units_();
 
 std::mutex core_mutex;  // COMMON-block state: one computation at a time
 
@@ -99,12 +105,14 @@ std::size_t run_difxcalc11(
     const std::string& calc_file, const std::string& ocean_loading_file,
     const std::string& tilt_file, const std::string& ocean_pole_tide_file,
     const std::string& de421_file, const std::string& leap_second_file,
-    std::size_t n_antenna, std::size_t max_samples, int* ymdhms, double* delay,
-    double* dry, double* wet, double* u, double* v, double* w) {
+    bool add_atmosphere, std::size_t n_antenna, std::size_t max_samples,
+    int* ymdhms, double* delay, double* dry, double* wet, double* u, double* v,
+    double* w) {
     if (n_antenna == 0 || n_antenna > kSta)
         throw std::invalid_argument("n_antenna out of range for difxcalc11.");
 
     std::lock_guard<std::mutex> lock(core_mutex);
+    rtdm_units_snapshot_();
 
     // The defaults difxcalc's command-line parser (GETCL in dstrt.f) would
     // set; we bypass GETCL, so replicate them exactly. Base_mode, UVW and
@@ -116,11 +124,17 @@ std::size_t run_difxcalc11(
     set_blank_padded(contrl_.calc_out_file, 128, "", "calc_out_file");
     set_blank_padded(contrl_.base_mode, 10, "geocenter", "base_mode");
     set_blank_padded(contrl_.l_time, 10, "dont-solve", "l_time");
-    set_blank_padded(contrl_.atmdr, 10, "Add-dry", "atmdr");
-    set_blank_padded(contrl_.atmwt, 10, "Add-wet", "atmwt");
+    set_blank_padded(contrl_.atmdr, 10, add_atmosphere ? "Add-dry" : "no-Add-dry",
+                     "atmdr");
+    set_blank_padded(contrl_.atmwt, 10, add_atmosphere ? "Add-wet" : "no-Add-wet",
+                     "atmwt");
     set_blank_padded(contrl_.near_far, 10, "Far-field", "near_far");
     set_blank_padded(contrl_.overwrite, 4, "no", "overwrite");
-    set_blank_padded(contrl_.uvw, 6, "exact", "uvw");
+    // 'noatmo' is difxcalc11's own atmosphere-free uvw mode: EWNS_atmC and
+    // the EWNS/W atmosphere additions (ddrvr.f, ctheu.f) run only under
+    // 'exact '.
+    set_blank_padded(contrl_.uvw, 6, add_atmosphere ? "exact" : "noatmo",
+                     "uvw");
     contrl_.d_interval = 24.0;
     contrl_.epoch2m = static_cast<int>(120.0001 / contrl_.d_interval) + 1;
     contrl_.verbose = 0;
@@ -170,6 +184,7 @@ std::size_t run_difxcalc11(
             }
         }
     }
+    rtdm_close_new_units_();
     return sample;
 }
 

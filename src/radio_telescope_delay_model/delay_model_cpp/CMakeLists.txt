@@ -98,22 +98,33 @@ file(READ "${_difx_src}/param11.i.in" _param11)
 string(REGEX REPLACE "@[A-Za-z0-9_]+@" "/nonexistent" _param11 "${_param11}")
 file(WRITE "${_difxcalc11_staged}/param11.i" "${_param11}")
 
-execute_process(
-    COMMAND "${RTDM_PATCH_EXECUTABLE}" -p1 --batch --forward
-            -i "${CMAKE_CURRENT_SOURCE_DIR}/patches/difxcalc11_runtime_paths.patch"
-    WORKING_DIRECTORY "${_difxcalc11_staged}"
-    RESULT_VARIABLE _patch_status
-    OUTPUT_VARIABLE _patch_output
-    ERROR_VARIABLE _patch_output)
-if(NOT _patch_status EQUAL 0)
-    message(FATAL_ERROR
-        "Applying difxcalc11_runtime_paths.patch to the DiFX submodule "
-        "sources failed -- is extern/difx off its pinned SHA, or did "
-        "upstream change the OPEN sites? Regenerate the patch against the "
-        "new sources if this was a deliberate bump.\n${_patch_output}")
-endif()
+# difxcalc11_runtime_paths.patch: the five data-file OPEN sites -> /RTDMPATHS/.
+# difxcalc11_embedded_use.patch: get4unit's lifetime unit cap lifted (the
+# embedded backend runs many jobs per process and closes every unit after
+# each run via fortran_support/rtdm_close_units.f; the standalone binary's
+# one-run-per-process cap of 60 would abort after ~20 embedded runs).
+foreach(_patch difxcalc11_runtime_paths.patch difxcalc11_embedded_use.patch)
+    execute_process(
+        COMMAND "${RTDM_PATCH_EXECUTABLE}" -p1 --batch --forward
+                -i "${CMAKE_CURRENT_SOURCE_DIR}/patches/${_patch}"
+        WORKING_DIRECTORY "${_difxcalc11_staged}"
+        RESULT_VARIABLE _patch_status
+        OUTPUT_VARIABLE _patch_output
+        ERROR_VARIABLE _patch_output)
+    if(NOT _patch_status EQUAL 0)
+        message(FATAL_ERROR
+            "Applying ${_patch} to the DiFX submodule sources failed -- is "
+            "extern/difx off its pinned SHA, or did upstream change the "
+            "patched sites? Regenerate the patch against the new sources if "
+            "this was a deliberate bump.\n${_patch_output}")
+    endif()
+endforeach()
 
 file(GLOB _difxcalc11_core "${_difxcalc11_staged}/*.f")
+# rtdm's own unit-number cleanup (see the file header); lives outside the
+# submodule and the patch.
+list(APPEND _difxcalc11_core
+    "${CMAKE_CURRENT_SOURCE_DIR}/fortran_support/rtdm_close_units.f")
 
 rtdm_add_pybind_module(
     NAME _difxcalc11_ext

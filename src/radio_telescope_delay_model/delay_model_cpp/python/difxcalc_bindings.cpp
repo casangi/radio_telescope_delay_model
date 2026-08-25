@@ -25,7 +25,7 @@ std::size_t difxcalc11_samples(
     py::array_t<double, py::array::c_style> wet,
     py::array_t<double, py::array::c_style> u,
     py::array_t<double, py::array::c_style> v,
-    py::array_t<double, py::array::c_style> w) {
+    py::array_t<double, py::array::c_style> w, bool add_atmosphere) {
     if (ymdhms.ndim() != 2 || ymdhms.shape(1) != 6)
         throw std::invalid_argument("ymdhms must be [max_samples, 6] int32.");
     const std::size_t max_samples = ymdhms.shape(0);
@@ -56,8 +56,9 @@ std::size_t difxcalc11_samples(
         py::gil_scoped_release release;
         n_samples = rtdm::difxcalc::run_difxcalc11(
             calc_file, ocean_loading_file, tilt_file, ocean_pole_tide_file,
-            de421_file, leap_second_file, n_antenna, max_samples, ymdhms_data,
-            delay_data, dry_data, wet_data, u_data, v_data, w_data);
+            de421_file, leap_second_file, add_atmosphere, n_antenna,
+            max_samples, ymdhms_data, delay_data, dry_data, wet_data, u_data,
+            v_data, w_data);
     }
     return n_samples;
 }
@@ -74,7 +75,7 @@ PYBIND11_MODULE(_difxcalc11_ext, m) {
           py::arg("ocean_pole_tide_file"), py::arg("de421_file"),
           py::arg("leap_second_file"), py::arg("ymdhms"), py::arg("delay"),
           py::arg("dry"), py::arg("wet"), py::arg("u"), py::arg("v"),
-          py::arg("w"),
+          py::arg("w"), py::arg("add_atmosphere") = true,
           "Run difxcalc11 on a .calc file; fills the sample arrays in place "
           "and returns the number of samples (6 per 2-minute interval, "
           "boundary samples repeated between intervals). Delays are "

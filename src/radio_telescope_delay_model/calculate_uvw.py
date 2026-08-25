@@ -373,6 +373,7 @@ def calculate_uvw_calc(
     station_name=None,
     mount_type=None,
     eop=None,
+    atmosphere_free_station=None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Baseline ``uvw`` (metres) for every time, CALC11 method.
 
@@ -408,6 +409,16 @@ def calculate_uvw_calc(
         200 m baseline -- and DiFX products carry the geocentric
         convention.
 
+    ``atmosphere_free_station`` (``mode="difxcalc11"`` only): station names
+    whose per-antenna model excludes the dry/wet troposphere entirely
+    (difxcalc's global ``-dry -wet`` applied to just those antennas via a
+    second pipeline run). This is the convention for phased arrays whose
+    real-time phasing already removes the troposphere: EHT phased ALMA's
+    production ``.im`` models are atmosphere-free for ALMA while every
+    other station carries geometry+atmosphere (verified against the
+    e21d15 delivery, where the unmodeled difference reaches metres at low
+    elevation). Requires ``station_name``.
+
     Either way the per-antenna values are delay-like (``-P(r)``), so the
     archival baseline is assembled as ``antenna2 - antenna1``.
 
@@ -425,6 +436,11 @@ def calculate_uvw_calc(
             "eop (explicit daily EOP entries) is only supported with "
             "mode='difxcalc11'; the other methods take per-epoch EOPs from "
             "IERS-B via earth_orientation_parameters."
+        )
+    if atmosphere_free_station is not None and mode != "difxcalc11":
+        raise ValueError(
+            "atmosphere_free_station (per-station tropospheric exclusion) "
+            "is only supported with mode='difxcalc11'."
         )
     if mode not in ("geometric", "difxcalc11"):
         raise ValueError(
@@ -472,6 +488,22 @@ def calculate_uvw_calc(
             [evaluate_samples(samples, q, epochs) for q in ("u", "v", "w")],
             axis=2,
         )  # [n_time, n_antenna, 3], geocentric delay-like (-P(r))
+        if atmosphere_free_station is not None:
+            free = _atmosphere_free_indices(atmosphere_free_station, station_name)
+            samples_free = difxcalc11_samples(
+                antenna_position,
+                astropy_time,
+                phase_center,
+                station_name=station_name,
+                mount_type=mount_type,
+                eop=eop,
+                add_atmosphere=False,
+            )
+            free_uvw = np.stack(
+                [evaluate_samples(samples_free, q, epochs) for q in ("u", "v", "w")],
+                axis=2,
+            )
+            antenna_uvw[:, free, :] = free_uvw[:, free, :]
         antenna1, antenna2 = baseline_antenna_pairs(np.shape(antenna_position)[0])
         uvw = antenna_uvw[:, antenna2, :] - antenna_uvw[:, antenna1, :]
         return np.ascontiguousarray(uvw), antenna1, antenna2
@@ -506,6 +538,22 @@ def calculate_uvw_calc(
     antenna1, antenna2 = baseline_antenna_pairs(np.shape(antenna_position)[0])
     uvw = antenna_uvw[:, antenna2, :] - antenna_uvw[:, antenna1, :]
     return np.ascontiguousarray(uvw), antenna1, antenna2
+
+
+def _atmosphere_free_indices(free, station_name):
+    """Antenna indices for ``atmosphere_free_station`` names."""
+    if station_name is None:
+        raise ValueError("atmosphere_free_station needs station_name to match against.")
+    normalized = [str(s).strip().upper()[:8] for s in station_name]
+    indices = set()
+    for name in [free] if isinstance(free, str) else free:
+        key = str(name).strip().upper()[:8]
+        if key not in normalized:
+            raise ValueError(
+                f"atmosphere_free_station {name!r} is not in station_name."
+            )
+        indices.add(normalized.index(key))
+    return np.array(sorted(indices), dtype=int)
 
 
 def _as_time(time):

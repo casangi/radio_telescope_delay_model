@@ -127,6 +127,7 @@ def difxcalc11_samples(
     station_name=None,
     mount_type=None,
     eop=None,
+    add_atmosphere: bool = True,
 ) -> dict:
     """Raw difxcalc11 model samples covering the given times.
 
@@ -139,6 +140,14 @@ def difxcalc11_samples(
     ``x_pole_arcsec``, ``y_pole_arcsec`` arrays (e.g. the FITS-IDI CALC
     table: the values the correlator actually used, reproducing its frame
     exactly). Default: 5 daily IERS-B entries with erfa TAI-UTC.
+
+    ``add_atmosphere=False`` mirrors difxcalc's ``-dry -wet`` flags
+    together: the dry/wet troposphere is left out of the total delay and
+    the exact-mode uvw (the ``dry``/``wet`` arrays are tabulated either
+    way). This is the model convention for phased arrays whose real-time
+    phasing already removes the troposphere -- EHT phased ALMA's ``.im``
+    models are computed this way (verified against the e21d15 production
+    delivery).
 
     Returns a dict with ``sample_unix`` [n_samples] (UTC epochs, 24 s grid,
     interval boundaries deduplicated), ``interval_start_unix``
@@ -238,6 +247,7 @@ def difxcalc11_samples(
             _data_file("ut1ls.dat"),
             ymdhms,
             *arrays,
+            add_atmosphere=bool(add_atmosphere),
         )
     finally:
         os.remove(calc_path)

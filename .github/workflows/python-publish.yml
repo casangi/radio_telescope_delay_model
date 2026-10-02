@@ -38,7 +38,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+        # macos-15 is pinned to match MACOSX_DEPLOYMENT_TARGET in
+        # [tool.cibuildwheel.macos] (the bundled Homebrew libgfortran has the
+        # runner's macOS as its minimum version).
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-15]
     steps:
       - uses: actions/checkout@v7
         with:

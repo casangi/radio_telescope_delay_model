@@ -61,8 +61,11 @@ manylinux-aarch64-image = "manylinux_2_28"
 # AppleClang (>= the C++23 floor on current runners) compiles the C++; the
 # Fortran cores use Homebrew's gfortran-14 (the workflow installs gcc@14).
 # The deployment target matches the runner OS so delocate accepts the brew
-# libgfortran it bundles into the wheel.
-environment = { MACOSX_DEPLOYMENT_TARGET = "14.0", FC = "gfortran-14" }
+# libgfortran it bundles into the wheel: Homebrew bottles gcc@14 for the
+# runner's own macOS, so its libgfortran/libquadmath have that minimum
+# version. The publish workflow pins the runner to macos-15 for this reason
+# (macos-latest is macOS 26, whose bottle needs 26.0); bump both together.
+environment = { MACOSX_DEPLOYMENT_TARGET = "15.0", FC = "gfortran-14" }
 
 [tool.ruff]
 target-version = "py311"

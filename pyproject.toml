@@ -5,7 +5,7 @@ description = "Radio telescope delay model: uvw and delays via CALC11 and astrop
 authors = [{ name = "Jan-Willem Steeb", email = "jsteeb@nrao.edu" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.11,<3.15"
 
 dependencies = [
   "numpy",
@@ -46,7 +46,8 @@ sdist.include = [
 # pass the unit tests before upload -- bit parity is per-toolchain, so the
 # pinned difxcalc11 values and the EHT-archive comparison in tests/unit are
 # the acceptance criterion for a CI-built wheel.
-build = "cp311-* cp312-* cp313-*"
+# CPython 3.12-3.14 (the VIPER-wide set; no free-threaded builds).
+build = "cp312-* cp313-* cp314-*"
 skip = "*-musllinux*"
 build-verbosity = 1
 test-requires = "pytest"

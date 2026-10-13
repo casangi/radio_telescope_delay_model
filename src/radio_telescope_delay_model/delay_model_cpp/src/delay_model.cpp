@@ -81,8 +81,10 @@ extern "C" struct {
     double dwoby;
 } wobcm_;
 
-// COMMON /ephem/ of d_input.i: a single CHARACTER*128 (raw bytes).
-extern "C" char ephem_[128];
+// COMMON /ephem/ of d_input.i: a single CHARACTER*4096 (raw bytes), the
+// length of a path on Linux (PATH_MAX); installed package paths can exceed
+// 128 characters.
+extern "C" char ephem_[4096];
 
 // COMMON /OBSRVN/ of cobsn11.i: the per-observation geocenter-station marker
 // (set by SITG from Zero_site; reset here every call because SITG never
@@ -132,8 +134,8 @@ void calc_delay_model(
         throw std::invalid_argument(
             "CALC11 needs at least two times (EOP rates are formed from the "
             "first and last time).");
-    if (ephemeris_path.size() > 128)
-        throw std::invalid_argument("ephemeris_path exceeds 128 characters.");
+    if (ephemeris_path.size() > sizeof(ephem_))
+        throw std::invalid_argument("ephemeris_path exceeds 4096 characters.");
     if (axis_type != nullptr)
         for (std::size_t i = 0; i < n_antenna; ++i)
             if (axis_type[i] < 1 || axis_type[i] > 5)
@@ -200,7 +202,7 @@ void calc_delay_model(
                 sitcm_.rotilt[n][j][i] = (i == j) ? 1.0 : 0.0;
     }
 
-    // --- Name of the ephemeris file (CHARACTER*128, blank padded) ---
+    // --- Name of the ephemeris file (CHARACTER*4096, blank padded) ---
     std::memset(ephem_, ' ', sizeof(ephem_));
     std::memcpy(ephem_, ephemeris_path.data(), ephemeris_path.size());
 

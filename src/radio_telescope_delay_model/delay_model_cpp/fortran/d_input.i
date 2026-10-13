@@ -8,7 +8,7 @@
       Integer*4    K_SIZE_JPL
       PARAMETER ( K_SIZE_JPL = 2036 )
       Integer*4   I_RECL_JPL
-      CHARACTER  JPL_DE421*128
+      CHARACTER  JPL_DE421*4096
       Common/ephem/JPL_DE421
 !
 !   Set MaxStat to the maximum number of stations that will ever be

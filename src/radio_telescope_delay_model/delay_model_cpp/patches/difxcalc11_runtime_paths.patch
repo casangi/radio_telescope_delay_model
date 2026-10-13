@@ -179,7 +179,7 @@ diff -ruN a/rtdm_paths.i b/rtdm_paths.i
 +!  before dSTART/dINITL run. Everything else is byte-identical to
 +!  difx/applications/difxcalc11/src.
 +!
-+      CHARACTER*128 RTDM_OC_FILE, RTDM_TILT_FILE, RTDM_OPTL_FILE,       &
++      CHARACTER*4096 RTDM_OC_FILE, RTDM_TILT_FILE, RTDM_OPTL_FILE,      &
 +     &              RTDM_DE421_FILE, RTDM_LEAP_FILE
 +      COMMON / RTDMPATHS / RTDM_OC_FILE, RTDM_TILT_FILE,                &
 +     &              RTDM_OPTL_FILE, RTDM_DE421_FILE, RTDM_LEAP_FILE

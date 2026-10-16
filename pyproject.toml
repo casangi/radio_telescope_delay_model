@@ -5,7 +5,7 @@ description = "Radio telescope delay model: uvw and delays via CALC11 and astrop
 authors = [{ name = "Jan-Willem Steeb", email = "jsteeb@nrao.edu" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.11,<3.15"
 
 dependencies = [
   "numpy",
@@ -46,7 +46,8 @@ sdist.include = [
 # pass the unit tests before upload -- bit parity is per-toolchain, so the
 # pinned difxcalc11 values and the EHT-archive comparison in tests/unit are
 # the acceptance criterion for a CI-built wheel.
-build = "cp311-* cp312-* cp313-*"
+# CPython 3.12-3.14 (the VIPER-wide set; no free-threaded builds).
+build = "cp312-* cp313-* cp314-*"
 skip = "*-musllinux*"
 build-verbosity = 1
 test-requires = "pytest"
@@ -60,8 +61,11 @@ manylinux-aarch64-image = "manylinux_2_28"
 # AppleClang (>= the C++23 floor on current runners) compiles the C++; the
 # Fortran cores use Homebrew's gfortran-14 (the workflow installs gcc@14).
 # The deployment target matches the runner OS so delocate accepts the brew
-# libgfortran it bundles into the wheel.
-environment = { MACOSX_DEPLOYMENT_TARGET = "14.0", FC = "gfortran-14" }
+# libgfortran it bundles into the wheel: Homebrew bottles gcc@14 for the
+# runner's own macOS, so its libgfortran/libquadmath have that minimum
+# version. The publish workflow pins the runner to macos-15 for this reason
+# (macos-latest is macOS 26, whose bottle needs 26.0); bump both together.
+environment = { MACOSX_DEPLOYMENT_TARGET = "15.0", FC = "gfortran-14" }
 
 [tool.ruff]
 target-version = "py311"

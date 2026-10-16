@@ -1,22 +1,31 @@
 # Run MacOS tests using the shared VIPER template (as astroviper does).
-# NOTE: the macOS runners ship gfortran as gfortran-14 without the bare
-# `gfortran` alias; if the template's build step cannot find a Fortran
-# compiler, set FC=gfortran-14 in the template or add the alias step here.
+# Runs on pull requests and merges to main only (not on every branch push).
 name: MacOS Tests
 
 on:
-  push:
-    paths-ignore:
-      - '**.md'
-      - '**.rst'
   pull_request:
     paths-ignore:
       - '**.md'
       - '**.rst'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref == 'refs/heads/main' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   call-testing-macos:
     uses: nrao/gh-actions-templates-public/.github/workflows/python-testing-macos-template.yml@main
     with:
+      python-versions: '["3.12", "3.13", "3.14"]'
       # The C++ extension requires C++23 (Apple Clang >= 16).
       xcode-version: "26"
+      # The CALC11 cores are Fortran. The macOS runners ship Homebrew GCC as
+      # gfortran-14 without a bare `gfortran`, so CMake found no Fortran
+      # compiler ("No CMAKE_Fortran_COMPILER could be found").
+      fortran-compiler: "gfortran-14"

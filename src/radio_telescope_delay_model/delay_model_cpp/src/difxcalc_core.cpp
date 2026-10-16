@@ -50,8 +50,10 @@ static_assert(offsetof(CalcInput, intrvls2min) == 2040);
 extern "C" char mode_[6];
 
 // --- COMMON /RTDMPATHS/ of rtdm_paths.i ----------------------------------
+// CHARACTER*4096 each, the length of a path on Linux (PATH_MAX): installed
+// package paths can exceed difxcalc11's own 128 characters.
 extern "C" struct {
-    char ocean[128], tilt[128], optl[128], de421[128], leap[128];
+    char ocean[4096], tilt[4096], optl[4096], de421[4096], leap[4096];
 } rtdmpaths_;
 
 // --- Leading members of COMMON /OUT_C/ of c2poly.i ------------------------
@@ -141,11 +143,16 @@ std::size_t run_difxcalc11(
     contrl_.i_out = 0;
     contrl_.im_out = 0;
     contrl_.numjobs = 0;
-    set_blank_padded(rtdmpaths_.ocean, 128, ocean_loading_file, "ocean file");
-    set_blank_padded(rtdmpaths_.tilt, 128, tilt_file, "tilt file");
-    set_blank_padded(rtdmpaths_.optl, 128, ocean_pole_tide_file, "optl file");
-    set_blank_padded(rtdmpaths_.de421, 128, de421_file, "de421 file");
-    set_blank_padded(rtdmpaths_.leap, 128, leap_second_file, "leap file");
+    set_blank_padded(rtdmpaths_.ocean, sizeof(rtdmpaths_.ocean),
+                     ocean_loading_file, "ocean file");
+    set_blank_padded(rtdmpaths_.tilt, sizeof(rtdmpaths_.tilt), tilt_file,
+                     "tilt file");
+    set_blank_padded(rtdmpaths_.optl, sizeof(rtdmpaths_.optl),
+                     ocean_pole_tide_file, "optl file");
+    set_blank_padded(rtdmpaths_.de421, sizeof(rtdmpaths_.de421), de421_file,
+                     "de421 file");
+    set_blank_padded(rtdmpaths_.leap, sizeof(rtdmpaths_.leap),
+                     leap_second_file, "leap file");
 
     int num_scans = 0;
     const int kjob = 1;

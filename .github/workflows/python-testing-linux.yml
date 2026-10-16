@@ -1,5 +1,6 @@
 # Run Linux tests using the shared VIPER template (as astroviper does).
 # The runners ship gfortran, which the CALC11 core needs.
+# Push to a branch: Python 3.13 only. Pull request / push to main: 3.12-3.14.
 name: Linux Tests
 
 on:
@@ -12,12 +13,22 @@ on:
       - '**.md'
       - '**.rst'
 
+concurrency:
+  # A newer push to the same branch/PR cancels the older run. Each run on main
+  # gets its own group, so merges are never queued behind or cancelled by
+  # each other.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref == 'refs/heads/main' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   call-testing-linux:
     uses: nrao/gh-actions-templates-public/.github/workflows/python-testing-linux-template.yml@main
     with:
       cov_project: "radio_telescope_delay_model"
       test-path: "tests/"
+      # Pull requests and pushes to main: 3.12-3.14; other branch pushes: 3.13.
+      python-versions: '["3.12", "3.13", "3.14"]'
+      push-python-versions: '["3.13"]'
       # The C++ extension requires C++23 (GCC >= 14).
       gcc-version: "14"
     secrets:

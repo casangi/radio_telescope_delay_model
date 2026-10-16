@@ -1,19 +1,35 @@
 # .github/workflows/python-publish.yml
 #
 # Build platform wheels + the sdist and upload them to PyPI when a GitHub
-# release is created. The org's python-publish-cngi-template (used by
+# release is published. The org's python-publish-cngi-template (used by
 # graphviper etc.) runs a single `python -m build` on ubuntu -- right for
 # pure-Python packages, but this package compiles C++23 + Fortran, so PyPI
 # needs manylinux/macOS wheels per Python version, built by cibuildwheel
 # (config: pyproject.toml [tool.cibuildwheel], including the per-wheel unit
 # test run). Same conventions as the template: release trigger, PYPI_TOKEN
 # secret, "release" environment.
+#
+# Pull requests and pushes to main build and test every wheel as a check
+# (CPython 3.12-3.14); only a published release uploads to PyPI.
 name: Publish Python 🐍 distribution 📦 to PyPI
 
 on:
   release:
-    types: [created]
+    types: [published]
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
   workflow_dispatch: # rehearsal: builds and tests everything, skips the upload
+
+permissions:
+  contents: read
 
 jobs:
   build-wheels:
@@ -22,9 +38,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+        # macos-15 is pinned to match MACOSX_DEPLOYMENT_TARGET in
+        # [tool.cibuildwheel.macos] (the bundled Homebrew libgfortran has the
+        # runner's macOS as its minimum version).
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-15]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       # The difxcalc11 Fortran comes from the pinned DiFX submodule; CMake
       # would fetch it by itself, but doing it here keeps one fetch per job
@@ -36,10 +57,12 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install gcc@14
 
+      # Pinned so a new cibuildwheel release cannot silently change the set of
+      # wheels (4.2 would otherwise also build CPython 3.15 if selected).
       - name: Build and test wheels
-        run: pipx run cibuildwheel --output-dir wheelhouse
+        run: pipx run cibuildwheel==4.2.1 --output-dir wheelhouse
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
@@ -48,7 +71,9 @@ jobs:
     name: Source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       # sdist.include packs these sources into the sdist, so installing from
       # it needs neither git nor network.
@@ -58,7 +83,7 @@ jobs:
       - name: Build the sdist
         run: pipx run build --sdist
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: sdist
           path: dist/*.tar.gz
@@ -73,7 +98,7 @@ jobs:
       url: https://pypi.org/project/radio-telescope-delay-model
     steps:
       - name: Download all distributions
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true

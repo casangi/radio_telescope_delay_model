@@ -16,8 +16,11 @@ repos:
       - id: check-json
       - id: check-toml
       - id: check-yaml
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
       - id: detect-private-key
       - id: end-of-file-fixer
+      - id: requirements-txt-fixer
       - id: trailing-whitespace
         args: [--chars,"  "]
 
@@ -28,10 +31,16 @@ repos:
         args:
           - --py311-plus
 
+  -   repo: https://github.com/MarcoGorelli/absolufy-imports
+      rev: v0.3.1
+      hooks:
+      - id: absolufy-imports
+        name: absolufy-imports
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.5
+    rev: v0.16.10
     hooks:
-      - id: ruff-check        # linter (incl. import sorting via the I rules)
+      - id: ruff-check        # linter + import sorting (see [tool.ruff.lint])
         args: [--fix]
       - id: ruff-format       # formatter (black replacement)
 

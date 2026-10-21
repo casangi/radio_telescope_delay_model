@@ -1,6 +1,6 @@
 [project]
 name = "radio_telescope_delay_model"
-version = "0.1.0"
+version = "0.1.1"
 description = "Radio telescope delay model: uvw and delays via CALC11 and astropy"
 authors = [{ name = "Jan-Willem Steeb", email = "jsteeb@nrao.edu" }]
 license = { file = "LICENSE" }
